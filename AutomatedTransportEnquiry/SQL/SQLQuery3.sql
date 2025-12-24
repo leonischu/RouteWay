@@ -1,0 +1,6 @@
+CREATE TABLE Fares (
+    FareId INT IDENTITY(1,1) PRIMARY KEY,
+    RouteId INT NOT NULL,
+    Price DECIMAL(10,2),
+    CONSTRAINT FK_Fares_Routes FOREIGN KEY (RouteId) REFERENCES Routes(RouteId)
+);
