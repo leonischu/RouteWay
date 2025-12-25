@@ -1,6 +1,5 @@
 ﻿
 using AutomatedTransportEnquiry.Data;
-using AutomatedTransportEnquiry.Models;
 
 using Dapper;
 using System.Data;
