@@ -45,12 +45,15 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<int> CreateAsync(VehicleRoute route)
         {
-            var query = @"INSERT INTO Routes (Source,Destination,Distance) VALUES (@Source,@Destination,@Distance);SELECT CAST(SCOPE_IDENTITY() as int);"
+            var query = @"INSERT INTO Routes (Source,Destination,Distance) VALUES (@Source,@Destination,@Distance);SELECT CAST(SCOPE_IDENTITY() as int)";
             //@ allows to write sql over multiple lines and select cast.--COnverts into integer and scopeIdentity returns last identity value inserted.
             //.. this gets auto generated id.
 
-            //var parameter = new DynamicParameters();
-            //DynamicParameters.Add("Source", route.Source, DbType.String);
+            var parameters = new DynamicParameters();
+                
+             parameters.Add("Source", route.Source, DbType.String);
+             parameters.Add("Destination", route.Destination, DbType.String);
+             parameters.Add("Distance", route.Distance, DbType.Int32);
 
 
             using var connection = _context.CreateConnection();
@@ -74,7 +77,17 @@ namespace AutomatedTransportEnquiry.Repositories
         public async Task<bool> UpdateAsync(VehicleRoute route)
         {
             var query = "Update Routes SET Source = @Source , Destination = @Destination , Distance = @Distance WHERE RouteId = @RouteId";
-              
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("RouteId", route.RouteId, DbType.Int32);
+            parameters.Add("Source", route.Source, DbType.String);
+            parameters.Add("Destination", route.Destination, DbType.String);
+            parameters.Add("Distance", route.Distance, DbType.Int32);
+
+
+
+
             using var connection = _context.CreateConnection();
             return await connection.ExecuteAsync(query,route) > 0;
         
