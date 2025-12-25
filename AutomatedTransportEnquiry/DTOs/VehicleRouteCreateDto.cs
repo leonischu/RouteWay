@@ -1,6 +1,6 @@
 ﻿namespace AutomatedTransportEnquiry.DTOs
 {
-    public class RouteCreateDto
+    public class VehicleRouteCreateDto
     {
         public string Source   { get; set; }    
         public string Destination {  get; set; }
