@@ -32,7 +32,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<VehicleRoute> GetByIdAsync(int id)
         {
-            var query = "SELECT FROM Routes WHERE RouteId = @Id";
+            var query = "SELECT * FROM Routes WHERE RouteId = @Id";
             using var connection = _context.CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<VehicleRoute>(query, new { Id = id });
         }
@@ -60,20 +60,6 @@ namespace AutomatedTransportEnquiry.Repositories
             return await connection.ExecuteScalarAsync<int>(query, route);
         }
 
-
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var query = "DELETE FROM Routes Where Id = @Id";
-            using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(query, new { id }) > 0;
-            
-        }
-
-        
-
-       
-
         public async Task<bool> UpdateAsync(VehicleRoute route)
         {
             var query = "Update Routes SET Source = @Source , Destination = @Destination , Distance = @Distance WHERE RouteId = @RouteId";
@@ -85,16 +71,20 @@ namespace AutomatedTransportEnquiry.Repositories
             parameters.Add("Destination", route.Destination, DbType.String);
             parameters.Add("Distance", route.Distance, DbType.Int32);
 
-
-
-
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(query,route) > 0;
-        
+            return await connection.ExecuteAsync(query, route) > 0;
+
         }
 
 
 
+        public async Task<bool> DeleteAsync(int RouteId)
+        {
+            var query = "DELETE FROM Routes Where RouteId = @RouteId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(query, new { RouteId }) > 0;
+            
+        }
         
     }
 }

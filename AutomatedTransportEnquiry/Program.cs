@@ -1,4 +1,6 @@
 using AutomatedTransportEnquiry.Data;
+using AutomatedTransportEnquiry.Models;
+using AutomatedTransportEnquiry.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +13,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<DapperContext>();
 
+builder.Services.AddScoped<IVehicleRouteRepository, VehicleRouteRepository>();
 
 
+//Registering AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
+//Registering Api Response 
+builder.Services.AddScoped<APIResponse>();
 
 
 
