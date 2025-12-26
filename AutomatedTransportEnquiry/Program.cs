@@ -16,6 +16,7 @@ builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IVehicleRouteRepository, VehicleRouteRepository>();
 
 
+
 //Registering AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
