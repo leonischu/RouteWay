@@ -8,9 +8,19 @@ namespace AutomatedTransportEnquiry.Mapping
     {
         public MappingProfile()
         {
+
+            //Mapping for VehicleRoute
+
             CreateMap<VehicleRoute, VehicleRouteDto>().ReverseMap();
             CreateMap<VehicleRouteCreateDto, VehicleRoute>().ReverseMap();
             CreateMap<VehicleRouteUpdateDto, VehicleRoute>().ReverseMap();
+
+
+
+            //Mapping for vehicles 
+            CreateMap<Vehicle, VehicleDTO>().ReverseMap();
+            CreateMap<VehicleCreateDto, Vehicle>().ReverseMap();
+            CreateMap<VehicleUpdateDto, Vehicle>().ReverseMap();
         }
 
     }
