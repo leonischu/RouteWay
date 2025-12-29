@@ -2,6 +2,7 @@
 using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
+using AutomatedTransportEnquiry.Services;
 using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +21,11 @@ namespace AutomatedTransportEnquiry.Controllers
 
     public class VehicleRouteController : ControllerBase
     {
-        private readonly IVehicleRouteRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly APIResponse _apiResponse;
-        public VehicleRouteController(IVehicleRouteRepository repository,IMapper mapper,APIResponse apiResponse)
+        private readonly IVehicleRouteService _service;
+        public VehicleRouteController(IVehicleRouteService service)
         {
-            _repository = repository;
-            _mapper = mapper;
-            _apiResponse = apiResponse;
+            _service = service;
+          
         }
 
 
@@ -35,152 +33,47 @@ namespace AutomatedTransportEnquiry.Controllers
         public async Task<ActionResult<APIResponse>> GetAll()
         {
 
-            try
-            {
-                var routes = await _repository.GetAllAsync();
-                _apiResponse.Data = _mapper.Map<IEnumerable<VehicleRouteDto>>(routes);
-                _apiResponse.Status = true;
-                _apiResponse.StatusCode = HttpStatusCode.OK;
-                return Ok(_apiResponse);
-            }
-            catch (Exception ex)
-            {
-                _apiResponse.Errors.Add(ex.Message);
-                _apiResponse.StatusCode = HttpStatusCode.InternalServerError;
-                _apiResponse.Status = false;
-                return _apiResponse;
-            }
+           
+            
+                var response = await _service.GetAllAsync();
+                return StatusCode((int)response.StatusCode,response);
+           
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<APIResponse>> GetById(int id)
         {
-            try {
-                var route = await _repository.GetByIdAsync(id);
-                if (route == null)
-                {
-                    _apiResponse.Status = false;
-                    _apiResponse.StatusCode = HttpStatusCode.NotFound;
-                    _apiResponse.Data = null;
-                    _apiResponse.Errors.Clear();
-                    _apiResponse.Errors.Add($"Route with ID {id} not found.");
-                    return NotFound(_apiResponse);
-                }
-                _apiResponse.Data = _mapper.Map<VehicleRouteDto>(route);
-                _apiResponse.Status = true;
-                _apiResponse.StatusCode = HttpStatusCode.OK;
-                return Ok(_apiResponse);
-            }
-            catch(Exception ex)
-            {
-                _apiResponse.Errors.Add(ex.Message);
-                _apiResponse.StatusCode = HttpStatusCode.InternalServerError;
-                _apiResponse.Status = false;
-                return _apiResponse;
-            }
+            var response = await _service.GetByIdAsync(id);
+            return StatusCode((int)response.StatusCode, response);
             
             }
 
 
         [HttpPost]
-        public async Task<ActionResult<APIResponse>>Create([FromBody] VehicleRouteCreateDto dto)
+        public async Task<ActionResult<APIResponse>>Create(VehicleRouteCreateDto dto)
         {
-            try
-            {
-                if(dto==null)
-                    return BadRequest();
-
-               
-                var route = _mapper.Map<VehicleRoute>(dto);
-                
-
-                var createdId = await _repository.CreateAsync(route);
-                var CreatedDto = _mapper.Map<VehicleRouteDto>(route);        
-                CreatedDto.RouteId = createdId;
-                _apiResponse.Status = true;
-                _apiResponse.StatusCode = HttpStatusCode.Created;
-                _apiResponse.Data = CreatedDto;
-                return CreatedAtAction(nameof(GetById), new { id = createdId }, _apiResponse);
-            
-            }
-            catch (Exception ex)
-            {
-                _apiResponse.Errors.Add(ex.Message);
-                _apiResponse.StatusCode = HttpStatusCode.InternalServerError;
-                _apiResponse.Status = false;
-                return _apiResponse;
-            }
-
-
+            var response = await _service.CreateAsync(dto);
+            return StatusCode((int)response.StatusCode, response);
 
         }
 
         [HttpPut]
 
-        public async Task<ActionResult<APIResponse>> Update([FromBody]VehicleRouteUpdateDto dto)
+        public async Task<ActionResult<APIResponse>> Update(VehicleRouteUpdateDto dto)
         {
-            try
-            {
-                if (dto == null || dto.RouteId <= 0)
-                    return BadRequest();
-
-                var route = _mapper.Map<VehicleRoute>(dto);
-
-
-                var updated = await _repository.UpdateAsync(route);
-                if (!updated)
-                {
-                    _apiResponse.Status = false;
-                    _apiResponse.StatusCode = HttpStatusCode.NotFound;
-                    _apiResponse.Data = null;
-                    return NotFound(_apiResponse);
-                }
-                _apiResponse.Data = "ROute Updated Sucessfully";
-                _apiResponse.Status = true;
-                _apiResponse.StatusCode = HttpStatusCode.OK;
-                return Ok(_apiResponse);
-            } 
-            catch (Exception ex)
-            {
-                _apiResponse.Errors.Add(ex.Message);
-                _apiResponse.StatusCode = HttpStatusCode.InternalServerError;
-                _apiResponse.Status = false;
-                return _apiResponse;
-            }
+            var response = await _service.UpdateAsync(dto);
+            return StatusCode((int)response.StatusCode, response);
 
         }
 
 
-        [HttpDelete("{RouteId}")]
+        [HttpDelete("{routeId}")]
 
-        public async Task<ActionResult<APIResponse>>Delete(int RouteId)
+        public async Task<ActionResult<APIResponse>>Delete(int routeId)
         {
-
-            try {
-                var deleted = await _repository.DeleteAsync(RouteId);
-                if (!deleted)
-                {
-                    _apiResponse.Status = false;
-                    _apiResponse.StatusCode = HttpStatusCode.NotFound;
-                    _apiResponse.Data = null;
-                    return NotFound(_apiResponse);
-                }
-
-                _apiResponse.Status = true;
-                _apiResponse.StatusCode = HttpStatusCode.OK;
-                _apiResponse.Data = "Route deleted successfully.";
-                return Ok(_apiResponse);
-
-
-            }
-            catch (Exception ex)
-            {
-                _apiResponse.Errors.Add(ex.Message);
-                _apiResponse.StatusCode = HttpStatusCode.InternalServerError;
-                _apiResponse.Status = false;
-                return _apiResponse;
-            }
-            }
+            var response = await _service.DeleteAsync(routeId);
+            return StatusCode((int)response.StatusCode,response);
+        }
 
     }
 }

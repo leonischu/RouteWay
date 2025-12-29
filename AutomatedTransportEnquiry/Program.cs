@@ -1,6 +1,7 @@
 using AutomatedTransportEnquiry.Data;
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
+using AutomatedTransportEnquiry.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +18,15 @@ builder.Services.AddScoped<IVehicleRouteRepository, VehicleRouteRepository>();
 
 
 
+builder.Services.AddScoped<IVehicleRouteService, VehicleRouteService>();
+
+
+
 //Registering AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //Registering Api Response 
-builder.Services.AddScoped<APIResponse>();
+
 
 
 
