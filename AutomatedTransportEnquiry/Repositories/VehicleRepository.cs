@@ -1,32 +1,70 @@
-﻿using AutomatedTransportEnquiry.Models;
+﻿using AutomatedTransportEnquiry.Data;
+using AutomatedTransportEnquiry.Models;
+using Dapper;
+using System.Data;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
     public class VehicleRepository : IVehicleRepository
     {
-        public Task<IEnumerable<Vehicle>> GetAllAsync()
+
+        private readonly DapperContext _context;
+
+        public VehicleRepository(DapperContext context)
         {
-            throw new NotImplementedException();
+         _context = context;
+          
+        }
+        public async Task<IEnumerable<Vehicle>> GetAllAsync()
+        {
+            var query = "SELECT * FROM Vehicles";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<Vehicle>(query);
         }
         
 
-        public Task<Vehicle> GetByIdAsync(int id)
+        public async Task<Vehicle> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM Routes WHERE VehicleId = @Id";
+            using var connection = _context.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<Vehicle>(query, new { Id = id });
         }
-        public Task<int> CreateAsync(Vehicle vehicle)
+        public async Task<int> CreateAsync(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            var query = @"INSERT INTO Vehicle(VehicleNumber,VehicleType,Capacity,RouteId) VALUES(@VehicleNumber,@VehicleType,@Capacity,@RouteId);SELECT CAST(SCOPE_IDENTITY() AS INT)";
+
+            var parameter = new DynamicParameters();
+            parameter.Add("VehicleNumber", vehicle.VehicleNumber, DbType.String);
+            parameter.Add("VehicleType", vehicle.VehicleType, DbType.String);
+            parameter.Add("Capacity", vehicle.Capacity, DbType.String);
+            parameter.Add("RouteId", vehicle.RouteId, DbType.Int32);
+
+
+            
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteScalarAsync<int>(query,vehicle);
         }
 
-        public Task<bool> UpdateAsync(Vehicle vehicle)
+        public async Task<bool> UpdateAsync(Vehicle vehicle)
         {
-            throw new NotImplementedException();
+            var query = "UPDATE Vehicle SET VehicleNumber = @VehicleNumber,VehicleType = @VehicleType, Capacity = @Capacity,RouteId=@RouteId WHERE VehicleId=@VehicleID";
+
+            var parameter = new DynamicParameters();
+            parameter.Add("VehicleId",vehicle.VehicleId,DbType.Int32);
+            parameter.Add("VehicleNumber", vehicle.VehicleNumber, DbType.String);
+            parameter.Add("VehicleType", vehicle.VehicleType, DbType.String);
+            parameter.Add("Capacity", vehicle.Capacity, DbType.String);
+            parameter.Add("RouteId", vehicle.RouteId, DbType.Int32);
+
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(query,vehicle) > 0;
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var query = "DELETE FROM Vehicle WHERE VehicleId = @VehicleId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(query, new {VehicleId = id }) >0;
         }
 
        
