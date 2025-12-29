@@ -1,4 +1,6 @@
 using AutomatedTransportEnquiry.Data;
+using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Mapping;
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
 using AutomatedTransportEnquiry.Services;
@@ -23,9 +25,13 @@ builder.Services.AddScoped<IVehicleRouteService, VehicleRouteService>();
 
 
 //Registering AutoMapper
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//Registering Api Response 
+//For Vehicle
+
+builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 
 
 

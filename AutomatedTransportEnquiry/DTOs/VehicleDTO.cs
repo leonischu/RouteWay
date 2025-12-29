@@ -6,7 +6,7 @@
         public string VehicleNumber { get; set; }
         public string VehicleType { get; set; }
         public int Capacity { get; set; }
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
 
 
     }
@@ -16,6 +16,7 @@
         public string VehicleNumber { get; set; }
         public string VehicleType { get; set; }
         public int Capacity { get; set; }
+        public int? RouteId { get; set; }
     }
 
     public class VehicleUpdateDto
@@ -24,6 +25,7 @@
         public string VehicleNumber { get; set; }
         public string VehicleType { get; set; }
         public int Capacity { get; set; }
+        public int? RouteId { get; set; }
     }
 
 
