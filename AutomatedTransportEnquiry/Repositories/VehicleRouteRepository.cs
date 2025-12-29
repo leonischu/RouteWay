@@ -78,11 +78,11 @@ namespace AutomatedTransportEnquiry.Repositories
 
 
 
-        public async Task<bool> DeleteAsync(int RouteId)
+        public async Task<bool> DeleteAsync(int routeId)
         {
             var query = "DELETE FROM Routes Where RouteId = @RouteId";
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(query, new { RouteId }) > 0;
+            return await connection.ExecuteAsync(query, new { RouteId = routeId }) > 0;
             
         }
         

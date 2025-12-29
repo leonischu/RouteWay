@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Voice\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
