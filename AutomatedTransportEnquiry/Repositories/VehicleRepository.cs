@@ -25,13 +25,13 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<Vehicle> GetByIdAsync(int id)
         {
-            var query = "SELECT * FROM Routes WHERE VehicleId = @Id";
+            var query = "SELECT * FROM Vehicles WHERE VehicleId = @Id";
             using var connection = _context.CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Vehicle>(query, new { Id = id });
         }
         public async Task<int> CreateAsync(Vehicle vehicle)
         {
-            var query = @"INSERT INTO Vehicle(VehicleNumber,VehicleType,Capacity,RouteId) VALUES(@VehicleNumber,@VehicleType,@Capacity,@RouteId);SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            var query = @"INSERT INTO Vehicles(VehicleNumber,VehicleType,Capacity,RouteId) VALUES(@VehicleNumber,@VehicleType,@Capacity,@RouteId);SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
             var parameter = new DynamicParameters();
             parameter.Add("VehicleNumber", vehicle.VehicleNumber, DbType.String);
@@ -47,7 +47,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<bool> UpdateAsync(Vehicle vehicle)
         {
-            var query = "UPDATE Vehicle SET VehicleNumber = @VehicleNumber,VehicleType = @VehicleType, Capacity = @Capacity,RouteId=@RouteId WHERE VehicleId=@VehicleID";
+            var query = "UPDATE Vehicles SET VehicleNumber = @VehicleNumber,VehicleType = @VehicleType, Capacity = @Capacity,RouteId=@RouteId WHERE VehicleId=@VehicleID";
 
             var parameter = new DynamicParameters();
             parameter.Add("VehicleId",vehicle.VehicleId,DbType.Int32);
@@ -62,7 +62,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var query = "DELETE FROM Vehicle WHERE VehicleId = @VehicleId";
+            var query = "DELETE FROM Vehicles WHERE VehicleId = @VehicleId";
             using var connection = _context.CreateConnection();
             return await connection.ExecuteAsync(query, new {VehicleId = id }) >0;
         }

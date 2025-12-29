@@ -9,5 +9,9 @@ namespace AutomatedTransportEnquiry.Models
         public dynamic Data { get; set; }
 
         public List<string>Errors {  get; set; }
+        public APIResponse()
+        {
+            Errors = new List<string>();   
+        }
     }
 }
