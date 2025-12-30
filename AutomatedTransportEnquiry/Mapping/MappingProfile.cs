@@ -21,6 +21,10 @@ namespace AutomatedTransportEnquiry.Mapping
             CreateMap<Vehicle, VehicleDTO>().ReverseMap();
             CreateMap<VehicleCreateDto, Vehicle>().ReverseMap();
             CreateMap<VehicleUpdateDto, Vehicle>().ReverseMap();
+
+
+            //Mapping for schedule 
+            CreateMap<ScheduleCreateDto, Schedule>();
         }
 
     }

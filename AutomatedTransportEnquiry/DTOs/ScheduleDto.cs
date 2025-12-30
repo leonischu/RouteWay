@@ -1,0 +1,27 @@
+﻿namespace AutomatedTransportEnquiry.DTOs
+{
+    public class ScheduleDto
+    {
+        public int ScheduleId { get; set; }
+        public string VehicleName { get; set; }
+        public string RouteName { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan ArrivalTime { get; set; }
+        public decimal Price { get; set; }
+    }
+
+
+
+    public class ScheduleCreateDto
+    {
+        public int VehicleId { get; set; }
+        public int RouteId { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public decimal Price { get; set; }
+    }
+
+
+
+
+}
