@@ -37,7 +37,9 @@ builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
 
-
+//For Search
+builder.Services.AddScoped<ISearchRepository,SearchRepository>();
+builder.Services.AddScoped<ISearchService,SearchService>();
 
 
 
