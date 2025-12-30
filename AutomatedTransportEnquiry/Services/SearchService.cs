@@ -1,4 +1,5 @@
-﻿using AutomatedTransportEnquiry.Models;
+﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
 using System.Net;
 
@@ -12,22 +13,23 @@ namespace AutomatedTransportEnquiry.Services
             _repository = repository;
         }
 
-        public async Task<APIResponse> SearchAsync(string from, string to)
+        public async Task<APIResponse> SearchAsync(TransportSearchRequestDto dto)
         {
             var response = new APIResponse();
             try
             {
-                var result = await _repository.SearchAsync(from, to);
+                var result = await _repository.SearchAsync(dto);
                 response.Data = result;
                 response.Status = true;
-                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.StatusCode = HttpStatusCode.OK;
 
             }
             catch (Exception ex)
             {
                 response.Status = false;
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Errors.Add(ex.Message);
+                //response.Errors.Add(ex.Message);
+                response.Errors.Add("An unexpected error occured");
         
             }
 

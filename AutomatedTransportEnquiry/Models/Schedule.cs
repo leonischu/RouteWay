@@ -6,9 +6,9 @@
         public int VehicleId { get; set; }
 
         public int RouteId { get; set; }
-
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
+        public DateTime? TravelDate { get; set; }
+        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan ArrivalTime { get; set; }
         public decimal Price { get; set; }
 
     }

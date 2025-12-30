@@ -1,6 +1,7 @@
 ﻿using AutomatedTransportEnquiry.Data;
 using AutomatedTransportEnquiry.DTOs;
 using Dapper;
+using System.Text;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
@@ -11,9 +12,9 @@ namespace AutomatedTransportEnquiry.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<TransportSearchDto>> SearchAsync(string from, string to)
+        public async Task<IEnumerable<TransportSearchResultDto>> SearchAsync(TransportSearchRequestDto dto)
         {
-            var query = @"
+            var sql =new StringBuilder( @"
                       SELECT 
                      s.ScheduleId,
                      v.VehicleName,
@@ -25,14 +26,41 @@ namespace AutomatedTransportEnquiry.Repositories
                      JOIN Vehicles v ON s.VehicleId = v.VehicleId
                      JOIN Routes r ON s.RouteId = r.RouteId
                      WHERE r.Source = @From
-                      AND r.Destination = @To";
+                      AND r.Destination = @To");
 
             var parameters = new DynamicParameters();
-            parameters.Add("@From" ,from);
-            parameters.Add("@To" , to);
+            parameters.Add("From" ,dto.From);
+            parameters.Add("To" , dto.To);
+
+
+            if (dto.TravelDate.HasValue)
+            {
+                sql.Append(" AND CAST(s.TravelDate AS DATE) = @TravelDate");
+                parameters.Add("TravelDate", dto.TravelDate.Value.Date);
+            }
+
+            if (dto.StartTime.HasValue)
+            {
+                sql.Append(" AND s.DepartureTime >= @StartTime");
+                parameters.Add("StartTime", dto.StartTime);
+            }
+
+            if (dto.EndTime.HasValue)
+            {
+                sql.Append(" AND s.ArrivalTime <= @EndTime");
+                parameters.Add("EndTime", dto.EndTime);
+            }
+            if (dto.MaxPrice.HasValue)
+            {
+                sql.Append(" AND s.Price <= @MaxPrice");
+                parameters.Add("MaxPrice", dto.MaxPrice);
+            }
+
+
+
             using var connection = _context.CreateConnection();
 
-            return await connection.QueryAsync<TransportSearchDto>(query,parameters);
+            return await connection.QueryAsync<TransportSearchResultDto>(sql.ToString(),parameters);
         }
     }
 }

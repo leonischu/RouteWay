@@ -1,4 +1,5 @@
-﻿using AutomatedTransportEnquiry.Services;
+﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,16 @@ namespace AutomatedTransportEnquiry.Controllers
         {
             _service = service;
         }
-        [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] string from, [FromQuery] string to)
+        [HttpPost]
+        public async Task<IActionResult> Search([FromBody] TransportSearchRequestDto dto )
         {
-            var response = await _service.SearchAsync(from, to);
-            return Ok(response);
+
+            if (dto == null || string.IsNullOrWhiteSpace(dto.From) || string.IsNullOrWhiteSpace(dto.To))
+                return BadRequest("From and To are required");
+
+
+            var response = await _service.SearchAsync(dto);
+            return StatusCode((int)response.StatusCode,response);
         }
     }
 }
