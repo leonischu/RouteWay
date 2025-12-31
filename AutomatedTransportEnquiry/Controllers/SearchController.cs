@@ -1,6 +1,7 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedTransportEnquiry.Controllers
@@ -28,7 +29,7 @@ namespace AutomatedTransportEnquiry.Controllers
 
 
             var response = await _service.SearchAsync(dto);
-            return StatusCode((int)response.StatusCode,response);
+            return Ok(response);
         }
     }
 }

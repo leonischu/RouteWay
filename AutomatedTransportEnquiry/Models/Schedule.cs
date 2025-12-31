@@ -4,6 +4,7 @@
     {
         public int ScheduleId { get; set; }
         public int VehicleId { get; set; }
+        public string VehicleName { get; set; }
 
         public int RouteId { get; set; }
         public DateTime? TravelDate { get; set; }

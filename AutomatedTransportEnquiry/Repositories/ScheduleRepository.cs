@@ -16,26 +16,25 @@ namespace AutomatedTransportEnquiry.Repositories
         public async Task<IEnumerable<ScheduleDto>> GetAllAsync(string from,string to)
         {
            
-            var query = @"SELECT s.ScheduleId,v.VehicleName,CONCAT(r.Source, ' - ' ,r.Destination) AS RouteName,
+            var query = @"SELECT s.ScheduleId,v.VehicleType,CONCAT(r.Source, ' - ' ,r.Destination) AS RouteName,
                            s.DepartureTime,
                            s.ArrivalTime,
-                           s.Price
+                           s.Price,
+                           s.TravelDate
                           FROM Schedules s
-                          JOIN Vehicles v ON s.VehicleId = v.VehicleId
-                          JOIN Routes r ON s.RouteId = r.RouteId WHERE r.Source = @From AND r.Destination = @To";
+                          JOIN Vehicles v ON v.VehicleId = s.VehicleId
+                          JOIN Routes r ON r.RouteId = s.RouteId WHERE r.Source = @From AND r.Destination = @To";
             using var connection = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@From", from);
-            parameters.Add("@To", to);
-            return await connection.QueryAsync<ScheduleDto>(query,parameters);
+            
+            return await connection.QueryAsync<ScheduleDto>(query, new { from, to});
         }
         public async Task<int> CreateAsync(Schedule schedule)
         {
           var query = @"
           INSERT INTO Schedules
-          (VehicleId, RouteId, DepartureTime, ArrivalTime, Price)
+          (VehicleId, RouteId, DepartureTime, ArrivalTime, Price,TravelDate)
           VALUES
-          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime, @Price);
+          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime, @Price,@TravelDate);
 
           SELECT CAST(SCOPE_IDENTITY() AS INT);  ";
             using var connection = _context.CreateConnection();
