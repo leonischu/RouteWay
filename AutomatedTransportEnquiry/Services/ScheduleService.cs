@@ -17,23 +17,12 @@ namespace AutomatedTransportEnquiry.Services
             _mapper = mapper;
         }
 
-        public async Task<APIResponse> GetAllAsync(string from, string to)
+        public async Task<IEnumerable<ScheduleDto>> GetAllAsync(string from, string to)
         {
-            var response = new APIResponse();
-            try
-            {
+            
                 var data = await _repository.GetAllAsync(from ,to);
-                response.Data = data;
-                response.Status = true;
-                response.StatusCode = HttpStatusCode.OK;
-            }
-            catch (Exception ex)
-            {
-                response.Status = false;
-                response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Errors.Add(ex.Message);
-            }
-            return response;
+            return _mapper.Map<IEnumerable<ScheduleDto>>(data);
+
         }
         public async Task<APIResponse> CreateAsync(ScheduleCreateDto dto)
         {

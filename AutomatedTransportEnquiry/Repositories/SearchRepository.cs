@@ -17,7 +17,7 @@ namespace AutomatedTransportEnquiry.Repositories
             var sql =new StringBuilder( @"
                       SELECT 
                      s.ScheduleId,
-                     v.VehicleName,
+                     v.VehicleType,
                      CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
                      s.DepartureTime,
                      s.ArrivalTime,

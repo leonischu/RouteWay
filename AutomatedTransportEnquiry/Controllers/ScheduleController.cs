@@ -22,7 +22,7 @@ namespace AutomatedTransportEnquiry.Controllers
         public async Task<IActionResult> GetAll(string from,string to)
         { 
             var response = await _service.GetAllAsync(from,to);
-            return StatusCode((int)response.StatusCode, response);
+            return Ok(response);
         }
 
         [HttpPost]

@@ -1,40 +1,30 @@
-﻿using AutomatedTransportEnquiry.DTOs;
+﻿using AutoMapper;
+using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
 using System.Net;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AutomatedTransportEnquiry.Services
 {
     public class SearchService:ISearchService
     {
         private readonly ISearchRepository _repository;
-        public SearchService(ISearchRepository repository)
+        private readonly IMapper _mapper;
+        public SearchService(ISearchRepository repository,IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<APIResponse> SearchAsync(TransportSearchRequestDto dto)
+        public async Task<IEnumerable<TransportSearchResultDto>> SearchAsync(TransportSearchRequestDto dto)
         {
-            var response = new APIResponse();
-            try
-            {
+           
+            
                 var result = await _repository.SearchAsync(dto);
-                response.Data = result;
-                response.Status = true;
-                response.StatusCode = HttpStatusCode.OK;
-
-            }
-            catch (Exception ex)
-            {
-                response.Status = false;
-                response.StatusCode = HttpStatusCode.InternalServerError;
-                //response.Errors.Add(ex.Message);
-                response.Errors.Add("An unexpected error occured");
-        
-            }
+            return _mapper.Map<IEnumerable<TransportSearchResultDto>>(result);
 
 
-            return response;
         }
 
     }

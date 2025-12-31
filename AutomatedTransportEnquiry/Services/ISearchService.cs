@@ -5,6 +5,6 @@ namespace AutomatedTransportEnquiry.Services
 {
     public interface ISearchService
     {
-        Task<APIResponse>SearchAsync(TransportSearchRequestDto dto);   
+        Task<IEnumerable<TransportSearchResultDto>>SearchAsync(TransportSearchRequestDto dto);   
     }
 }

@@ -25,6 +25,7 @@ namespace AutomatedTransportEnquiry.Mapping
 
             //Mapping for schedule 
             CreateMap<ScheduleCreateDto, Schedule>();
+            CreateMap<ScheduleDto, Schedule>().ReverseMap();
         }
 
     }
