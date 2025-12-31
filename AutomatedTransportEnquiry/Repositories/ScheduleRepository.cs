@@ -19,7 +19,7 @@ namespace AutomatedTransportEnquiry.Repositories
             var query = @"SELECT s.ScheduleId,v.VehicleType,CONCAT(r.Source, ' - ' ,r.Destination) AS RouteName,
                            s.DepartureTime,
                            s.ArrivalTime,
-                           s.Price,
+                           
                            s.TravelDate
                           FROM Schedules s
                           JOIN Vehicles v ON v.VehicleId = s.VehicleId
@@ -32,9 +32,9 @@ namespace AutomatedTransportEnquiry.Repositories
         {
           var query = @"
           INSERT INTO Schedules
-          (VehicleId, RouteId, DepartureTime, ArrivalTime, Price,TravelDate)
+          (VehicleId, RouteId, DepartureTime, ArrivalTime, TravelDate)
           VALUES
-          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime, @Price,@TravelDate);
+          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime,@TravelDate);
 
           SELECT CAST(SCOPE_IDENTITY() AS INT);  ";
             using var connection = _context.CreateConnection();

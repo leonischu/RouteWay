@@ -10,7 +10,7 @@
         public DateTime? TravelDate { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
-        public decimal Price { get; set; }
+        //public decimal Price { get; set; }
 
     }
 }
