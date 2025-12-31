@@ -25,8 +25,8 @@ namespace AutomatedTransportEnquiry.Repositories
                      FROM Schedules s
                      JOIN Vehicles v ON s.VehicleId = v.VehicleId
                      JOIN Routes r ON s.RouteId = r.RouteId
-                     WHERE r.Source = @From
-                      AND r.Destination = @To");
+                     WHERE LOWER(r.Source) = LOWER(@From)
+                      AND LOWER(r.Destination) =LOWER(@To)");
 
             var parameters = new DynamicParameters();
             parameters.Add("From" ,dto.From);

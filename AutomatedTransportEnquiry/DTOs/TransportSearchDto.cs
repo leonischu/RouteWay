@@ -13,7 +13,6 @@
     public class TransportSearchResultDto
     {
         public int ScheduleId { get; set; }
-        public string VehicleName { get; set; }
         public string RouteName { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }

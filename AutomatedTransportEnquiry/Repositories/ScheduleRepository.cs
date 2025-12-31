@@ -23,7 +23,7 @@ namespace AutomatedTransportEnquiry.Repositories
                            s.TravelDate
                           FROM Schedules s
                           JOIN Vehicles v ON v.VehicleId = s.VehicleId
-                          JOIN Routes r ON r.RouteId = s.RouteId WHERE r.Source = @From AND r.Destination = @To";
+                          JOIN Routes r ON r.RouteId = s.RouteId WHERE LOWER(r.Source) = LOWER(@From) AND LOWER( r.Destination) = LOWER(@To)";
             using var connection = _context.CreateConnection();
             
             return await connection.QueryAsync<ScheduleDto>(query, new { from, to});
