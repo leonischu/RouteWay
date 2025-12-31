@@ -21,10 +21,11 @@ namespace AutomatedTransportEnquiry.Repositories
                      CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
                      s.DepartureTime,
                      s.ArrivalTime,
-                     s.Price
+                     f.Price
                      FROM Schedules s
                      JOIN Vehicles v ON s.VehicleId = v.VehicleId
                      JOIN Routes r ON s.RouteId = r.RouteId
+                      JOIN Fares f ON f.RouteId = r.RouteId
                      WHERE LOWER(r.Source) = LOWER(@From)
                       AND LOWER(r.Destination) =LOWER(@To)");
 
@@ -52,7 +53,7 @@ namespace AutomatedTransportEnquiry.Repositories
             }
             if (dto.MaxPrice.HasValue)
             {
-                sql.Append(" AND s.Price <= @MaxPrice");
+                sql.Append(" AND f.Price <= @MaxPrice");
                 parameters.Add("MaxPrice", dto.MaxPrice);
             }
 
