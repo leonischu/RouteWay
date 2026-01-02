@@ -9,6 +9,7 @@ namespace AutomatedTransportEnquiry.Services
 
 
          Task<APIResponse> GetAllAsync();
+        Task<APIResponse> GetByIdAsync(int fareId);
          Task<APIResponse> CreateAsync(FareCreateDto dto);
 
 

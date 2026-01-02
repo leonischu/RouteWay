@@ -1,4 +1,5 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -25,6 +26,19 @@ namespace AutomatedTransportEnquiry.Controllers
         {
             return Ok(await _service.GetAllAsync()); 
         }
+
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<APIResponse>> GetById(int id)
+        {
+            var response = await _service.GetByIdAsync(id);
+            return StatusCode((int)response.StatusCode, response);
+
+        }
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Create(FareCreateDto dto) 
