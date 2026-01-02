@@ -2,6 +2,7 @@
 using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Models;
 using Dapper;
+using MySqlX.XDevAPI.Common;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
@@ -12,6 +13,35 @@ namespace AutomatedTransportEnquiry.Repositories
         {
             _context = context;
         }
+
+        public async Task<bool>ScheduleExists(int scheduleId)
+        {
+            var sql = "SELECT COUNT(1) FROM Schedules WHERE ScheduleId = @ScheduleId";
+            using var conn = _context.CreateConnection();
+            return await conn.ExecuteScalarAsync<int>(sql, new { ScheduleId = scheduleId }) > 0;
+        }
+
+        public async Task<(decimal price,int availableSeats)> GetFareAndSeats(int scheduleId, int fareId)
+        {
+            var sql = @"SELECT f.price,s.AvailableSeats
+                        FROM Fares f 
+                        JOIN Schedules s ON s.RouteId = f.RouteId
+                        WHERE s.ScheduleId = @ScheduleId AND f.FareId = @FareId";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryFirstOrDefaultAsync<(decimal, int)>(sql, new
+            {
+
+                //Instead of this we can write var parameters = new DynamicParameters();
+                ScheduleId = scheduleId,
+                FareId = fareId
+            });
+
+     
+        }
+
+
+
+
 
         public async Task<int> CreateAsync(Booking booking)
         {
@@ -34,10 +64,24 @@ namespace AutomatedTransportEnquiry.Repositories
             return await connection.ExecuteScalarAsync<int>(sql, parameters);
         }
 
+        public async Task UpdateSeatsAsync(int scheduleId, int seats)
+        {
+            var sql = @"
+            UPDATE Schedules
+            SET AvailableSeats = AvailableSeats - @Seats
+            WHERE ScheduleId = @ScheduleId";
+
+            using var conn = _context.CreateConnection();
+            await conn.ExecuteAsync(sql, new { ScheduleId = scheduleId, Seats = seats });
+        }
+
+
+
+
         public async Task<IEnumerable<BookingDto>> GetByPhoneAsync(string phone)
         {
             var sql = @"SELECT b.BookingId,
-                            CONCAT(r.Source, ' - ' r.Destination) AS RouteName,
+                            CONCAT(r.Source, ' - ',.Destination) AS RouteName,
                             v.VehicleName,
                             s.DepartureTime,    
                             b.TotalAmount,

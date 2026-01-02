@@ -7,6 +7,9 @@ namespace AutomatedTransportEnquiry.Repositories
     {
         Task<int> CreateAsync(Booking booking);
         Task<IEnumerable<BookingDto>> GetByPhoneAsync(string phone);
+        Task UpdateSeatsAsync(int scheduleId, int seats);
+        Task<(decimal price, int availableSeats)> GetFareAndSeats(int scheduleId, int fareId);
+        Task<bool> ScheduleExists(int scheduleId);
 
     }
 }

@@ -25,18 +25,38 @@ namespace AutomatedTransportEnquiry.Services
             var response = new APIResponse();
             try
             {
-                var fare = await _fareRepository.GetByIdAsync(dto.FareId);
-                if (fare == null)
+                
+
+
+
+                if (!await _repository.ScheduleExists(dto.ScheduleId))
                 {
                     response.Status = false;
-                    response.StatusCode = HttpStatusCode.NotFound;
-                    response.Errors.Add("Fare not found");
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Errors.Add("Invalid Schedule");
                     return response;
                 }
+
+                var (price, availableSeats) =
+                                        await _repository.GetFareAndSeats(dto.ScheduleId, dto.FareId);
+
+
+                if (availableSeats < dto.Seats)
+                {
+                    response.Status = false;
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Errors.Add("Not enough seats available");
+                    return response;
+                }
+
+
+
                 var booking = _mapper.Map<Booking>(dto);
-                booking.TotalAmount = fare.Price * dto.Seats;
+                booking.TotalAmount = price * dto.Seats;
+                booking.BookingStatus = "CONFIRMED";
 
                 var bookingId = await _repository.CreateAsync(booking);
+                await _repository.UpdateSeatsAsync(dto.ScheduleId, dto.Seats);
 
                 response.Data = bookingId;
                 response.Status = true;

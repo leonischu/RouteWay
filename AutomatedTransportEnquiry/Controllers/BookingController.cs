@@ -17,7 +17,7 @@ namespace AutomatedTransportEnquiry.Controllers
             _service = service;
         }
         [HttpPost]
-        public async Task<ActionResult<APIResponse>>Create(BookingCreateDto dto)
+        public async Task<ActionResult<APIResponse>>Create([FromBody] BookingCreateDto dto)
         {
             var result = await _service.CreateAsync(dto);
             return StatusCode((int)result.StatusCode,result);
