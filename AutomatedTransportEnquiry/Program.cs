@@ -45,6 +45,9 @@ builder.Services.AddScoped<ISearchService,SearchService>();
 builder.Services.AddScoped<IFareService, FareService>();
 builder.Services.AddScoped<IFareRepository, FareRepository>();
 
+//For Bookings 
+builder.Services.AddScoped<IBookingRepository,BookingRepository>();
+builder.Services.AddScoped<IBookingService,BookingService>();
 
 var app = builder.Build();
 

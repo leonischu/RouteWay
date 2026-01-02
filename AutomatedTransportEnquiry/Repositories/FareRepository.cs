@@ -19,6 +19,25 @@ namespace AutomatedTransportEnquiry.Repositories
                 using var connection = _context.CreateConnection();
                 return await connection.QueryAsync<FareDto>(sql);
         }
+
+        public async Task<FareDto?> GetByIdAsync(int fareId)
+        {
+            var sql = @"
+        SELECT 
+            f.FareId,
+            CONCAT(r.source, ' - ' ,r.Destination) AS RouteName,
+            f.RouteId,
+            f.Price
+        FROM Fares f
+       JOIN Routes r ON r.RouteId = f.RouteId
+
+        WHERE f.FareId = @FareId";
+
+            using var connection = _context.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<FareDto>(sql, new { FareId = fareId });
+        }
+
+
         public async Task<int> CreateAsync(FareCreateDto dto)
         {
             var sql = @"INSERT INTO Fares (RouteId,Price)
