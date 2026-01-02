@@ -94,5 +94,30 @@ namespace AutomatedTransportEnquiry.Repositories
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<BookingDto>(sql, new { Phone = phone });
         }
+
+        public async Task<bool> CancelBookingAsync(int bookingId, string? cancellationReason)
+        {
+            var sql = @"UPDATE Bookings SET BookingStatus = 'CANCELLED' , CancellationReason = @CancellationReason,CancellationDate = GETDATE() 
+                        WHERE BookingId = @BookingId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(sql, new
+            {
+                BookingId = bookingId,
+                CancellationReason = cancellationReason
+            })>0;
+        }
+
+        public async Task<bool> RestoreSeatsAsync(int scheduleId, int seats)
+        {
+            var sql = @"UPDATE Schedules 
+                SET AvailableSeats = AvailableSeats + @Seats 
+                 WHERE ScheduleId = @ScheduleId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(sql, new
+            {
+                ScheduleId = scheduleId,
+                Seats = seats
+            }) > 0;
+        }
     }
 }
