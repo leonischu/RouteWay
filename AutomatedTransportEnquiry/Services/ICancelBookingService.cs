@@ -1,9 +1,9 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
-
+using AutomatedTransportEnquiry.Models;
 namespace AutomatedTransportEnquiry.Services
 {
     public interface ICancelBookingService
     {
-        Task<APIResponse<CancelBookingResponseDto>>CancelBookingAsync(CancelBookingDto dto);
+        Task<APIResponse>CancelBookingAsync(CancelBookingDto dto);
     }
 }
