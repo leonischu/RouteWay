@@ -49,6 +49,11 @@ builder.Services.AddScoped<IFareRepository, FareRepository>();
 builder.Services.AddScoped<IBookingRepository,BookingRepository>();
 builder.Services.AddScoped<IBookingService,BookingService>();
 
+
+//Cancel Bookings 
+builder.Services.AddScoped<ICancelBookingService, CancelBookingService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
