@@ -4,6 +4,7 @@ using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
 using AutomatedTransportEnquiry.Services;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,6 +14,8 @@ namespace AutomatedTransportEnquiry.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+
 
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
