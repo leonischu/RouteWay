@@ -1,29 +1,25 @@
-﻿using AutomatedTransportEnquiry.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data.OleDb;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedTransportEnquiry.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-   
+    [Route("api/test")]
     public class TestController : ControllerBase
     {
-        private readonly DapperContext _context;
-        public TestController(DapperContext dapperContext)
+        [HttpGet("bcrypt")]
+        public IActionResult TestBcrypt()
         {
-            
-            _context = dapperContext;
+            var password = "Admin@123";
 
-        }
+            var hash = BCrypt.Net.BCrypt.HashPassword(password);
+            var verify = BCrypt.Net.BCrypt.Verify(password, hash);
 
-        [HttpGet("db")]
-        public IActionResult TestDb()
-        {
-            using var connection = _context.CreateConnection();
-           // connection.Open();
-            return Ok("Database Connected Sucessfully!");
+            return Ok(new
+            {
+                Password = password,
+                Hash = hash,
+                Verified = verify
+            });
         }
     }
 }
