@@ -29,5 +29,31 @@ namespace AutomatedTransportEnquiry.Repositories
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(sql, user);
         }
+        // NEW METHOD: Get user by verification token
+        public async Task<User?> GetByVerificationToken(string token)
+        {
+            var sql = "SELECT * FROM Users WHERE EmailVerificationToken = @Token";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryFirstOrDefaultAsync<User>(sql, new { Token = token });
+        }
+
+        // NEW METHOD: Update verification status
+        public async Task UpdateVerification(User user)
+        {
+            var sql = @"
+                UPDATE Users 
+                SET 
+                    IsEmailVerified = @IsEmailVerified,
+                    EmailVerificationToken = @EmailVerificationToken,
+                    EmailVerificationTokenExpiry = @EmailVerificationTokenExpiry
+                WHERE UserId = @UserId";
+
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(sql, user);
+        }
+
+
+
+
     }
 }
