@@ -19,15 +19,25 @@ namespace AutomatedTransportEnquiry.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-            await _service.Register(dto);
-            return Ok("User registered");
+           
+                await _service.Register(dto);
+                return Ok(new {message =  "User registered" });
+           
+           
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var token = await _service.Login(dto);
-            return Ok(new { token });
+            try
+            {
+                var token = await _service.Login(dto);
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
