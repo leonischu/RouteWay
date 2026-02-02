@@ -1,0 +1,41 @@
+<nav class="bg-blue-500 text-white">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+    
+    <a routerLink="/" class="text-2xl font-bold ">
+  🚌 TransportHub
+    </a>
+        <div class="flex items-center gap-4">
+                  <!-- NOT logged in -->
+       <ng-container *ngIf="!isLoggedIn()">
+
+            <a
+          routerLink="/login"
+          class="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-100"
+        >
+          Login
+        </a>
+         <a
+          routerLink="/register"
+          class="border border-white px-4 py-2 rounded-md hover:bg-blue-900"
+        >
+          Register
+        </a>
+              </ng-container>
+
+<!-- Logged in -->
+        <ng-container *ngIf="isLoggedIn()">
+        <span class="text-sm">
+          Hi, {{ getUserName() }}
+        </span>
+
+        <button
+          (click)="logout()"
+          class="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </ng-container>
+
+        </div>
+        </div>
+        </nav>
