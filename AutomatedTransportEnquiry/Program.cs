@@ -113,8 +113,7 @@ builder.Services.AddScoped<ICancelBookingService, CancelBookingService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-//For Email 
-builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
