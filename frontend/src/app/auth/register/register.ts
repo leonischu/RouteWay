@@ -35,7 +35,7 @@ export class Register {
       return;
     }
 
-    this.loading = true;  // ✅ Set to TRUE to show loading state
+    this.loading = true;  //  Set to TRUE to show loading state
     this.errorMessage = '';
     this.successMessage = '';
 

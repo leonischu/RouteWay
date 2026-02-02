@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
+import { provideToastr, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class Login {
    loginForm: FormGroup;
   loading = false;
   errorMessage = '';
+  toaster=inject(ToastrService)
+ 
 
   constructor(
     private fb: FormBuilder,
@@ -38,9 +41,11 @@ export class Login {
     const { email, password } = this.loginForm.value;
 
     this.authService.login(email, password).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         this.loading = false;
-        alert('Login successful! ✅');
+        this.toaster.success('Login successfull',"Sucess");
+
+
         this.router.navigate(['/']); 
       },
       error: (error) => {
