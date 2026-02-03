@@ -29,10 +29,12 @@
               </ng-container>
 
 <!-- Logged in -->
-        <ng-container *ngIf="isLoggedIn()">
+        <ng-container *ngIf="isLoggedIn() && userDetail">
+          <!-- <div *ngIf="authService.getUserName() as userDetail"> -->
         <span class="text-sm">
-          Hi, {{ getUserName() }}
+          Hi, {{ userDetail.FullName }}
         </span>
+        <!-- </div> -->
 
         <button
           (click)="logout()"

@@ -10,16 +10,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-
+   userDetail: any;
   constructor(
-  private authService: Auth,
+  public authService: Auth,
   private router:Router
   ){}
     isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
-    getUserName(): string {
-    return this.authService.getUserName();
+  
+  ngOnInit() {
+    this.userDetail = this.authService.getUserName();
+  }
+    getUserName(){
+     this.authService.getUserName();
   }
 
     logout(): void {

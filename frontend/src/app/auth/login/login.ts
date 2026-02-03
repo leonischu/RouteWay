@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { provideToastr, ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -38,19 +39,28 @@ export class Login {
     this.loading = true;
     this.errorMessage = '';
 
-    const { email, password } = this.loginForm.value;
-
-    this.authService.login(email, password).subscribe({
-      next: (response:any) => {
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
         this.loading = false;
-        this.toaster.success('Login successfull',"Sucess");
-
-
         this.router.navigate(['/']); 
+        Swal.fire({
+        title: "Welcome",
+        text: "Login Successful!",
+        icon: "success"
+        } );
+        // //this.toaster.success('Login successfull',"Sucess");
+        // alert('Login successful! ✅');
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = error.error?.message || 'Login failed. Please try again.';
+        Swal.fire({
+        title: "",
+        text: "Please Check your username or password",
+        icon: "error"
+        } );
+        // this.router.navigate(['/login']); 
+          this.loginForm.reset();
+
       }
     });
   }
