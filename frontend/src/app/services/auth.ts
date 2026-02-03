@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { Login } from '../auth/login/login';
+import { Register } from '../auth/register/register';
+import { jwtDecode } from 'jwt-decode';
+import { UserDetail } from '../model/userDetail';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +15,13 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   // Register new user
-  register(data: any): Observable<any> {
+  register(data:Register ): Observable<any> {
     return this.http.post(`${this.apiUrl}api/Auth/register`, data);
   }
 
   // Login
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}api/Auth/login`, { email, password })
+  login(data:Login): Observable<UserDetail> {
+    return this.http.post(`${this.apiUrl}api/Auth/login`, data)
       .pipe(
         tap((response: any) => {
           // Save token to localStorage
@@ -45,14 +49,34 @@ export class Auth {
     return localStorage.getItem('token');
   }
 
+  // getMyDetails():Observable<UserDetail>{
+  //   const token = localStorage.getItem('token')
+  //   const body = {
+  //     token:token
+  //   }
+  //   return this.http.post<any>
+  // }
+
+
+
+
   // Get user name
-  getUserName(): string {
-    const user = localStorage.getItem('user');
-    if (user) {
-      return JSON.parse(user).name || 'User';
-    }
-    return 'Guest';
-  }
+  getUserName = () =>{
+    const token = this.getToken();
+    if(!token) return null;
+    const decodedToken : any = jwtDecode(token);
+    console.log('DECODED TOKEN ', decodedToken);
+
+    const userDetail ={
+      id:decodedToken.nameid,
+       FullName: decodedToken.name,
+      email: decodedToken.email,
+      roles: decodedToken.role || [],
+    };
+    return userDetail;
+
+  };
+  
 
   // Get user role (for admin check)
   getUserRole(): string {
