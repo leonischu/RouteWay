@@ -136,7 +136,15 @@ builder.Services.AddAuthorization();
 
 
 
+
+
+
 var app = builder.Build();
+
+//seeding admin
+using var scope = app.Services.CreateScope();
+var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
+await authService.SeedAdmin();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

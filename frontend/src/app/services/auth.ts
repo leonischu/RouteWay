@@ -62,16 +62,18 @@ export class Auth {
 
   // Get user name
   getUserName = () =>{
+  // getUserName$(): Observable<UserDetail> {
+
     const token = this.getToken();
     if(!token) return null;
     const decodedToken : any = jwtDecode(token);
-    console.log('DECODED TOKEN ', decodedToken);
+    console.log('DECODED TOKEN', decodedToken);
 
     const userDetail ={
-      id:decodedToken.nameid,
+      id:decodedToken.id,
        FullName: decodedToken.name,
       email: decodedToken.email,
-      roles: decodedToken.role || [],
+      role: decodedToken.role || [],
     };
     return userDetail;
 

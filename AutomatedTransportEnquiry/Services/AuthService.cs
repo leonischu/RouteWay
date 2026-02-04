@@ -64,12 +64,12 @@ namespace AutomatedTransportEnquiry.Services
 
 
             var claims = new[]
-            {
-            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-            new Claim(ClaimTypes.Name, user.FullName),    
-        new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+             {
+                new Claim("id", user.UserId.ToString()),
+                new Claim("name", user.FullName),
+                 new Claim("email", user.Email),
+                 new Claim("role", user.Role)
+                    };
 
 
             var key = new SymmetricSecurityKey(
@@ -85,5 +85,25 @@ namespace AutomatedTransportEnquiry.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
+        public async Task SeedAdmin()
+        {
+            // Check if admin already exists
+            var adminEmail = "admin@example.com"; // set your admin email
+            var existingAdmin = await _repo.GetByEmail(adminEmail);
+            if (existingAdmin != null) return; // Admin already exists
+
+            var admin = new User
+            {
+                FullName = "Admin",
+                Email = adminEmail,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"), // set your password
+                Role = "Admin"
+            };
+
+            await _repo.Create(admin);
+        }
+
     }
 }
