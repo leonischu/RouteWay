@@ -2,11 +2,13 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { Login } from './auth/login/login';
 import { Register } from './auth/register/register';
+import { PageNotFound } from './pages/page-not-found/page-not-found';
 
 export const routes: Routes = [
 
       { path: '', component: Home },
       { path: 'login', component: Login },
       { path: 'register', component: Register },
+      { path: "**", component:PageNotFound}
 
 ];
