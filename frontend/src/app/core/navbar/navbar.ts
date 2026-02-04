@@ -42,6 +42,9 @@ export class Navbar {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+  viewProfile(){
+    this.router.navigate(['/profile'])
+  }
 
 
 
