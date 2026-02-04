@@ -1,49 +1,96 @@
-<nav class="bg-[#1B2432] text-slate-50">
-  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-    
-    <a routerLink="/" class="text-2xl font-bold ">
-  🚌 TransportHub
-    </a>
-        <div class="flex items-center gap-4">
-                  <!-- NOT logged in -->
-       <ng-container *ngIf="!isLoggedIn()">
+<nav class="bg-[#1B2432] text-slate-50 shadow-md">
+  <div class="container mx-auto px-6 py-3 flex items-center justify-between">
 
-            <a
+    <!-- Logo -->
+    <a routerLink="/" class="text-2xl font-bold flex items-center gap-2">
+      🚌 <span>TransportHub</span>
+    </a>
+
+    <!-- Right section -->
+    <div class="flex items-center gap-6">
+
+      <!-- NOT logged in -->
+      <ng-container *ngIf="!isLoggedIn()">
+        <a
           routerLink="/login"
           class="border border-white px-4 py-2 rounded-md hover:text-sky-400 transition"
         >
           Login
         </a>
-         <a
+
+        <a
           routerLink="/register"
-          class="border border-white px-4 py-2 rounded-md  hover:text-sky-400 transition"
+          class="border border-white px-4 py-2 rounded-md hover:text-sky-400 transition"
         >
           Register
         </a>
-         <a
+
+        <a
           routerLink="/"
-          class="border border-white px-4 py-2 rounded-md  hover:text-sky-400 transition"
+          class="border border-white px-4 py-2 rounded-md hover:text-sky-400 transition"
         >
           Contact
         </a>
-              </ng-container>
-
-<!-- Logged in -->
-        <ng-container *ngIf="isLoggedIn() && userDetail">
-          <!-- <div *ngIf="authService.getUserName() as userDetail"> -->
-        <span class="text-sm">
-          Hi, {{ userDetail.FullName }}
-        </span>
-        <!-- </div> -->
-
-        <button
-          (click)="logout()"
-          class="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
       </ng-container>
 
+      <!-- Logged in -->
+      <ng-container *ngIf="isLoggedIn() && userDetail">
+
+        <!-- User dropdown -->
+        <div class="relative group">
+
+          <!-- Trigger -->
+          <div class="flex items-center gap-3 cursor-pointer">
+            <!-- Avatar -->
+            <div
+              class="bg-yellow-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-md"
+            >
+              {{ userDetail.FullName[0] | uppercase }}
+            </div>
+
+            <!-- Name + role -->
+            <div class="hidden md:flex flex-col leading-tight">
+              <span class="font-medium">
+                {{ userDetail.FullName }}
+              </span>
+              <span class="text-xs text-slate-300">
+                {{ userDetail.role }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Dropdown menu -->
+          <div
+            class="absolute right-0 mt-3 w-44 bg-white text-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200"
+          >
+            <a
+              routerLink="/account/1" 
+              class="block px-4 py-2 hover:bg-gray-100"
+            >  
+              👤 View Profile
+            </a>
+
+            <button
+              (click)="logout()"
+              class="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"
+            >
+              🚪 Logout
+            </button>
+          </div>
         </div>
-        </div>
-        </nav>
+
+        <!-- Admin-only link -->
+        <a
+          *ngIf="userDetail.role === 'Admin'"
+          routerLink="/users"
+          class="text-slate-50 hover:text-sky-400 transition"
+          title="Manage Users"
+        >
+          👥
+        </a>
+
+      </ng-container>
+
+    </div>
+  </div>
+</nav>

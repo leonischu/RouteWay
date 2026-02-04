@@ -6,6 +6,9 @@ namespace AutomatedTransportEnquiry.Services
     {
         Task Register(RegisterDto dto);
         Task<string> Login(LoginDto dto);
-   
+        Task SeedAdmin();
+
+
+
     }
 }
