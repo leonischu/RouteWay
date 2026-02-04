@@ -79,6 +79,10 @@ export class Auth {
 
   };
   
+  getUserProfile(): Observable<UserDetail>{
+    return this.http.get<UserDetail>(this.apiUrl);
+  }
+  
 
   // Get user role (for admin check)
   getUserRole(): string {
