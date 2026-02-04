@@ -14,25 +14,4 @@ import { Token } from '@angular/compiler';
 })
 export class App {
   protected readonly title = signal('frontend');
-
-// authService = inject(Auth)
-//   userModel : UserDetail | null = null
-//   token : Token | null = null
-
-//   getUserName(){
-//     const myToken = localStorage.getItem('token')
-//     if(myToken){
-//       this.authService.getUserName().subscribe({
-//         next: (response) =>{
-//           // console.log(response)
-//           this.userModel = response
-//         },
-//         error: (err: any) => {
-//           console.error("Error fetching data", err)
-//         }
-//       })
-//     }else{
-//       console.error('No Token Found')
-//     }
-//   }
 }

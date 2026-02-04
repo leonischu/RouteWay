@@ -1,11 +1,20 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-  
-  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+<main class="flex-1 container mx-auto px-1 py-6">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
+
+  <div class="bg-white p-12 rounded-xl shadow-2xl w-full max-w-md">
     
-    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Login</h2>
+    <!-- Hero Section -->
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-extrabold text-gray-800 mb-4">
+        Welcome Back
+      </h2>
+      <p class="text-lg text-gray-600 mb-6">
+        Log in to continue your journey with us. We promise a seamless experience, tailored to your needs.
+      </p>
+    </div>
 
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg mb-6 shadow-md transition-transform transform hover:scale-105">
       {{ errorMessage }}
     </div>
 
@@ -13,31 +22,29 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       
       <!-- Email -->
-      <div class="mb-4">
-        <label class="block text-gray-700 mb-2">Email</label>
+      <div class="mb-6">
+        <label class="block text-lg font-semibold text-gray-700 mb-2">Email</label>
         <input 
           type="email" 
           formControlName="email"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-6 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
           placeholder="Enter your email"
         />
-        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
-             class="text-red-500 text-sm mt-1">
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
           Email is required
         </div>
       </div>
 
       <!-- Password -->
-      <div class="mb-6">
-        <label class="block text-gray-700 mb-2">Password</label>
+      <div class="mb-8">
+        <label class="block text-lg font-semibold text-gray-700 mb-2">Password</label>
         <input 
           type="password" 
           formControlName="password"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="w-full px-6 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
           placeholder="Enter your password"
         />
-        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" 
-             class="text-red-500 text-sm mt-1">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
           Password is required
         </div>
       </div>
@@ -46,7 +53,7 @@
       <button 
         type="submit"
         [disabled]="loginForm.invalid || loading"
-        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+        class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-xl font-semibold transition-all duration-300 ease-in-out"
       >
         <span *ngIf="!loading">Login</span>
         <span *ngIf="loading">Loading...</span>
@@ -54,12 +61,33 @@
 
     </form>
 
+    <!-- Forgot Password and Social Media Login -->
+  
+
+    <div class="mt-8 text-center">
+      <p class="text-lg text-gray-600">Or log in with:</p>
+      <div class="flex justify-center gap-6 mt-4">
+        <button class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
+          <i class="fab fa-facebook-f"></i> <!-- Facebook Icon -->
+        </button>
+        <button class="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition duration-300">
+          <i class="fab fa-google"></i> <!-- Google Icon -->
+        </button>
+      </div>
+    </div>
+
     <!-- Register Link -->
-    <p class="text-center mt-4 text-gray-600">
+    <p class="text-center mt-6 text-gray-600">
       Don't have an account? 
-      <a routerLink="/register" class="text-blue-600 hover:underline">Register here</a>
+      <a routerLink="/register" class="text-indigo-600 hover:underline font-semibold">Register here</a>
     </p>
+
+    <!-- Privacy Policy and Footer -->
+    <div class="mt-8 text-center text-gray-500">
+      <p class="text-sm">By logging in, you agree to our <a href="/privacy" class="text-indigo-600 hover:underline">Privacy Policy</a>.</p>
+    </div>
 
   </div>
 
 </div>
+</main>
