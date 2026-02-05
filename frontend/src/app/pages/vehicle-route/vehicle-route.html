@@ -1,27 +1,31 @@
 <div class="min-h-screen bg-gray-100 p-6">
   <!-- Header Section -->
-  <header class="text-center mb-6">
-    <h1 class="text-4xl font-bold text-blue-700">Vehicle Routes</h1>
-    <p class="text-lg text-gray-600">Explore the available vehicle routes</p>
+  <header class="text-center mb-8">
+    <h1 class="text-5xl font-extrabold text-blue-800">Routes</h1>
+    <p class="text-xl text-gray-600 mt-2">Explore the available vehicle routes</p>
   </header>
 
   <!-- Vehicle Routes Grid -->
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Loop through each vehicle route -->
-    <div *ngFor="let route of vehicleRoutes" class="max-w-xs rounded-lg bg-white shadow-lg overflow-hidden">
-      
-      <div class="p-4">
-        <!-- Route Information -->
-        <h2 class="text-xl font-semibold text-gray-800">{{ route?.source }} to {{ route?.destination }}</h2>
-        <p class="text-gray-500">Distance: {{ route?.distance }} km</p>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-        <div class="mt-3 flex justify-between items-center">
+
+    <!-- Loop through each vehicle route -->
+    <div *ngFor="let route of vehicleRoutes" class="max-w-xs rounded-xl bg-white shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 ease-in-out">
+      
+    
+    
+        <div class="p-6 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 rounded-xl">
+        <!-- Route Information -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ route?.source }} to {{ route?.destination }}</h2>
+        <p class="text-gray-600 text-sm mb-4">Distance: {{ route?.distance }} km</p>
+
+        <div class="mt-4 flex justify-between items-center">
           <button 
-            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+            class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
             View Details
           </button>
         </div>
       </div>
     </div>
-  </div>ss
+  </div>
 </div>
