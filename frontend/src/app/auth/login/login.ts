@@ -42,7 +42,7 @@ export class Login {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         this.loading = false;
-        this.router.navigate(['/vehicleRoute']); 
+        this.router.navigate(['/']); 
         Swal.fire({
         title: "Welcome",
         text: "Login Successful!",

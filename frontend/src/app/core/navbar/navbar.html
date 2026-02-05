@@ -81,6 +81,14 @@
         >
           🧑‍🤝‍🧑
         </a>
+        <a
+          *ngIf="userDetail.role === 'Admin'"
+          routerLink="/vehicleRoute"
+          class="text-slate-50 hover:text-sky-400 transition duration-300 transform hover:scale-105"
+          title="Manage Routes"
+        >
+          🧑
+        </a>
       </ng-container>
 
     </div>
