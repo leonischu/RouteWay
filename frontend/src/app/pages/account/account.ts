@@ -28,8 +28,10 @@ export class Account implements OnInit{
 }
 
  logout():void{
-  localStorage.removeItem('token');
-  this.user=null;
-  this.router.navigate(['/login'])
+  // localStorage.removeItem('token');
+  // this.user=null;
+  // this.router.navigate(['/login'])
+     this.authService.logout();
+    this.router.navigate(['/login']);
  }
 }

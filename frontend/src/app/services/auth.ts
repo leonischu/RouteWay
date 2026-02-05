@@ -49,20 +49,11 @@ export class Auth {
     return localStorage.getItem('token');
   }
 
-  // getMyDetails():Observable<UserDetail>{
-  //   const token = localStorage.getItem('token')
-  //   const body = {
-  //     token:token
-  //   }
-  //   return this.http.post<any>
-  // }
-
-
 
 
   // Get user name
   getUserName = () =>{
-  // getUserName$(): Observable<UserDetail> {
+  
 
     const token = this.getToken();
     if(!token) return null;
