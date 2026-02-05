@@ -7,6 +7,7 @@ import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { ContactUs } from './pages/contact-us/contact-us';
 import { Account } from './pages/account/account';
 import { authGuard } from './guards/auth-guard';
+import { VehicleRoute } from './pages/vehicle-route/vehicle-route';
 
 export const routes: Routes = [
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'privacy', component: PrivacyPolicy },
       { path: 'contact', component: ContactUs },
       { path: 'profile', component: Account,canActivate:[authGuard] },
-      { path: "**", component:PageNotFound}
+      { path: 'vehicleRoute', component: VehicleRoute },
+      { path: "**", component:PageNotFound},
 
 ];
