@@ -1,7 +1,8 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Services;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AutomatedTransportEnquiry.Controllers
 {
@@ -19,11 +20,11 @@ namespace AutomatedTransportEnquiry.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-           
-                await _service.Register(dto);
-                return Ok(new {message =  "User registered" });
-           
-           
+
+            await _service.Register(dto);
+            return Ok(new { message = "User registered" });
+
+
         }
 
         [HttpPost("login")]
@@ -41,7 +42,26 @@ namespace AutomatedTransportEnquiry.Controllers
         }
 
 
+        //[Authorize]
 
-      
+        [HttpGet("detail")]
+        public async Task<IActionResult> Detail()
+        {
+            var idClaim = User.FindFirst("id")?.Value;
+
+            if (string.IsNullOrEmpty(idClaim))
+                return Unauthorized("Invalid token");
+
+            if (!int.TryParse(idClaim, out int userId))
+                return Unauthorized("Invalid token");
+
+            var user = await _service.GetUserDetail(userId);
+
+            if (user == null)
+                return NotFound("User not found");
+
+            return Ok(user);
+
+        }
     }
 }

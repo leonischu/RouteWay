@@ -7,6 +7,7 @@ namespace AutomatedTransportEnquiry.Repositories
         Task<User> GetByEmail(string email);
         Task Create(User user);
 
+        Task<User> GetById(int id);
   
 
     }
