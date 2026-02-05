@@ -1,4 +1,5 @@
-﻿using AutomatedTransportEnquiry.DTOs;
+﻿using AutoMapper;
+using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Repositories;
 using Microsoft.IdentityModel.Tokens;
@@ -12,15 +13,17 @@ namespace AutomatedTransportEnquiry.Services
     {
         private readonly IUserRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
 
-        public AuthService(IUserRepository repo, IConfiguration config)
+        public AuthService(IUserRepository repo, IConfiguration config,IMapper mapper)
 
 
 
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
 
         }
 
@@ -105,5 +108,12 @@ namespace AutomatedTransportEnquiry.Services
             await _repo.Create(admin);
         }
 
+        public async Task<UserDetailDto> GetUserDetail(int userId)
+        {
+            var user = await _repo.GetById(userId);
+            if (user == null)
+                throw new Exception("User not found");
+            return _mapper.Map<UserDetailDto>(user);
+        }
     }
 }

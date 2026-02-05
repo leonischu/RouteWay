@@ -30,6 +30,26 @@ namespace AutomatedTransportEnquiry.Repositories
             await connection.ExecuteAsync(sql, user);
         }
       
+    
+        
 
+       public async Task<User>GetById(int id)
+        {
+            var sql = @"
+            SELECT 
+            UserId , 
+            FullName,
+            Email,
+            PasswordHash,
+            Role
+            FROM Users
+            WHERE UserId = @UserId";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryFirstOrDefaultAsync<User>(
+                sql, new { UserId = id });
+
+                
+            
+        }
     }
 }
