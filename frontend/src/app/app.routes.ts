@@ -6,6 +6,7 @@ import { PageNotFound } from './pages/page-not-found/page-not-found';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { ContactUs } from './pages/contact-us/contact-us';
 import { Account } from './pages/account/account';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
 
@@ -14,7 +15,7 @@ export const routes: Routes = [
       { path: 'register', component: Register },
       { path: 'privacy', component: PrivacyPolicy },
       { path: 'contact', component: ContactUs },
-      { path: 'profile', component: Account },
+      { path: 'profile', component: Account,canActivate:[authGuard] },
       { path: "**", component:PageNotFound}
 
 ];

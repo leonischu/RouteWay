@@ -80,7 +80,7 @@ export class Auth {
   };
   
   getUserProfile(): Observable<UserDetail>{
-    return this.http.get<UserDetail>(this.apiUrl);
+    return this.http.get<UserDetail>(`${this.apiUrl}api/Auth/detail`);
   }
   
 

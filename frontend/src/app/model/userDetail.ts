@@ -1,6 +1,6 @@
 export interface UserDetail {
-  id: string;
-  FullName: string;
+  userId: number;
+  fullName: string;
   email: string;
-  roles: string[];
+  role: string;
 }
