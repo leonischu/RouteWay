@@ -15,5 +15,8 @@ export class Api {
   getRoutes():Observable<VehicleRoutesInterface>{
     return this.http.get<VehicleRoutesInterface>(`${this.apiUrl}api/VehicleRoute`);
   }
+  deleteRoutes(routeId:number): Observable<any> {
+    return this.http.delete<any>( `${this.apiUrl}api/VehicleRoute/${routeId}`)
+  } 
 
 }

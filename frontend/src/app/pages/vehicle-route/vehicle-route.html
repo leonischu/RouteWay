@@ -1,9 +1,19 @@
-<div class="min-h-screen bg-gray-100 p-6">
+<div class="min-h-screen bg-gray-300 p-6">
   <!-- Header Section -->
   <header class="text-center mb-8">
-    <h1 class="text-5xl font-extrabold text-blue-800">Routes</h1>
+    <h1 class="text-5xl font-extrabold text-blue-800">Available Routes</h1>
     <p class="text-xl text-gray-600 mt-2">Explore the available vehicle routes</p>
   </header>
+
+
+<!-- Add New Route Button -->
+  <div class="text-center mb-23 ">
+    <button 
+      class="px-6 py-3 bg-green-600 text-white rounded-md  hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+      Add New Route
+    </button>
+  </div>
+
 
   <!-- Vehicle Routes Grid -->
   <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -23,6 +33,12 @@
           <button 
             class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
             View Details
+          </button>
+          <button 
+           (click)="deleteRoute(route.routeId)"
+            class="px-5   py-3 bg-red-500 fa fa-trash  text-white rounded-md
+             hover:bg-red-900 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg ">        
+            Delete 
           </button>
         </div>
       </div>
