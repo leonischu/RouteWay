@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Api } from '../../services/api';
 import { CommonModule } from '@angular/common';
 import { VehicleRoutes, VehicleRoutesInterface } from '../../model/vehicle-route';
+import { AddRoutes } from '../../Forms/add-routes/add-routes';
+
 
 @Component({
   selector: 'app-vehicle-route',
@@ -10,6 +12,8 @@ import { VehicleRoutes, VehicleRoutesInterface } from '../../model/vehicle-route
   styleUrl: './vehicle-route.css',
 })
 export class VehicleRoute implements OnInit {
+    @ViewChild(AddRoutes) addRouteForm!: AddRoutes;  // Access the child component
+
   
   vehicleRoutes:VehicleRoutes[]=[];
   constructor(private apiService:Api){}
@@ -38,6 +42,20 @@ export class VehicleRoute implements OnInit {
     error => {
       console.error('Error deleting routes',error);
     });
+  }
+
+  addNewRoute(newRoute:any):void {
+    this.apiService.addRoute(newRoute).subscribe((addedRoute)=>{
+      console.log('Route added sucessfully',addedRoute);
+      
+    }, error =>{
+      console.error('Error adding route:',error);
+    });
+  }
+
+
+  openAddRouteForm(): void {
+    this.addRouteForm.openForm();  // Call openForm() from the child component
   }
 
 

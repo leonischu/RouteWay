@@ -9,10 +9,15 @@
 <!-- Add New Route Button -->
   <div class="text-center mb-23 ">
     <button 
-      class="px-6 py-3 bg-green-600 text-white rounded-md  hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+      class="px-6 py-3 bg-green-600 text-white rounded-md 
+       hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg"
+        (click)="addRouteForm.openForm()">
       Add New Route
     </button>
   </div>
+
+  <!-- Modal Form i.e child to parent call -->
+  <app-add-routes (newRouteAdded)="addNewRoute($event)" #addRouteForm ></app-add-routes>
 
 
   <!-- Vehicle Routes Grid -->

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { VehicleRoutesInterface } from '../model/vehicle-route';
+import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +19,8 @@ export class Api {
   deleteRoutes(routeId:number): Observable<any> {
     return this.http.delete<any>( `${this.apiUrl}api/VehicleRoute/${routeId}`)
   } 
+  addRoute(newRoute:any):Observable<VehicleRoute>{
+    return this.http.post<VehicleRoute>(`${this.apiUrl}api/vehicleRoute`,newRoute)
+  }
 
 }

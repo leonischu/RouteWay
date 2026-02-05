@@ -8,6 +8,7 @@ import { ContactUs } from './pages/contact-us/contact-us';
 import { Account } from './pages/account/account';
 import { authGuard } from './guards/auth-guard';
 import { VehicleRoute } from './pages/vehicle-route/vehicle-route';
+import { AddRoutes } from './Forms/add-routes/add-routes';
 
 export const routes: Routes = [
 
@@ -17,7 +18,9 @@ export const routes: Routes = [
       { path: 'privacy', component: PrivacyPolicy },
       { path: 'contact', component: ContactUs },
       { path: 'profile', component: Account,canActivate:[authGuard] },
+      { path: 'addRoute', component: AddRoutes },
       { path: 'vehicleRoute', component: VehicleRoute },
+      
       { path: "**", component:PageNotFound},
 
 ];
