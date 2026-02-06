@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-routes',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './add-routes.html',
   styleUrl: './add-routes.css',
 })
