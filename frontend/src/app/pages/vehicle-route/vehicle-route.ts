@@ -12,8 +12,11 @@ import { AddRoutes } from '../../Forms/add-routes/add-routes';
   styleUrl: './vehicle-route.css',
 })
 export class VehicleRoute implements OnInit {
-    @ViewChild(AddRoutes) addRouteForm!: AddRoutes;  // Access the child component
+    @ViewChild('addRouteForm') addRouteForm!: AddRoutes;  // Access the child component
+   
 
+     selectedRouteId!:number;
+     isEditMode = false;
   
   vehicleRoutes:VehicleRoutes[]=[];
   constructor(private apiService:Api){}
@@ -55,14 +58,45 @@ export class VehicleRoute implements OnInit {
 
 
   openAddRouteForm(): void {
-    this.addRouteForm.openForm();  // Call openForm() from the child component
+    this.addRouteForm.openForm();  // Call openForm() from the parent component
   }
 
-  // editRoute(){
-  //   this.apiService.editRoute(routeId, this.addRouteForm.value).subscribe(res =>{
-  //     console.log('Route Updated',res);
-  //   });
-  // }
+  editRoute(route:VehicleRoutes):void{
+    this.selectedRouteId = route.routeId;
+    this.isEditMode = true;
+
+    //open the form 
+    this.addRouteForm.openForm();
+
+    //patch existing value into from 
+    this.addRouteForm.newRoute={
+      routeId:route.routeId,
+      source:route.source,
+      destination:route.destination,
+      distance: route.distance
+    };
+ 
+  }
+
+  updateRoute(): void {
+    if(!this.selectedRouteId) return;
+    
+    this.apiService
+    .editRoute(this.selectedRouteId,this.addRouteForm.newRoute).subscribe({
+       next: res => {
+        console.log('Route Updated', res);
+
+        this.isEditMode = false;
+        this.selectedRouteId = 0;
+
+        this.addRouteForm.closeForm();
+        this.ngOnInit();
+
+    },
+  error:err => console.error(err)
+  });
+
+  }
 
 
 }

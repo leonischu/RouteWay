@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { VehicleRoutesInterface } from '../model/vehicle-route';
+import { VehicleRoutes, VehicleRoutesInterface } from '../model/vehicle-route';
 import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
 
 @Injectable({
@@ -22,8 +22,8 @@ export class Api {
   addRoute(newRoute:any):Observable<VehicleRoute>{
     return this.http.post<VehicleRoute>(`${this.apiUrl}api/vehicleRoute`,newRoute)
   }
-  editRoute(routeId:number, routeData:VehicleRoute){
-    return this.http.put<VehicleRoute>(`${this.apiUrl}api/VehicleRoute/${routeId}`,routeData)
+  editRoute(routeId:number, routeData:VehicleRoutes){
+    return this.http.put<VehicleRoutes>(`${this.apiUrl}api/VehicleRoute/${routeId}`,routeData)
   }
 
 }
