@@ -1,52 +1,105 @@
-<div class="min-h-screen bg-gray-300 p-6">
+
+<div class="min-h-screen bg-slate-900 text-slate-100 p-6 md:p-12">
+  
   <!-- Header Section -->
-  <header class="text-center mb-8">
-    <h1 class="text-5xl font-extrabold text-blue-800">Available Routes</h1>
-    <p class="text-xl text-gray-600 mt-2">Explore the available vehicle routes</p>
+  <header class="text-center mb-12">
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">Available Routes</span>
+    </h1>
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto">
+      Explore and manage your vehicle routes efficiently.
+    </p>
   </header>
 
-
-<!-- Add New Route Button -->
-  <div class="text-center mb-23 ">
+  <!-- Add New Route Button -->
+  <div class="text-center mb-12">
     <button 
-      class="px-6 py-3 bg-green-600 text-white rounded-md 
-       hover:bg-green-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg"
-        (click)="addRouteForm.openForm()">
+      (click)="addRouteForm.openForm()"
+      class="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full 
+             hover:shadow-lg hover:shadow-emerald-500/30 transform hover:-translate-y-1 transition-all duration-300 ease-in-out flex items-center gap-3 mx-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
       Add New Route
     </button>
   </div>
 
-  <!-- Modal Form i.e child to parent call -->
-  <app-add-routes (newRouteAdded)="addNewRoute($event)" #addRouteForm ></app-add-routes>
-
+  <!-- Modal Form -->
+  <app-add-routes (newRouteAdded)="addNewRoute($event)" #addRouteForm></app-add-routes>
 
   <!-- Vehicle Routes Grid -->
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
     <!-- Loop through each vehicle route -->
-    <div *ngFor="let route of vehicleRoutes" class="max-w-xs rounded-xl bg-white shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 ease-in-out">
+    <div *ngFor="let route of vehicleRoutes" 
+         class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden 
+                hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-900/20 hover:border-blue-500/50 
+                transition-all duration-300 ease-in-out group flex flex-col">
       
-    
-    
-        <div class="p-6 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 rounded-xl">
-        <!-- Route Information -->
-        <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ route?.source }} to {{ route?.destination }}</h2>
-        <p class="text-gray-600 text-sm mb-4">Distance: {{ route?.distance }} km</p>
+      <!-- Card Header (Accent Line) -->
+      <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 to-indigo-500"></div>
 
-        <div class="mt-4 flex justify-between items-center">
-          <button 
-            class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
-            View Details
+      <div class="p-6 flex-1 flex flex-col">
+        
+        <!-- Route Information -->
+        <div class="mb-6 flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="p-2 bg-blue-500/10 rounded-lg text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h2 class="text-xl font-bold text-white leading-tight">{{ route?.source }}</h2>
+          </div>
+
+          <div class="flex items-center gap-3 mb-6">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-500 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+             </svg>
+             <h2 class="text-xl font-bold text-white leading-tight">{{ route?.destination }}</h2>
+          </div>
+
+          <div class="flex items-center gap-2 text-slate-400 text-sm bg-slate-900/50 w-fit px-3 py-1.5 rounded-full border border-slate-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>{{ route?.distance }} km</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-3 mt-auto pt-4 border-t border-slate-700">
+          
+          <!-- View Details -->
+          <button class="flex-1 py-2.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors text-sm">
+            Details
           </button>
+
+          <!-- Edit Button (NEW) -->
+          <!-- <button 
+            (click)="editRoute(route.routeId)" 
+            class="py-2.5 px-4 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-medium transition-colors"
+            title="Edit Route">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </button> -->
+
+          <!-- Delete Button -->
           <button 
-           (click)="deleteRoute(route.routeId)"
-            class="px-5   py-3 bg-red-500 fa fa-trash  text-white rounded-md
-             hover:bg-red-900 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg ">        
-            Delete 
+            (click)="deleteRoute(route.routeId)"
+            class="py-2.5 px-4 rounded-lg bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white border border-red-600/50 hover:border-red-600 transition-colors"
+            title="Delete Route">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
           </button>
+
         </div>
       </div>
     </div>
+
   </div>
 </div>
+```

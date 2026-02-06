@@ -58,5 +58,11 @@ export class VehicleRoute implements OnInit {
     this.addRouteForm.openForm();  // Call openForm() from the child component
   }
 
+  // editRoute(){
+  //   this.apiService.editRoute(routeId, this.addRouteForm.value).subscribe(res =>{
+  //     console.log('Route Updated',res);
+  //   });
+  // }
+
 
 }

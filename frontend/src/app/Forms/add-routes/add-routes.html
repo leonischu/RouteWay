@@ -1,23 +1,98 @@
-<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50" *ngIf="isModalOpen">
-  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Add New Route</h2>
-    <form (ngSubmit)="addRoute()">
-      <div class="mb-4">
-        <label for="source" class="block text-sm font-medium text-gray-600">Source</label>
-        <input id="source" [(ngModel)]="newRoute.source" name="source" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Enter source" required>
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center z-50 p-4" *ngIf="isModalOpen">
+  
+  <!-- Modal Container -->
+  <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative transform transition-all scale-100">
+    
+    <!-- Close Button (Top Right) -->
+    <button type="button" (click)="closeForm()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Header -->
+    <h2 class="text-2xl font-bold text-white mb-6 text-center">Add New Route</h2>
+
+    <!-- Form -->
+    <form (ngSubmit)="addRoute()" class="space-y-5">
+      
+      <!-- Source Input -->
+      <div>
+        <label for="source" class="block text-sm font-medium text-slate-300 mb-2">Source Location</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </div>
+          <input 
+            id="source" 
+            [(ngModel)]="newRoute.source" 
+            name="source" 
+            type="text" 
+            class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+            placeholder="e.g. New York" 
+            required
+          >
+        </div>
       </div>
-      <div class="mb-4">
-        <label for="destination" class="block text-sm font-medium text-gray-600">Destination</label>
-        <input id="destination" [(ngModel)]="newRoute.destination" name="destination" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Enter destination" required>
+
+      <!-- Destination Input -->
+      <div>
+        <label for="destination" class="block text-sm font-medium text-slate-300 mb-2">Destination</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </div>
+          <input 
+            id="destination" 
+            [(ngModel)]="newRoute.destination" 
+            name="destination" 
+            type="text" 
+            class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+            placeholder="e.g. Los Angeles" 
+            required
+          >
+        </div>
       </div>
-      <div class="mb-4">
-        <label for="distance" class="block text-sm font-medium text-gray-600">Distance (km)</label>
-        <input id="distance" [(ngModel)]="newRoute.distance" name="distance" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Enter distance" required>
+
+      <!-- Distance Input -->
+      <div>
+        <label for="distance" class="block text-sm font-medium text-slate-300 mb-2">Distance (km)</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <input 
+            id="distance" 
+            [(ngModel)]="newRoute.distance" 
+            name="distance" 
+            type="number" 
+            class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" 
+            placeholder="e.g. 450" 
+            required
+          >
+        </div>
       </div>
-      <div class="flex justify-end">
-        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Add Route</button>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 mt-8">
+        <!-- Cancel Button -->
+        <button 
+          type="button" 
+          (click)="closeForm()" 
+          class="flex-1 px-6 py-3 bg-slate-700 text-slate-200 rounded-lg hover:bg-slate-600 transition-colors font-medium"
+        >
+          Cancel
+        </button>
+
+        <!-- Add Route Button -->
+        <button 
+          type="submit" 
+          class="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all font-semibold"
+        >
+          Add Route
+        </button>
       </div>
+
     </form>
-    <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700" (click)="closeForm()">X</button>
   </div>
 </div>

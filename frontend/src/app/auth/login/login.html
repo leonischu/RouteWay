@@ -1,20 +1,25 @@
-<main class="flex-1 container mx-auto px-1 py-6">
-<div class="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600">
 
-  <div class="bg-white p-12 rounded-xl shadow-2xl w-full max-w-md">
+<main class="flex-1 min-h-screen flex items-center justify-center bg-slate-900 relative overflow-hidden">
+  
+  <!-- Background Glow Effects -->
+  <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-600/30 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-600/30 rounded-full blur-[120px]"></div>
+
+  <div class="relative z-10 bg-slate-800/60 backdrop-blur-xl border border-slate-700 p-10 rounded-2xl shadow-2xl w-full max-w-md">
     
     <!-- Hero Section -->
     <div class="text-center mb-8">
-      <h2 class="text-4xl font-extrabold text-gray-800 mb-4">
+      <h2 class="text-3xl font-extrabold text-white mb-2">
         Welcome Back
       </h2>
-      <p class="text-lg text-gray-600 mb-6">
-        Log in to continue your journey with us. We promise a seamless experience, tailored to your needs.
+      <p class="text-sm text-slate-400">
+        Log in to continue your journey with RouteWay.
       </p>
     </div>
 
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg mb-6 shadow-md transition-transform transform hover:scale-105">
+    <div *ngIf="errorMessage" class="bg-red-900/30 border border-red-800 text-red-200 px-4 py-3 rounded-lg mb-6 text-sm flex items-center gap-3">
+      <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
       {{ errorMessage }}
     </div>
 
@@ -22,29 +27,39 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       
       <!-- Email -->
-      <div class="mb-6">
-        <label class="block text-lg font-semibold text-gray-700 mb-2">Email</label>
-        <input 
-          type="email" 
-          formControlName="email"
-          class="w-full px-6 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
-          placeholder="Enter your email"
-        />
-        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+      <div class="mb-5">
+        <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
+          </div>
+          <input 
+            type="email" 
+            formControlName="email"
+            class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+            placeholder="you@example.com"
+          />
+        </div>
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-400 text-xs mt-1.5 ml-1">
           Email is required
         </div>
       </div>
 
       <!-- Password -->
-      <div class="mb-8">
-        <label class="block text-lg font-semibold text-gray-700 mb-2">Password</label>
-        <input 
-          type="password" 
-          formControlName="password"
-          class="w-full px-6 py-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out"
-          placeholder="Enter your password"
-        />
-        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          </div>
+          <input 
+            type="password" 
+            formControlName="password"
+            class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200"
+            placeholder="••••••••"
+          />
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-400 text-xs mt-1.5 ml-1">
           Password is required
         </div>
       </div>
@@ -53,41 +68,46 @@
       <button 
         type="submit"
         [disabled]="loginForm.invalid || loading"
-        class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-xl font-semibold transition-all duration-300 ease-in-out"
+        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white py-3 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg shadow-indigo-900/40 hover:shadow-indigo-900/60 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none transform active:scale-95"
       >
-        <span *ngIf="!loading">Login</span>
-        <span *ngIf="loading">Loading...</span>
+        <span *ngIf="!loading">Sign In</span>
+        <span *ngIf="loading" class="flex items-center justify-center gap-2">
+          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          Processing...
+        </span>
       </button>
 
     </form>
 
-    <!-- Forgot Password and Social Media Login -->
-  
+    <!-- Divider -->
+    <div class="my-8 flex items-center">
+      <div class="flex-1 border-t border-slate-700"></div>
+      <span class="px-4 text-xs text-slate-500 uppercase tracking-wider">Or continue with</span>
+      <div class="flex-1 border-t border-slate-700"></div>
+    </div>
 
-    <div class="mt-8 text-center">
-      <p class="text-lg text-gray-600">Or log in with:</p>
-      <div class="flex justify-center gap-6 mt-4">
-        <button class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300">
-          <i class="fab fa-facebook-f"></i> <!-- Facebook Icon -->
-        </button>
-        <button class="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition duration-300">
-          <i class="fab fa-google"></i> <!-- Google Icon -->
-        </button>
-      </div>
+    <!-- Social Media Login -->
+    <div class="grid grid-cols-2 gap-4">
+      <button type="button" class="flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white py-2.5 px-4 rounded-lg transition-colors duration-200 border border-slate-600">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </button>
+      <button type="button" class="flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white py-2.5 px-4 rounded-lg transition-colors duration-200 border border-slate-600">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.545 10.239v3.821h5.445c-.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866.549 3.921 1.453l2.814-2.814C17.503 2.988 15.139 2 12.545 2 6.665 2 1.914 6.751 1.914 12.63s4.751 10.63 10.631 10.63c5.936 0 9.981-4.248 9.981-10.128 0-.678-.061-1.335-.169-1.972H12.545z"/></svg>
+        Google
+      </button>
     </div>
 
     <!-- Register Link -->
-    <p class="text-center mt-6 text-gray-600">
+    <p class="text-center mt-8 text-sm text-slate-400">
       Don't have an account? 
-      <a routerLink="/register" class="text-indigo-600 hover:underline font-semibold">Register here</a>
+      <a routerLink="/register" class="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">Create one now</a>
     </p>
 
-    <!-- Privacy Policy and Footer -->
-    <div class="mt-8 text-center text-gray-500">
-      <p class="text-sm">By logging in, you agree to our <a href="/privacy" class="text-indigo-600 hover:underline">Privacy Policy</a>.</p>
-    </div>
+    <!-- Privacy Policy -->
+    <p class="text-center mt-4 text-xs text-slate-600">
+      By logging in, you agree to our <a href="/privacy" class="text-slate-500 hover:text-slate-400 underline">Privacy Policy</a>.
+    </p>
 
   </div>
-
-</div>
 </main>

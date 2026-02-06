@@ -22,5 +22,8 @@ export class Api {
   addRoute(newRoute:any):Observable<VehicleRoute>{
     return this.http.post<VehicleRoute>(`${this.apiUrl}api/vehicleRoute`,newRoute)
   }
+  editRoute(routeId:number, routeData:VehicleRoute){
+    return this.http.put<VehicleRoute>(`${this.apiUrl}api/VehicleRoute/${routeId}`,routeData)
+  }
 
 }

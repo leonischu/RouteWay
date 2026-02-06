@@ -1,100 +1,171 @@
-<div class="container mx-auto px-4 py-20">
+<!-- ==========================
+     HERO SECTION 
+========================== -->
+<section class="relative bg-slate-900 text-white overflow-hidden">
+  <!-- Background Glow Effects -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-600/20 rounded-full blur-[120px] -z-10"></div>
   
-  <!-- Hero Section -->
-  <div class="text-center mb-16">
-    <h1 class="text-5xl font-bold text-gray-800 mb-4">
-      Welcome to TransportHub 🚌
-    </h1>
-    <p class="text-xl text-gray-600 mb-8">
-      Your journey begins here — Find your bus routes and book tickets in seconds. Whether you're commuting or planning a long-distance trip, we’ve got you covered with seamless booking and travel management.
-    </p>
-    <a routerLink="/login" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transform hover:scale-105 transition duration-300 ease-in-out">
-      Find Buses Now
-    </a>
-  </div>
-
-  <!-- Features Section -->
-  <div class="grid md:grid-cols-3 gap-8">
+  <div class="container mx-auto px-6 py-24 md:py-32 flex flex-col md:flex-row items-center gap-12">
     
-    <!-- Easy Search Feature -->
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
-      <div class="text-5xl mb-4 text-blue-600">
-        <i class="fas fa-search"></i> <!-- Font Awesome Search Icon -->
+    <!-- Left: Text Content -->
+    <div class="flex-1 text-center md:text-left z-10">
+      <div class="inline-block px-4 py-1.5 bg-blue-900/30 border border-blue-700 rounded-full text-blue-300 text-sm font-medium mb-6">
+        🚀 #1 Logistics Management Platform
       </div>
-      <h3 class="text-xl font-bold mb-2 text-gray-800">Easy Search</h3>
-      <p class="text-gray-600">
-        Search for buses based on route, time, and fare with just a few clicks. We make it easy for you to find the perfect bus for your needs.
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+        Move Smarter.<br />
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
+          Not Harder.
+        </span>
+      </h1>
+      <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto md:mx-0">
+        Streamline your fleet, optimize routes, and track shipments in real-time. 
+        The all-in-one solution for modern transportation businesses.
       </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <a href="#" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-full font-bold text-lg shadow-lg shadow-blue-900/50 transform hover:scale-105 transition-all duration-300 text-center">
+          Start Free Trial
+        </a>
+        <a href="#" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-full font-bold text-lg transform hover:scale-105 transition-all duration-300 text-center">
+          View Demo
+        </a>
+      </div>
     </div>
 
-    <!-- Real-time Seat Availability -->
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
-      <div class="text-5xl mb-4 text-blue-600">
-        <i class="fas fa-chair"></i> <!-- Font Awesome Chair Icon -->
-      </div>
-      <h3 class="text-xl font-bold mb-2 text-gray-800">Real-time Seats</h3>
-      <p class="text-gray-600">
-        Check seat availability instantly! Book your seat in real-time and enjoy your journey with peace of mind.
-      </p>
-    </div>
-
-    <!-- Manage Bookings -->
-    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out">
-      <div class="text-5xl mb-4 text-blue-600">
-        <i class="fas fa-mobile-alt"></i> <!-- Font Awesome Mobile Icon -->
-      </div>
-      <h3 class="text-xl font-bold mb-2 text-gray-800">Manage Bookings</h3>
-      <p class="text-gray-600">
-        View, modify, and cancel your bookings with ease. Flexibility and control at your fingertips, anytime, anywhere.
-      </p>
-    </div>
-
-  </div>
-
-  <!-- Why Choose TransportHub? Section -->
-  <div class="mt-16 text-center bg-gray-100 py-12 rounded-lg shadow-md">
-    <h2 class="text-3xl font-semibold text-gray-800 mb-6">
-      Why Choose TransportHub?
-    </h2>
-    <p class="text-lg text-gray-600 mb-6">
-      We offer the most comprehensive and reliable bus ticketing system. With real-time seat availability, quick searches, and seamless booking management, your travel plans have never been easier.
-    </p>
-    <div class="flex justify-center gap-6">
-      <!-- Easy Payment Options -->
-      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-        <div class="text-4xl mb-4 text-green-600">
-          <i class="fas fa-credit-card"></i> <!-- Font Awesome Credit Card Icon -->
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">Easy Payment Options</h3>
-        <p class="text-gray-600 mb-4">
-          Secure and fast payment methods for a hassle-free transaction experience. Pay with cards or digital wallets.
-        </p>
-      </div>
-
-      <!-- 24/7 Support -->
-      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-        <div class="text-4xl mb-4 text-orange-600">
-          <i class="fas fa-headset"></i> <!-- Font Awesome Headset Icon -->
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-3">24/7 Support</h3>
-        <p class="text-gray-600 mb-4">
-          Our support team is available around the clock to assist you with any issues or queries. You’re never alone on your journey.
-        </p>
-      </div>
+    <!-- Right: Image -->
+    <div class="flex-1 relative">
+      <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-transparent rounded-2xl blur-3xl opacity-30"></div>
+      <img 
+        src="https://i.pinimg.com/1200x/1d/5b/b6/1d5bb6b351913857d1773aae367d03a8.jpg" 
+        alt="Logistics Dashboard" 
+        class="relative rounded-2xl shadow-2xl border border-slate-700 w-full transform hover:scale-[1.02] transition-transform duration-500"
+      />
     </div>
   </div>
+</section>
 
-  <!-- Call to Action Section -->
-  <div class="mt-16 text-center">
-    <h2 class="text-3xl font-semibold text-gray-800 mb-4">
-      Ready to start your journey?
-    </h2>
-    <p class="text-lg text-gray-600 mb-6">
-      Whether you're planning a quick commute or a long-distance adventure, our platform makes it easier than ever to find the best routes and book your tickets instantly.
-    </p>
-    <a routerLink="/login" class="bg-green-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-green-700 transform hover:scale-105 transition duration-300 ease-in-out">
-      Start Searching Now
+<!-- ==========================
+     FEATURES SECTION 
+========================== -->
+<section class="py-24 bg-slate-50">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Everything you need to scale</h2>
+      <p class="text-slate-600 max-w-2xl mx-auto">Powerful tools designed to solve your biggest logistics challenges.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Feature 1 -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-slate-100 group">
+        <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 mb-3">Real-Time Tracking</h3>
+        <p class="text-slate-600">Monitor every vehicle and shipment live on our interactive map. No more guessing games.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-slate-100 group">
+        <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 mb-3">Route Optimization</h3>
+        <p class="text-slate-600">AI-powered algorithms find the fastest, cheapest routes to save fuel and time.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 border border-slate-100 group">
+        <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-teal-600 group-hover:text-white transition-colors duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 mb-3">Automated Reports</h3>
+        <p class="text-slate-600">Generate detailed analytics on performance, costs, and driver behavior instantly.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================
+     STATS SECTION 
+========================== -->
+<section class="py-20 bg-slate-800 text-white">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      
+      <div>
+        <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">10k+</div>
+        <div class="text-slate-400 font-medium">Active Drivers</div>
+      </div>
+      
+      <div>
+        <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">500+</div>
+        <div class="text-slate-400 font-medium">Companies</div>
+      </div>
+      
+      <div>
+        <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">1M+</div>
+        <div class="text-slate-400 font-medium">Deliveries</div>
+      </div>
+      
+      <div>
+        <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">99.9%</div>
+        <div class="text-slate-400 font-medium">Uptime</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================
+     HOW IT WORKS 
+========================== -->
+<section class="py-24 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Get started in minutes</h2>
+      <p class="text-slate-600">Simple setup. Powerful results.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+      <!-- Connecting Line (Desktop) -->
+      <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-0.5 bg-slate-200 -z-0"></div>
+
+      <!-- Step 1 -->
+      <div class="text-center">
+        <div class="w-24 h-24 mx-auto bg-slate-100 border-4 border-white shadow-xl rounded-full flex items-center justify-center text-3xl font-bold text-slate-800 mb-6 relative z-10">1</div>
+        <h3 class="text-xl font-bold text-slate-900 mb-2">Create Account</h3>
+        <p class="text-slate-600">Sign up for free and verify your business profile in under 5 minutes.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="text-center">
+        <div class="w-24 h-24 mx-auto bg-blue-600 border-4 border-white shadow-xl shadow-blue-200 rounded-full flex items-center justify-center text-3xl font-bold text-white mb-6 relative z-10">2</div>
+        <h3 class="text-xl font-bold text-slate-900 mb-2">Add Fleet</h3>
+        <p class="text-slate-600">Import your drivers and vehicles with our easy CSV upload tool.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="text-center">
+        <div class="w-24 h-24 mx-auto bg-slate-100 border-4 border-white shadow-xl rounded-full flex items-center justify-center text-3xl font-bold text-slate-800 mb-6 relative z-10">3</div>
+        <h3 class="text-xl font-bold text-slate-900 mb-2">Go Live</h3>
+        <p class="text-slate-600">Assign routes and start tracking your logistics empire instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================
+     CTA SECTION 
+========================== -->
+<section class="py-20 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to transform your logistics?</h2>
+    <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Join thousands of companies saving time and money with TransportHub.</p>
+    <a href="#" class="inline-block px-10 py-4 bg-white text-slate-900 font-bold rounded-full text-lg hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 shadow-lg">
+      Get Started Now →
     </a>
   </div>
-
-</div>
+</section>
