@@ -7,7 +7,7 @@ import { AddRoutes } from '../../Forms/add-routes/add-routes';
 
 @Component({
   selector: 'app-vehicle-route',
-  imports: [CommonModule],
+  imports: [CommonModule,AddRoutes],
   templateUrl: './vehicle-route.html',
   styleUrl: './vehicle-route.css',
 })
