@@ -15,6 +15,7 @@ export class AddRoutes {
   //New route ko data hold garna 
 
   newRoute ={
+    routeId:0,
     source:'',
     destination:'',
     distance:0
@@ -35,7 +36,7 @@ export class AddRoutes {
 
   //Reset Form 
   resetForm(){
-    this.newRoute = { source:'',destination:'',distance:0}
+    this.newRoute = { routeId:0,source:'',destination:'',distance:0}
   }
 
 
