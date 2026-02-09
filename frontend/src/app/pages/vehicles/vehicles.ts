@@ -24,8 +24,20 @@ export class Vehicles {
         console.error("Error while fetching vehicle ",error)
       }
     );
+   
   }
 
+ deleteVehicle(vehicleId:number):void{
+      this.apiService.deleteVehicle(vehicleId).subscribe((response)=>
+      {
+        console.log("Vehicle Deleted sucessfully");
 
+      },
+      error => {
+        console.error ('Error deleting vehicle ',error);
+
+      }
+      );
+    }
 
 }

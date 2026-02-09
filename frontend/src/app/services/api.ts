@@ -31,5 +31,9 @@ export class Api {
       getVehicle():Observable<VehicleInterface>{
       return this.http.get<VehicleInterface>(`${this.apiUrl}api/Vehicle`)
       }
+      
+      deleteVehicle(vehicleId:number):Observable<any>{
+        return this.http.delete<any>(`${this.apiUrl}api/Vehicle/${vehicleId}`)
+      }
 
 }
