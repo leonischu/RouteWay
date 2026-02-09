@@ -11,6 +11,7 @@ import { VehicleRoute } from './pages/vehicle-route/vehicle-route';
 import { AddRoutes } from './Forms/add-routes/add-routes';
 import { Admin } from './pages/admin/admin';
 import { Vehicles } from './pages/vehicles/vehicles';
+import { AddVehicle } from './Forms/add-vehicle/add-vehicle';
 
 export const routes: Routes = [
 
@@ -21,6 +22,8 @@ export const routes: Routes = [
       { path: 'contact', component: ContactUs },
       { path: 'profile', component: Account,canActivate:[authGuard] },
       { path: 'addRoute', component: AddRoutes,canActivate:[authGuard]  },
+      { path: 'addvehicle', component: AddVehicle,canActivate:[authGuard]  },
+
       { path: 'vehicleRoute', component: VehicleRoute,canActivate:[authGuard]  },
       { path: 'adminPage', component: Admin,canActivate:[authGuard]},
       { path: 'vehicles', component: Vehicles,canActivate:[authGuard]},

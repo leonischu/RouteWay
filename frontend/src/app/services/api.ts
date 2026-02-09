@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { VehicleRoutes, VehicleRoutesInterface } from '../model/vehicle-route';
 import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
-import {  VehicleInterface } from '../model/Vehicles-Info';
+import {  Vehicle, VehicleInterface } from '../model/Vehicles-Info';
 
 @Injectable({
   providedIn: 'root',
@@ -29,11 +29,18 @@ export class Api {
 
 // Services For Vehicles 
       getVehicle():Observable<VehicleInterface>{
-      return this.http.get<VehicleInterface>(`${this.apiUrl}api/Vehicle`)
+      return this.http.get<VehicleInterface>(`${this.apiUrl}api/Vehicle`);
       }
       
       deleteVehicle(vehicleId:number):Observable<any>{
-        return this.http.delete<any>(`${this.apiUrl}api/Vehicle/${vehicleId}`)
+        return this.http.delete<any>(`${this.apiUrl}api/Vehicle/${vehicleId}`);
       }
+      addVehicle(newVehicle:any):Observable<Vehicle>{
+        return this.http.post<Vehicle>(`${this.apiUrl}api/Vehicle`,newVehicle);
+      }
+      updateVehicle(vehicleId:number,vehicleData:Vehicle){
+        return this.http.put<Vehicle>(`${this.apiUrl}api/Vehicle/${vehicleId}`,vehicleData)
+      }
+      
 
 }
