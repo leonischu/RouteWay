@@ -34,9 +34,9 @@ export class VehicleRoute implements OnInit {
     );
   }
 
-  viewRouteDetails(route:VehicleRoute){
-    console.log(route);
-  }
+  // viewRouteDetails(route:VehicleRoute){
+  //   console.log(route);
+  // }
   deleteRoute(routeId:number):void{
     this.apiService.deleteRoutes(routeId).subscribe((rresponse)=>{
       console.log('Route Deleted');
