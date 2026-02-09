@@ -76,12 +76,12 @@ export class Auth {
   
 
   // Get user role (for admin check)
-  getUserRole(): string {
-    const user = localStorage.getItem('user');
-    if (user) {
-      return JSON.parse(user).role || 'user';
-    }
-    return 'guest';
-  }
+ getUserRole(): string | null {
+  const token = this.getToken();
+  if (!token) return null;
+
+  const decoded: any = jwtDecode(token);
+  return decoded.role || decoded.Role || null;
+}
   
 }

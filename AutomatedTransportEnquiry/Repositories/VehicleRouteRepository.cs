@@ -72,7 +72,7 @@ namespace AutomatedTransportEnquiry.Repositories
             parameters.Add("Distance", route.Distance, DbType.Int32);
 
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(query, route) > 0;
+            return await connection.ExecuteAsync(query, parameters) > 0;
 
         }
 

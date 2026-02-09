@@ -1,0 +1,9 @@
+
+<ng-container *ngIf="isLoggedIn() && userDetail.role === 'Admin'">
+    <a routerLink="/vehicleRoute" title="Manage Route">Manage Route</a>
+    <a routerLink="/" title="Manage Route">Manage Vehicles</a>
+    <a routerLink="/" title="Manage Route">Schedule</a>
+    <a routerLink="/" title="Manage Route">Fare</a>
+    <a routerLink="/" title="Manage Route">Bookings</a>
+    <a routerLink="/" title="Manage User">Users</a>
+</ng-container>
