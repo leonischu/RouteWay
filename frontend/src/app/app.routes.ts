@@ -10,6 +10,7 @@ import { authGuard } from './guards/auth-guard';
 import { VehicleRoute } from './pages/vehicle-route/vehicle-route';
 import { AddRoutes } from './Forms/add-routes/add-routes';
 import { Admin } from './pages/admin/admin';
+import { Vehicles } from './pages/vehicles/vehicles';
 
 export const routes: Routes = [
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
       { path: 'addRoute', component: AddRoutes,canActivate:[authGuard]  },
       { path: 'vehicleRoute', component: VehicleRoute,canActivate:[authGuard]  },
       { path: 'adminPage', component: Admin,canActivate:[authGuard]},
+      { path: 'vehicles', component: Vehicles,canActivate:[authGuard]},
       
       { path: "**", component:PageNotFound},
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { VehicleRoutes, VehicleRoutesInterface } from '../model/vehicle-route';
 import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
+import {  VehicleInterface } from '../model/Vehicles-Info';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class Api {
 
   constructor(private http:HttpClient){}
 
-
+//Services For Routes
   getRoutes():Observable<VehicleRoutesInterface>{
     return this.http.get<VehicleRoutesInterface>(`${this.apiUrl}api/VehicleRoute`);
   }
@@ -25,5 +26,10 @@ export class Api {
   editRoute(routeId:number, routeData:VehicleRoutes){
     return this.http.put<VehicleRoutes>(`${this.apiUrl}api/VehicleRoute/${routeId}`,routeData)
   }
+
+// Services For Vehicles 
+      getVehicle():Observable<VehicleInterface>{
+      return this.http.get<VehicleInterface>(`${this.apiUrl}api/Vehicle`)
+      }
 
 }
