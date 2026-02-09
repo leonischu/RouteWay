@@ -1,5 +1,5 @@
 export interface Vehicle{
-    vehicleId:number,
+    vehicleId :number,
     vehicleNumber:string,
     vehicleType:string,
     capacity:number,
