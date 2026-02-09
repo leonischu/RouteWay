@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Auth } from '../../services/auth';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   standalone:true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,RouterOutlet],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
@@ -23,5 +23,9 @@ ngOnInit(){
 isLoggedIn(): boolean {
   return this.authService.isLoggedIn();
 }
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
 }
