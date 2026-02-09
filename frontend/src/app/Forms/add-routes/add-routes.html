@@ -14,7 +14,7 @@
     <h2 class="text-2xl font-bold text-white mb-6 text-center">Add New Route</h2>
 
     <!-- Form -->
-    <form (ngSubmit)="addRoute()" class="space-y-5">
+    <form (ngSubmit)="submitForm()" class="space-y-5">
       
       <!-- Source Input -->
       <div>
@@ -89,7 +89,7 @@
           type="submit" 
           class="flex-1 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:shadow-indigo-500/30 transition-all font-semibold"
         >
-          Add Route
+          {{ isEditMode ? 'Update Route' : 'Add Route' }}
         </button>
       </div>
 

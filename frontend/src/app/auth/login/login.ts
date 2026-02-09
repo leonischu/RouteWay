@@ -40,9 +40,17 @@ export class Login {
     this.errorMessage = '';
 
     this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
+      next: (response) => {  
+        
         this.loading = false;
-        this.router.navigate(['/']); 
+
+        const role = this.authService.getUserRole();
+        if(role === 'Admin'){
+          this.router.navigate(['/adminPage']);
+        }
+        else{
+          this.router.navigate(['/'])
+        }
         Swal.fire({
         title: "Welcome",
         text: "Login Successful!",

@@ -21,19 +21,8 @@ export class Navbar {
   
   ngOnInit() {
     this.getUserName();
-    // this.userDetail = this.authService.getUserName();
   }
 
-  //  getUserName() {
-  //    this.authService.getUserName().subscribe({
-  //     next:(response) =>{
-  //       this.userDetail=response;
-  //     },
-  //     error:(err:any) =>{
-  //       console.error("Error fetching username",err)
-  //     }
-  //    });
-  // }
     getUserName(){
      this.userDetail=this.authService.getUserName();
   }

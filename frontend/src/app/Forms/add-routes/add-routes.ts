@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -21,7 +21,9 @@ export class AddRoutes {
     distance:0
   };
   // use event emitter to notify the parent component when new route is added 
+   @Input() isEditMode = false;
    @Output() newRouteAdded = new EventEmitter<any>();
+   @Output() routeUpdated = new EventEmitter<any>();
    
   //Opens the Form 
 
@@ -51,6 +53,17 @@ export class AddRoutes {
       this.resetForm(); //Reset the fields of Forms
     }
 
+  }
+
+   submitForm() {
+    if (this.isEditMode) {
+      this.routeUpdated.emit(this.newRoute);   //  PUT
+    } else {
+      this.newRouteAdded.emit(this.newRoute);  //  POST
+    }
+
+    this.closeForm();
+    this.resetForm();
   }
 
   

@@ -46,6 +46,7 @@ namespace AutomatedTransportEnquiry.Controllers
         [HttpPut]
         public async Task<ActionResult<APIResponse>>Update([FromBody]VehicleUpdateDto dto)
         {
+            //dto.VehicleId = id;
             var response = await _service.UpdateAsync(dto);
             return StatusCode((int)response.StatusCode,response);
         }

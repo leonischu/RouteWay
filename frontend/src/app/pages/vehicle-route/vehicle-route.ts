@@ -65,8 +65,7 @@ export class VehicleRoute implements OnInit {
     this.selectedRouteId = route.routeId;
     this.isEditMode = true;
 
-    //open the form 
-    this.addRouteForm.openForm();
+  
 
     //patch existing value into from 
     this.addRouteForm.newRoute={
@@ -75,28 +74,26 @@ export class VehicleRoute implements OnInit {
       destination:route.destination,
       distance: route.distance
     };
+      //open the form 
+    this.addRouteForm.openForm();
  
   }
 
-  updateRoute(): void {
-    if(!this.selectedRouteId) return;
-    
-    this.apiService
-    .editRoute(this.selectedRouteId,this.addRouteForm.newRoute).subscribe({
-       next: res => {
-        console.log('Route Updated', res);
-
+ updateRoute(route: any): void {
+  this.apiService
+    .editRoute(route.routeId, route)
+    .subscribe({
+      next: () => {
         this.isEditMode = false;
-        this.selectedRouteId = 0;
-
-        this.addRouteForm.closeForm();
+        this.addRouteForm.isEditMode = false;
         this.ngOnInit();
+      },
+      error: err => console.error(err)
+    });
+}
 
-    },
-  error:err => console.error(err)
-  });
 
   }
 
 
-}
+
