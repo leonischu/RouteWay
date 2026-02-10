@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { VehicleRoutes, VehicleRoutesInterface } from '../model/vehicle-route';
 import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
 import {  Vehicle, VehicleInterface } from '../model/Vehicles-Info';
+import { Schedule } from '../model/schedule-info';
+import { Fare, FareInterface } from '../model/Fare-Info';
+
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +45,18 @@ export class Api {
         return this.http.put<Vehicle>(`${this.apiUrl}api/Vehicle`,vehicleData)
       }
       
+      //Services For Schedule
+     getSchedule(from: string, to: string):Observable<Schedule[]> {
+     return this.http.get<Schedule[]>(`${this.apiUrl}api/Schedule?from=${from}&to=${to}`);
+        }
+
+      //Services for Fares 
+        
+        getFare():Observable<FareInterface>{
+          return this.http.get<FareInterface>(`${this.apiUrl}api/Fare`);
+        }
+        addFare(newFare:any):Observable<Fare>{
+          return this.http.post<Fare>(`${this.apiUrl}api/Fare`,newFare)
+        }
 
 }
