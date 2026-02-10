@@ -44,28 +44,20 @@ export class AddRoutes {
 
 
 
-  //Add the new Route 
-  addRoute(){
-    if(this.newRoute.source && this.newRoute.destination && this.newRoute.distance)
-    {
-      this.newRouteAdded.emit(this.newRoute); //Esle new route data parent ma emit garcha
-      this.closeForm(); //this closes the form after adding new data 
-      this.resetForm(); //Reset the fields of Forms
+ submitForm() {
+    if (!this.newRoute.source || !this.newRoute.destination || !this.newRoute.distance) {
+      return;
     }
 
-  }
-
-   submitForm() {
     if (this.isEditMode) {
-      this.routeUpdated.emit(this.newRoute);   //  PUT
+      this.routeUpdated.emit(this.newRoute); // PUT
     } else {
-      this.newRouteAdded.emit(this.newRoute);  //  POST
+      this.newRouteAdded.emit(this.newRoute); // POST
     }
 
     this.closeForm();
     this.resetForm();
   }
-
   
   
 

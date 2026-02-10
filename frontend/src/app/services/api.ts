@@ -39,7 +39,7 @@ export class Api {
         return this.http.post<Vehicle>(`${this.apiUrl}api/Vehicle`,newVehicle);
       }
       updateVehicle(vehicleId:number,vehicleData:Vehicle){
-        return this.http.put<Vehicle>(`${this.apiUrl}api/Vehicle/${vehicleId}`,vehicleData)
+        return this.http.put<Vehicle>(`${this.apiUrl}api/Vehicle`,vehicleData)
       }
       
 

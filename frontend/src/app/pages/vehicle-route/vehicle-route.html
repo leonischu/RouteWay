@@ -25,7 +25,12 @@
   </div>
 
   <!-- Modal Form -->
-  <app-add-routes (newRouteAdded)="addNewRoute($event)" #addRouteForm></app-add-routes>
+<app-add-routes
+  #addRouteForm
+  [isEditMode]="isEditMode"
+  (newRouteAdded)="addNewRoute($event)"
+  (routeUpdated)="updateRoute($event)">
+</app-add-routes>
 
   <!-- Vehicle Routes Grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

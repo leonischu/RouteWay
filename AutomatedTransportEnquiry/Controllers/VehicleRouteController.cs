@@ -28,7 +28,7 @@ namespace AutomatedTransportEnquiry.Controllers
         public VehicleRouteController(IVehicleRouteService service)
         {
             _service = service;
-          
+
         }
 
 
@@ -36,11 +36,11 @@ namespace AutomatedTransportEnquiry.Controllers
         public async Task<ActionResult<APIResponse>> GetAll()
         {
 
-           
-            
-                var response = await _service.GetAllAsync();
-                return StatusCode((int)response.StatusCode,response);
-           
+
+
+            var response = await _service.GetAllAsync();
+            return StatusCode((int)response.StatusCode, response);
+
         }
 
         [HttpGet("{id}")]
@@ -48,22 +48,24 @@ namespace AutomatedTransportEnquiry.Controllers
         {
             var response = await _service.GetByIdAsync(id);
             return StatusCode((int)response.StatusCode, response);
-            
-            }
+
+        }
 
 
         [HttpPost]
-        public async Task<ActionResult<APIResponse>>Create(VehicleRouteCreateDto dto)
+        public async Task<ActionResult<APIResponse>> Create(VehicleRouteCreateDto dto)
         {
             var response = await _service.CreateAsync(dto);
             return StatusCode((int)response.StatusCode, response);
 
         }
 
-        [HttpPut]
+        [HttpPut("{routeId}")]
 
-        public async Task<ActionResult<APIResponse>> Update(VehicleRouteUpdateDto dto)
+        public async Task<ActionResult<APIResponse>> Update(int routeId, [FromBody]  VehicleRouteUpdateDto dto)
         {
+            dto.RouteId = routeId;
+         
             var response = await _service.UpdateAsync(dto);
             return StatusCode((int)response.StatusCode, response);
 

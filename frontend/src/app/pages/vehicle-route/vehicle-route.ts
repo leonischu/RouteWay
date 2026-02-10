@@ -1,99 +1,78 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Api } from '../../services/api';
 import { CommonModule } from '@angular/common';
 import { VehicleRoutes, VehicleRoutesInterface } from '../../model/vehicle-route';
 import { AddRoutes } from '../../Forms/add-routes/add-routes';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-vehicle-route',
+  standalone: true,
   imports: [CommonModule,AddRoutes],
   templateUrl: './vehicle-route.html',
   styleUrl: './vehicle-route.css',
 })
 export class VehicleRoute implements OnInit {
-    @ViewChild('addRouteForm') addRouteForm!: AddRoutes;  // Access the child component
-   
+  @ViewChild(AddRoutes) addRouteForm!: AddRoutes;
 
-     selectedRouteId!:number;
-     isEditMode = false;
-  
-  vehicleRoutes:VehicleRoutes[]=[];
-  constructor(private apiService:Api){}
-  
-  
- ngOnInit(): void {
-    this.apiService.getRoutes().subscribe(
-      (data) => { 
-        this.vehicleRoutes = data.data;
-        console.log(this.vehicleRoutes);
-      },
-      (error: any) => {
-        console.error('Error fetching vehicle routes', error);
-      }
-    );
+  vehicleRoutes: VehicleRoutes[] = [];
+  isEditMode = false;
+
+  constructor(private apiService: Api,
+      private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.loadRoutes();
   }
 
-  // viewRouteDetails(route:VehicleRoute){
-  //   console.log(route);
-  // }
-  deleteRoute(routeId:number):void{
-    this.apiService.deleteRoutes(routeId).subscribe((rresponse)=>{
-      console.log('Route Deleted');
-      
+ loadRoutes(): void {
+  this.apiService.getRoutes().subscribe({
+    next: (res) => {
+      this.vehicleRoutes = [...res.data]; 
+      this.cdr.detectChanges();           
     },
-    error => {
-      console.error('Error deleting routes',error);
-    });
-  }
-
-  addNewRoute(newRoute:any):void {
-    this.apiService.addRoute(newRoute).subscribe((addedRoute)=>{
-      console.log('Route added sucessfully',addedRoute);
-      
-    }, error =>{
-      console.error('Error adding route:',error);
-    });
-  }
-
-
-  openAddRouteForm(): void {
-    this.addRouteForm.openForm();  // Call openForm() from the parent component
-  }
-
-  editRoute(route:VehicleRoutes):void{
-    this.selectedRouteId = route.routeId;
-    this.isEditMode = true;
-
-  
-
-    //patch existing value into from 
-    this.addRouteForm.newRoute={
-      routeId:route.routeId,
-      source:route.source,
-      destination:route.destination,
-      distance: route.distance
-    };
-      //open the form 
-    this.addRouteForm.openForm();
- 
-  }
-
- updateRoute(route: any): void {
-  this.apiService
-    .editRoute(route.routeId, route)
-    .subscribe({
-      next: () => {
-        this.isEditMode = false;
-        this.addRouteForm.isEditMode = false;
-        this.ngOnInit();
-      },
-      error: err => console.error(err)
-    });
+    error: (err) => console.error(err),
+  });
 }
 
-
+  openAddRouteForm() {
+    this.isEditMode = false;
+    this.addRouteForm.openForm();
   }
+
+  addNewRoute(route: VehicleRoutes) {
+    this.apiService.addRoute(route).subscribe({
+      next: () => this.loadRoutes(),
+      error: (err) => console.error(err),
+    });
+  }
+
+  editRoute(route: VehicleRoutes) {
+    this.isEditMode = true;
+
+    this.addRouteForm.newRoute = { ...route };
+    this.addRouteForm.openForm();
+  }
+
+  updateRoute(route: VehicleRoutes) {
+    this.apiService.editRoute(route.routeId, route).subscribe({
+      next: () => {
+        this.isEditMode = false;
+        this.loadRoutes();
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  deleteRoute(routeId: number) {
+    this.apiService.deleteRoutes(routeId).subscribe({
+      next: () => this.loadRoutes(),
+      error: (err) => console.error(err),
+    });
+  }
+}
+
 
 
 
