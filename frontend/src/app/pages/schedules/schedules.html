@@ -1,0 +1,46 @@
+<!-- <div class="input-container">
+  <label for="from">From:</label>
+  <input type="text" id="from" [(ngModel)]="from" placeholder="Enter start location" />
+
+  <label for="to">To:</label>
+  <input type="text" id="to" [(ngModel)]="to" placeholder="Enter destination" />
+
+  <button (click)="loadSchedule()">Get Schedules</button>
+</div>
+
+<div *ngIf="isLoading" class="loading">
+  Loading schedules...
+</div>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+
+<div *ngIf="!isLoading && !error && schedules.length > 0" class="schedule-list">
+  <h2>Schedules from {{ from }} to {{ to }}</h2>
+
+  <table class="schedule-table">
+    <thead>
+      <tr>
+        <th>Schedule ID</th>
+        <th>Route</th>
+        <th>Travel Date</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let schedule of schedules">
+        <td>{{ schedule.scheduleId }}</td>
+        <td>{{ schedule.vehicleName }}</td>
+        <td>{{ schedule.travelDate ? schedule.travelDate | date: 'shortDate' : 'N/A' }}</td>
+        <td>{{ schedule.departureTime }}</td>
+        <td>{{ schedule.arrivalTime }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isLoading && !error && schedules.length === 0" class="no-schedules">
+  No schedules found for the selected route.
+</div> -->

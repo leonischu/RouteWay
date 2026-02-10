@@ -21,7 +21,7 @@ export class Vehicles implements OnInit {
 
   isEditMode = false;
   selectedVehicleId = 0;
-
+ 
   constructor(
     private apiService: Api,
       private cdr: ChangeDetectorRef
