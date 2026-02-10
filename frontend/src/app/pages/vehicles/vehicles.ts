@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Api } from '../../services/api';
 import { Vehicle } from '../../model/Vehicles-Info';
@@ -22,7 +22,12 @@ export class Vehicles implements OnInit {
   isEditMode = false;
   selectedVehicleId = 0;
 
-  constructor(private apiService: Api) {}
+  constructor(
+    private apiService: Api,
+      private cdr: ChangeDetectorRef
+
+
+  ) {}
 
   ngOnInit(): void {
     this.loadVehicle();
@@ -30,17 +35,24 @@ export class Vehicles implements OnInit {
   }
 
   loadVehicle(): void {
-    this.apiService.getVehicle().subscribe(res => {
-      this.vehicles = res.data;
-    });
-  }
+  this.apiService.getVehicle().subscribe({
+    next: (res) => {
+      this.vehicles = [...res.data];  
+      this.cdr.detectChanges();        
+    },
+    error: (err) => console.error(err),
+  });
+}
 
-  loadRoutes(): void {
-    this.apiService.getRoutes().subscribe(res => {
-      this.routes = res.data;
-    });
-  }
-
+loadRoutes(): void {
+  this.apiService.getRoutes().subscribe({
+    next: (res) => {
+      this.routes = [...res.data];     
+      this.cdr.detectChanges();       
+    },
+    error: (err) => console.error(err),
+  });
+}
 
   openAddVehicleForm(): void {
     this.isEditMode = false;
