@@ -26,13 +26,13 @@ constructor(
  
 
   ngOnInit(): void {
-    // this.loadSchedule();
+    this.getSchedule();
       }
 
 
 
       getSchedule(){
-        this.apiService.getSchedule(this.from , this.to).subscribe({
+        this.apiService.getSchedule().subscribe({
           next:(response) =>{
             this.schedules=response;
             console.log(this.schedules)
