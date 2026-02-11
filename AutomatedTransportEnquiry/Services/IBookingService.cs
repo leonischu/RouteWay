@@ -9,6 +9,7 @@ namespace AutomatedTransportEnquiry.Services
 
 
         Task<APIResponse> GetByIdAsync(int bookingId);
+        Task<APIResponse> GetAllAsync();
         Task<APIResponse> CreateAsync(BookingCreateDto dto);
     }
 }

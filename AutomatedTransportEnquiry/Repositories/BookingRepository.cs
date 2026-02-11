@@ -155,5 +155,12 @@ namespace AutomatedTransportEnquiry.Repositories
                 Seats = seats
             }) > 0;
         }
+
+        public async Task<IEnumerable<Booking>> GetAllAsync()
+        {
+            var query = "SELECT * FROM Bookings";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<Booking>(query);
+        }
     }
 }

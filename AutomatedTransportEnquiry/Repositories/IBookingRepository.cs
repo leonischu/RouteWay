@@ -6,6 +6,7 @@ namespace AutomatedTransportEnquiry.Repositories
     public interface IBookingRepository
     {
         Task<int> CreateAsync(Booking booking);
+        Task<IEnumerable<Booking>> GetAllAsync();
         Task<Booking> GetByIdAsync(int bookingId);
         Task<IEnumerable<BookingDto>> GetByPhoneAsync(string phone);
         Task UpdateSeatsAsync(int scheduleId, int seats);
