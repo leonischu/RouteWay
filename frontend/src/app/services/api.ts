@@ -6,6 +6,7 @@ import { VehicleRoute } from '../pages/vehicle-route/vehicle-route';
 import {  Vehicle, VehicleInterface } from '../model/Vehicles-Info';
 import { Schedule } from '../model/schedule-info';
 import { Fare, FareInterface } from '../model/Fare-Info';
+import { Searches, searchResult } from '../model/Searches';
 
 
 @Injectable({
@@ -58,5 +59,12 @@ export class Api {
         addFare(newFare:any):Observable<Fare>{
           return this.http.post<Fare>(`${this.apiUrl}api/Fare`,newFare)
         }
+
+
+
+      //Service for search 
+      search(newSearch:any):Observable<searchResult[]>{
+        return this.http.post<searchResult[]>(`${this.apiUrl}api/Search`,newSearch);
+      }
 
 }
