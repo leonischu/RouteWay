@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserDetail } from '../../model/userDetail';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class Account implements OnInit{
   user:UserDetail | null =null;
- constructor(private authService:Auth,private router: Router){}
+ constructor(private authService:Auth,private router: Router,private cdr: ChangeDetectorRef){}
 
 
  ngOnInit(): void {
@@ -20,6 +20,8 @@ export class Account implements OnInit{
     next: (data) => {
       console.log('Profile data received:', data);
       this.user = data;
+            this.cdr.detectChanges();        
+
     },
     error: (err) => {
       console.error('Error loading profile:', err);

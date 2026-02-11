@@ -49,7 +49,7 @@ export class Login {
           this.router.navigate(['/adminPage']);
         }
         else{
-          this.router.navigate(['/'])
+          this.router.navigate(['/User'])
         }
         Swal.fire({
         title: "Welcome",
