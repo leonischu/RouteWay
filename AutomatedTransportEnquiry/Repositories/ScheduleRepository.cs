@@ -5,7 +5,7 @@ using Dapper;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
-    public class ScheduleRepository :IScheduleRepository
+    public class ScheduleRepository : IScheduleRepository
     {
         private readonly DapperContext _context;
         public ScheduleRepository(DapperContext context)
@@ -13,6 +13,9 @@ namespace AutomatedTransportEnquiry.Repositories
             _context = context;
 
         }
+
+
+
         public async Task<IEnumerable<ScheduleDto>> GetAllAsync(string from,string to)
         {
            
@@ -41,6 +44,11 @@ namespace AutomatedTransportEnquiry.Repositories
             return await connection.ExecuteScalarAsync<int>(query,schedule);
         }
 
-
+        public async Task<IEnumerable<Schedule>> GetAsync()
+        {
+            var query = "SELECT * FROM Schedules ";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<Schedule>(query);
+        }
     }
 }

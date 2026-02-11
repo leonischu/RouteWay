@@ -1,5 +1,7 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Services;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +20,17 @@ namespace AutomatedTransportEnquiry.Controllers
         {
             _service = service;
         }
+
         [HttpGet]
+        public async Task<ActionResult<APIResponse>>GetAll()
+        {
+            var response = await _service.GetAsync();
+            return Ok(response);
+        }
+
+
+
+        [HttpGet("{from}")]
         public async Task<IActionResult> GetAll(string from,string to)
         { 
             var response = await _service.GetAllAsync(from,to);
