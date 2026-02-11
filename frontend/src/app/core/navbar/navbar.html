@@ -74,18 +74,37 @@
         <!-- User Dropdown -->
         <div class="relative group">
           <!-- Trigger -->
-          <div routerLink="/adminPage" class="flex items-center gap-3 cursor-pointer pl-2">
-            <!-- Name + Role (Hidden on small screens) -->
-            <div class="hidden lg:flex flex-col text-right leading-tight">
-              <span class="font-semibold text-sm text-white">{{ userDetail.FullName }}</span>
-              <span class="text-xs text-slate-400 capitalize">{{ userDetail.role }}</span>
-            </div>
+           <div *ngIf="userDetail.role === 'Admin'; else userLink" 
+       [routerLink]="'/adminPage'" 
+       class="flex items-center gap-3 cursor-pointer pl-2">
+    <!-- Name + Role (Hidden on small screens) -->
+    <div class="hidden lg:flex flex-col text-right leading-tight">
+      <span class="font-semibold text-sm text-white">{{ userDetail.FullName }}</span>
+      <span class="text-xs text-slate-400 capitalize">{{ userDetail.role }}</span>
+    </div>
 
-            <!-- Avatar -->
-            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-full w-11 h-11 flex items-center justify-center shadow-lg shadow-indigo-900/50 ring-2 ring-slate-900 transition-all duration-300 group-hover:ring-indigo-500">
-              {{ userDetail.FullName[0] | uppercase }}
-            </div>
-          </div>
+    <!-- Avatar -->
+    <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-full w-11 h-11 flex items-center justify-center shadow-lg shadow-indigo-900/50 ring-2 ring-slate-900 transition-all duration-300 group-hover:ring-indigo-500">
+      {{ userDetail.FullName[0] | uppercase }}
+    </div>
+  </div>
+
+  <!-- Else condition: If the user is not an Admin, display this link -->
+  <ng-template #userLink>
+    <div [routerLink]="'/User'" 
+         class="flex items-center gap-3 cursor-pointer pl-2">
+      <!-- Name + Role (Hidden on small screens) -->
+      <div class="hidden lg:flex flex-col text-right leading-tight">
+        <span class="font-semibold text-sm text-white">{{ userDetail.FullName }}</span>
+        <span class="text-xs text-slate-400 capitalize">{{ userDetail.role }}</span>
+      </div>
+
+      <!-- Avatar -->
+      <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-full w-11 h-11 flex items-center justify-center shadow-lg shadow-indigo-900/50 ring-2 ring-slate-900 transition-all duration-300 group-hover:ring-indigo-500">
+        {{ userDetail.FullName[0] | uppercase }}
+      </div>
+    </div>
+  </ng-template>
 
           <!-- Dropdown Menu -->
           <div class="absolute right-0 top-full mt-3 w-56 bg-slate-800 text-slate-200 rounded-xl shadow-2xl border border-slate-700 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-2 origin-top-right overflow-hidden">

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AutomatedTransportEnquiry.Controllers
 
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     

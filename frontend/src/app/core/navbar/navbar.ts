@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,10 @@ export class Navbar {
    userDetail: any;
   constructor(
   public authService: Auth,
-  private router:Router
+  private router:Router,
+  private cdr: ChangeDetectorRef
+
+
   ){}
     isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
@@ -25,6 +28,8 @@ export class Navbar {
 
     getUserName(){
      this.userDetail=this.authService.getUserName();
+           this.cdr.detectChanges();        
+
   }
 
     logout(): void {
@@ -33,6 +38,8 @@ export class Navbar {
   }
   viewProfile(){
     this.router.navigate(['/profile'])
+          this.cdr.detectChanges();        
+
   }
 
 
