@@ -20,6 +20,8 @@ namespace AutomatedTransportEnquiry.Services
             _fareRepository = fareRepository;
             _mapper = mapper;
         }
+
+
         public async Task<APIResponse> CreateAsync(BookingCreateDto dto)
         {
             var response = new APIResponse();
@@ -72,6 +74,34 @@ namespace AutomatedTransportEnquiry.Services
             return response;
 
         }
-        
+
+        public async Task<APIResponse> GetByIdAsync(int bookingId)
+        {
+            var response = new APIResponse();
+            try
+            {
+                var booking = await _repository.GetByIdAsync(bookingId);
+                if(booking == null)
+                {
+                    response.Status = false;
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Errors.Add($"Booking with ID{bookingId} not found.");
+                    return response;
+                }
+                response.Data = _mapper.Map<BookingDto>(booking);
+                response.Status = true;
+                response.StatusCode = HttpStatusCode.OK;
+            } 
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.StatusCode = HttpStatusCode.OK;
+                response.Errors.Add(ex.Message);
+            }
+            return response;
+
+
+
+        }
     }
 }
