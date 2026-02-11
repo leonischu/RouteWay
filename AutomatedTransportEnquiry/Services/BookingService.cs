@@ -75,6 +75,25 @@ namespace AutomatedTransportEnquiry.Services
 
         }
 
+        public async Task<APIResponse> GetAllAsync()
+        {
+            var response = new APIResponse();
+            try
+            {
+                var booking = await _repository.GetAllAsync();
+                response.Data = booking;
+                response.Status = true;
+                response.StatusCode = HttpStatusCode.OK;
+            }
+            catch(Exception ex)
+            {
+                response.Status = false;
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Errors.Add(ex.Message);
+            }
+            return response;
+        }
+
         public async Task<APIResponse> GetByIdAsync(int bookingId)
         {
             var response = new APIResponse();

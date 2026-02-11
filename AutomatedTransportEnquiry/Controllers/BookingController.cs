@@ -20,6 +20,16 @@ namespace AutomatedTransportEnquiry.Controllers
             
             _service = service;
         }
+        [HttpGet]
+
+        public async Task<ActionResult<APIResponse>>GetAll()
+        {
+            var response = await _service.GetAllAsync();
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+
+
         [HttpGet("{id}")]
          
         public async Task<ActionResult<APIResponse>>GetById(int id)
