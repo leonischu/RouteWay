@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AutomatedTransportEnquiry.Controllers
 
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     
@@ -20,6 +20,16 @@ namespace AutomatedTransportEnquiry.Controllers
             
             _service = service;
         }
+        [HttpGet("{id}")]
+         
+        public async Task<ActionResult<APIResponse>>GetById(int id)
+        {
+            var response = await _service.GetByIdAsync(id);
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+
+
         [HttpPost]
         public async Task<ActionResult<APIResponse>>Create([FromBody] BookingCreateDto dto)
         {

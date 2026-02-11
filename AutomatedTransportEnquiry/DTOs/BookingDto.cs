@@ -11,6 +11,15 @@
         public decimal TotalAmount { get; set; }
 
         public string BookingStatus { get; set; }
+        public int ScheduleId { get; set; }
+        public int FareId { get; set; }
+
+        public string PassengerName { get; set; }
+        public string PassengerPhone { get; set; }
+
+        public int Seats { get; set; }
+        public string CancellationReason { get; set; }
+        public DateTime? CancellationDate { get; set; }
     }
     public class BookingCreateDto
     {

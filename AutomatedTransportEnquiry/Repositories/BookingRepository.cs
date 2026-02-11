@@ -42,9 +42,27 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<Booking> GetByIdAsync(int bookingId)
         {
-            var sql = @"SELECT BookingId, ScheduleId, Seats, BookingStatus
-                FROM Bookings
-                WHERE BookingId = @BookingId";
+            var sql = @"SELECT b.BookingId,
+                            CONCAT(r.Source, ' - ',r.Destination) AS RouteName,
+                            v.VehicleNumber,
+                            s.DepartureTime,    
+                            b.TotalAmount,
+                            b.BookingStatus,
+                            b.ScheduleId,
+                            b.FareId,
+                            b.PassengerName,
+                            b.PassengerPhone,
+                            b.Seats,
+                            b.BookingDate,
+                            b.PaymentStatus,
+                            b.CancellationReason,
+                            b.CancellationDate
+                            FROM Bookings b
+                          JOIN Schedules s ON b.ScheduleId = s.ScheduleId
+                          JOIN Vehicles v ON s.VehicleId = v.VehicleId
+                           JOIN Routes r ON s.RouteId = r.RouteId
+    
+                WHERE b.BookingId = @BookingId";
 
             using var conn = _context.CreateConnection();
             return await conn.QuerySingleOrDefaultAsync<Booking>(sql, new { BookingId = bookingId });

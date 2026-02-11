@@ -5,6 +5,10 @@ namespace AutomatedTransportEnquiry.Services
 {
     public interface IBookingService
     {
+
+
+
+        Task<APIResponse> GetByIdAsync(int bookingId);
         Task<APIResponse> CreateAsync(BookingCreateDto dto);
     }
 }
