@@ -46,10 +46,7 @@ export class Api {
         return this.http.put<Vehicle>(`${this.apiUrl}api/Vehicle`,vehicleData)
       }
       
-      //Services For Schedule
-     getSchedule(from: string, to: string):Observable<Schedule[]> {
-     return this.http.get<Schedule[]>(`${this.apiUrl}api/Schedule?from=${from}&to=${to}`);
-        }
+
 
 
         
@@ -68,5 +65,10 @@ export class Api {
       search(newSearch:any):Observable<searchResult[]>{
         return this.http.post<searchResult[]>(`${this.apiUrl}api/Search`,newSearch);
       }
+
+            //Services For Schedule
+     getSchedule():Observable<Schedule[]> {
+     return this.http.get<Schedule[]>(`${this.apiUrl}api/Schedule`);
+        }
 
 }
