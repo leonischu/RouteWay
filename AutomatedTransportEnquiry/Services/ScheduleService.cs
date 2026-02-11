@@ -17,6 +17,27 @@ namespace AutomatedTransportEnquiry.Services
             _mapper = mapper;
         }
 
+
+        public async Task<IEnumerable<Schedule>> GetAsync()
+        {
+            var response = new APIResponse();
+            try
+            {
+                var schedule = await _repository.GetAsync();
+                response.Data = schedule;
+                response.Status = true;
+                response.StatusCode = HttpStatusCode.OK;
+            } catch(Exception ex)
+            {
+                response.Status = false;
+                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.Errors.Add(ex.Message);
+            }
+            return response.Data;
+        }
+
+
+
         public async Task<IEnumerable<ScheduleDto>> GetAllAsync(string from, string to)
         {
             
@@ -24,6 +45,9 @@ namespace AutomatedTransportEnquiry.Services
             return _mapper.Map<IEnumerable<ScheduleDto>>(data);
 
         }
+
+
+
         public async Task<APIResponse> CreateAsync(ScheduleCreateDto dto)
         {
             var response = new APIResponse();
@@ -43,5 +67,7 @@ namespace AutomatedTransportEnquiry.Services
             }
             return response;
         }
+
+        
     }
 }

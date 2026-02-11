@@ -51,6 +51,8 @@ export class Api {
      return this.http.get<Schedule[]>(`${this.apiUrl}api/Schedule?from=${from}&to=${to}`);
         }
 
+
+        
       //Services for Fares 
         
         getFare():Observable<FareInterface>{
