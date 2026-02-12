@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Api } from '../../services/api';
 import { Schedule } from '../../model/schedule-info';
 import { CommonModule } from '@angular/common';
+import { VehicleRoutes } from '../../model/vehicle-route';
+import { Vehicle } from '../../model/Vehicles-Info';
 
 @Component({
   selector: 'app-schedules',
@@ -12,6 +14,8 @@ import { CommonModule } from '@angular/common';
 })
 export class Schedules implements OnInit {
 schedules: Schedule[] = [];
+routes: VehicleRoutes [] = [];
+vehicles : Vehicle [] =[];
   
 newSchedule: Schedule = {
   scheduleId: 0,
@@ -21,7 +25,7 @@ newSchedule: Schedule = {
   travelDate: '',
   departureTime: '',
   arrivalTime: ''
-}
+};
  
  error: string = '';
 constructor(
@@ -32,6 +36,8 @@ constructor(
 
   ngOnInit(): void {
     this.getSchedule();
+    this.loadRoutes();
+    this.loadVehicle();
       }
 
 
@@ -48,8 +54,8 @@ constructor(
       addSchedule():void {
         this.apiService.addSchedule(this.newSchedule).subscribe(
           {
-       next:(response:Schedule)=>{
-       this.schedules.push(response);
+       next:(response:Schedule[])=>{
+       this.schedules.push(...response);
          this.newSchedule = {
                scheduleId: 0,
                vehicleId: 0,
@@ -58,13 +64,35 @@ constructor(
                travelDate: '',
                departureTime: '',
                arrivalTime: ''
-                },
+                }
+              },
          error:(err) =>{
           this.error = 'Failed to add Schedule';
           console.error(err);
          } 
             
           });
+      }
+
+
+      loadRoutes() : void {
+        this.apiService.getRoutes().subscribe({
+          next:(res) =>{
+            this.routes = [...res.data];
+            console.log(this.routes);            
+          },
+          error:(err) => console.error(err)
+        });
+      }
+
+      loadVehicle() : void {
+        this.apiService.getVehicle().subscribe({
+          next:(res) =>{
+          this.vehicles = [...res.data];
+          console.log(this.vehicles);
+          },
+          error:(err) => console.error(err)
+        });
       }
 
 }
