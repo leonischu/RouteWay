@@ -12,13 +12,18 @@ import { CommonModule } from '@angular/common';
 })
 export class Schedules implements OnInit {
 schedules: Schedule[] = [];
-  from: string = '';
-  to: string = '';
-   isLoading: boolean = false;
-  error: string = '';
-
+  
+newSchedule: Schedule = {
+  scheduleId: 0,
+  vehicleId: 0,
+  vehicleName: '',
+  routeId: 0,
+  travelDate: '',
+  departureTime: '',
+  arrivalTime: ''
+}
  
-
+ error: string = '';
 constructor(
   private apiService:Api,
   //  private cdr: ChangeDetectorRef
@@ -40,28 +45,26 @@ constructor(
         })
       }
 
-// loadSchedule(): void {
-//   // Validate input
-//   if (!this.from || !this.to) {
-//     this.error = 'Please enter both From and To cities.';
-//     return;
-//   }
-
-//   this.isLoading = true;
-//   this.error = '';
-
-//   // Call service
-//   this.apiService.getSchedule(this.from, this.to).subscribe({
-//      next: (data: Schedule[]) => {
-//         this.schedules = data;
-//         this.isLoading = false;
-//       },
-//     error: (err) => {
-//       console.error('Schedule API error:', err);
-//       this.error = 'Failed to load schedules. Please try again.';
-//       this.isLoading = false;
-//     }
-//   });
-// }
+      addSchedule():void {
+        this.apiService.addSchedule(this.newSchedule).subscribe(
+          {
+       next:(response:Schedule)=>{
+       this.schedules.push(response);
+         this.newSchedule = {
+               scheduleId: 0,
+               vehicleId: 0,
+               vehicleName: '',
+               routeId: 0,
+               travelDate: '',
+               departureTime: '',
+               arrivalTime: ''
+                },
+         error:(err) =>{
+          this.error = 'Failed to add Schedule';
+          console.error(err);
+         } 
+            
+          });
+      }
 
 }
