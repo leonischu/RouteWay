@@ -1,31 +1,133 @@
-<table class="table-auto w-full bg-white border border-gray-300">
-  <thead class="bg-blue-500 text-white">
-    <tr>
-    <th  class="border px-4 py-2">ScheduleId</th>
-    <th  class="border px-4 py-2">VehicleId</th>
-    <th  class="border px-4 py-2">VehicleName</th>
-    <th  class="border px-4 py-2">Route Id</th>
-    <th  class="border px-4 py-2">Travel Date</th>
-    <th  class="border px-4 py-2">Departure Time</th>
-    <th  class="border px-4 py-2">Arrival Time</th>
-    
-    </tr>
-  </thead>
-  <tbody>
-<tr *ngFor = "let schedule of schedules"  class="bg-gray-100">
-  <td  class="border px-4 py-2">{{schedule.scheduleId}}</td>
-  <td  class="border px-4 py-2">{{schedule.vehicleId}}</td>
-  <td  class="border px-4 py-2">{{schedule.vehicleName}}</td>
-  <td  class="border px-4 py-2">{{schedule.routeId}}</td>
- <td  class="border px-4 py-2">{{schedule.travelDate}}</td>
- <td  class="border px-4 py-2">{{schedule.departureTime}}</td>
- <td  class="border px-4 py-2">{{schedule.arrivalTime}}</td>
-  </tr>
-  </tbody>
-</table>
+<div class="bg-slate-800 border border-slate-700 rounded-xl p-8 mb-10 shadow-xl">
+  <h2 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    Add New Schedule
+  </h2>
+
+  <form (ngSubmit)="addSchedule()" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <div>
+      <label class="block text-sm font-medium text-slate-300 mb-2">Assign Route</label>
+      <select [(ngModel)]="newSchedule.routeId" name="routeId" required
+        class="dan w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white 
+        focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+        <option value="0" disabled>Select a route</option>
+        <option *ngFor="let route of routes" [value]="route.routeId">
+          {{ route.source }} → {{ route.destination }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-300 mb-2">VehicleNumber</label>
+      <select [(ngModel)]="newSchedule.vehicleId" name="vehicleId" required
+        class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+        <option value="0" disabled>Select VehicleNumber</option>
+        <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">
+          {{ vehicle.vehicleNumber }}
+        </option>
+      </select>
+    </div>
+
+    <div class="relative">
+      <label class="block text-sm font-medium text-slate-300 mb-2">Date</label>
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none mt-9">
+        <svg class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <input type="date" [(ngModel)]="newSchedule.travelDate" name="date" required
+        class="w-full bg-slate-900 border border-slate-600 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
+    </div>
+
+    <div class="relative">
+      <label class="block text-sm font-medium text-slate-300 mb-2">Departure Time</label>
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none mt-9">
+        <svg class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <input type="text" placeholder="00:00:00" [(ngModel)]="newSchedule.departureTime" name="startTime" required
+        class="w-full bg-slate-900 border border-slate-600 rounded-lg pl-12 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
+    </div>
+
+    <div class="relative">
+      <label class="block text-sm font-medium text-slate-300 mb-2">Arrival Time</label>
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none mt-9">
+        <svg class="h-5 w-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <input type="text" placeholder="00:00:00" [(ngModel)]="newSchedule.arrivalTime" name="arrivalTime" required
+        class="w-full bg-slate-900 border border-slate-600 rounded-lg pl-12 pr-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all">
+    </div>
+
+    <div class="flex items-end">
+      <button type="submit" 
+        class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg transition-all transform hover:scale-105">
+        Create Schedule
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Schedules Cards - Table Removed -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div *ngFor="let schedule of schedules" 
+       class="bg-slate-800/90 backdrop-blur-sm border border-slate-700 rounded-xl p-6 hover:border-indigo-500 transition-all">
+
+    <div class="flex justify-between items-start mb-4">
+      <h3 class="text-xl font-bold text-white">Schedule #{{schedule.scheduleId}}</h3>
+      <span class="text-sm text-slate-400">Veh ID: {{schedule.vehicleId}}</span>
+    </div>
+
+    <div class="space-y-3 text-slate-300">
+      <!-- Loop through the routes array and find the matching route -->
+      <div *ngFor="let route of routes">
+        <p *ngIf="route.routeId === schedule.routeId">
+          <span class="text-slate-400">Route:</span> 
+          {{route.source}} → {{route.destination}}
+        </p>
+      </div>
+
+      <!-- Similarly for the vehicles -->
+      <div *ngFor="let vehicle of vehicles">
+        <p *ngIf="vehicle.vehicleId === schedule.vehicleId">
+          <span class="text-slate-400">VehicleNumber:</span> 
+          {{vehicle.vehicleNumber}} 
+        </p>
+      </div>
+
+      <p><span class="text-slate-400">Route ID:</span> {{schedule.routeId}}</p>
+      <p><span class="text-slate-400">Date:</span> {{schedule.travelDate}}</p>
+      <!-- <p><span class="text-slate-400">Date:</span> {{schedule.availableSeats}}</p> -->
+      
+      <div class="flex items-center gap-4 pt-2">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{schedule.departureTime}}</span>
+        </div>
+        <span class="text-slate-500">→</span>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{schedule.arrivalTime}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
  
 
+  
 
 
-
-
+<!-- Empty state -->
+<div *ngIf="!schedules || schedules.length === 0" class="text-center py-16 text-slate-500">
+  No schedules added yet.
+</div>

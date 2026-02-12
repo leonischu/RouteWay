@@ -35,9 +35,9 @@ namespace AutomatedTransportEnquiry.Repositories
         {
           var query = @"
           INSERT INTO Schedules
-          (VehicleId, RouteId, DepartureTime, ArrivalTime, TravelDate)
+          (VehicleId, RouteId, DepartureTime, ArrivalTime, TravelDate,AvailableSeats)
           VALUES
-          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime,@TravelDate);
+          (@VehicleId, @RouteId, @DepartureTime, @ArrivalTime,@TravelDate,@AvailableSeats);
 
           SELECT CAST(SCOPE_IDENTITY() AS INT);  ";
             using var connection = _context.CreateConnection();

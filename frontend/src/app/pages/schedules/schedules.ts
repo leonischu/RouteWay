@@ -4,11 +4,12 @@ import { Schedule } from '../../model/schedule-info';
 import { CommonModule } from '@angular/common';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { Vehicle } from '../../model/Vehicles-Info';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-schedules',
   standalone:true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './schedules.html',
   styleUrl: './schedules.css',
 })
@@ -20,9 +21,9 @@ vehicles : Vehicle [] =[];
 newSchedule: Schedule = {
   scheduleId: 0,
   vehicleId: 0,
-  vehicleName: '',
+  
   routeId: 0,
-  travelDate: '',
+  travelDate: null,
   departureTime: '',
   arrivalTime: ''
 };
@@ -52,20 +53,23 @@ constructor(
       }
 
       addSchedule():void {
+        console.log(this.newSchedule)
         this.apiService.addSchedule(this.newSchedule).subscribe(
           {
-       next:(response:Schedule[])=>{
+       next:(response:Schedule[] )=>{
        this.schedules.push(...response);
          this.newSchedule = {
                scheduleId: 0,
                vehicleId: 0,
-               vehicleName: '',
+               
                routeId: 0,
                travelDate: '',
                departureTime: '',
                arrivalTime: ''
                 }
+                console.log(this.newSchedule)
               },
+              
          error:(err) =>{
           this.error = 'Failed to add Schedule';
           console.error(err);

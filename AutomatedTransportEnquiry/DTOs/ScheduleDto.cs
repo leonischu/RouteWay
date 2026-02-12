@@ -8,7 +8,7 @@
         public DateTime? TravelDate { get; set; }
         public TimeSpan? DepartureTime { get; set; }
         public TimeSpan? ArrivalTime { get; set; }
-        //public decimal Price { get; set; }
+        public int AvailableSeats { get; set; }
     }
 
 
@@ -20,6 +20,7 @@
         public DateTime? TravelDate { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
+        public int AvailableSeats { get; set; }
         //public decimal Price { get; set; }
     }
 
