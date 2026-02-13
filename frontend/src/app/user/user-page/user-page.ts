@@ -4,6 +4,7 @@ import { Searches, searchResult } from '../../model/Searches';
 import { errorContext } from 'rxjs/internal/util/errorContext';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Schedule } from '../../model/schedule-info';
 
 @Component({
   selector: 'app-user-page',
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './user-page.css',
 })
 export class UserPage {
+  schedules:Schedule[] = [];
   newSearch: Searches = {
     from: '',
     to: '',
@@ -23,6 +25,8 @@ export class UserPage {
 
   searchResults:searchResult[] = [];
   searchCompleted: boolean = false;
+  error: string = '';
+  
 
   constructor(
      private apiService:Api,
@@ -31,6 +35,8 @@ export class UserPage {
   ){}
   ngOnInit():void{
  this.performSearch();
+ this.loadSchedule();
+ this.loadRides();
   }
   performSearch(){
     this.searchCompleted = false; 
@@ -47,6 +53,31 @@ export class UserPage {
       }
     );
   }
+
+  loadSchedule():void{
+    this.apiService.getSchedule().subscribe({
+      next: (res:Schedule[]) => {
+        this.schedules=[...res];
+        console.log(this.schedules);
+        this.cdr.detectChanges();       
+      },
+     error:(err) => console.error(err)
+    })
+  }
+
+
+loadRides(): void {
+    this.apiService.getAllSearch().subscribe(
+      (searchResults: searchResult[]) => {
+        this.searchResults = searchResults;
+        console.log( this.searchResults);
+      },
+       (err) => {
+        console.error('Error loading rides', err);
+      }
+    );
+  }
+
 
 
 }

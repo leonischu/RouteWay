@@ -62,6 +62,10 @@ export class Api {
 
 
       //Service for search 
+      getAllSearch():Observable<searchResult[]>{
+        return this.http.get<searchResult[]>(`${this.apiUrl}api/Search`)
+      } 
+
       search(newSearch:any):Observable<searchResult[]>{
         return this.http.post<searchResult[]>(`${this.apiUrl}api/Search`,newSearch);
       }

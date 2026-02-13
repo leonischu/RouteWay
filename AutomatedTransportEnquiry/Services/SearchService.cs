@@ -7,7 +7,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AutomatedTransportEnquiry.Services
 {
-    public class SearchService:ISearchService
+    public class SearchService : ISearchService
     {
         private readonly ISearchRepository _repository;
         private readonly IMapper _mapper;
@@ -15,6 +15,12 @@ namespace AutomatedTransportEnquiry.Services
         {
             _repository = repository;
             _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<TransportSearchResultDto>> GetAllAsync()
+        {
+            var result = await _repository.GetAll();
+            return _mapper.Map<IEnumerable<TransportSearchResultDto>>(result);
         }
 
         public async Task<IEnumerable<TransportSearchResultDto>> SearchAsync(TransportSearchRequestDto dto)

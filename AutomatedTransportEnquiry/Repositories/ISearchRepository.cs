@@ -3,7 +3,10 @@
 namespace AutomatedTransportEnquiry.Repositories
 {
     public interface ISearchRepository
+
     {
+
+        Task<IEnumerable<TransportSearchResultDto>> GetAll();
         Task<IEnumerable<TransportSearchResultDto>>SearchAsync(TransportSearchRequestDto dto);  
     }
 }

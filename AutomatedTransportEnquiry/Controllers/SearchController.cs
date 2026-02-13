@@ -20,6 +20,16 @@ namespace AutomatedTransportEnquiry.Controllers
         {
             _service = service;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TransportSearchResultDto>>> GetAll()
+        {
+            var result = await _service.GetAllAsync();
+            return Ok(result);
+        }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Search([FromBody] TransportSearchRequestDto dto )
         {
