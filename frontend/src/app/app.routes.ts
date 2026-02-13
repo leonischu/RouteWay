@@ -15,7 +15,6 @@ import { AddVehicle } from './Forms/add-vehicle/add-vehicle';
 import { Schedules } from './pages/schedules/schedules';
 import { Fares } from './pages/fares/fares';
 import { UserPage } from './user/user-page/user-page';
-import { AvailableRide } from './user/available-ride/available-ride';
 
 export const routes: Routes = [
 
@@ -34,7 +33,7 @@ export const routes: Routes = [
       { path: 'schedules', component: Schedules,canActivate:[authGuard]},
       { path: 'Fares', component: Fares,canActivate:[authGuard]},
       { path: 'User', component: UserPage,canActivate:[authGuard]},
-      { path: 'availableRides', component: AvailableRide,canActivate:[authGuard]},
+      
       
       { path: "**", component:PageNotFound},
 
