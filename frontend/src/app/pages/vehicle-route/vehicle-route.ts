@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { VehicleRoutes, VehicleRoutesInterface } from '../../model/vehicle-route';
 import { AddRoutes } from '../../Forms/add-routes/add-routes';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-route',
   standalone: true,
-  imports: [CommonModule,AddRoutes],
+  imports: [CommonModule,AddRoutes,RouterLink],
   templateUrl: './vehicle-route.html',
   styleUrl: './vehicle-route.css',
 })

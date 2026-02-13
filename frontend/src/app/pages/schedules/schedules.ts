@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { Vehicle } from '../../model/Vehicles-Info';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-schedules',
   standalone:true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './schedules.html',
   styleUrl: './schedules.css',
 })

@@ -7,6 +7,7 @@ import {  Vehicle, VehicleInterface } from '../model/Vehicles-Info';
 import { Schedule } from '../model/schedule-info';
 import { Fare, FareInterface } from '../model/Fare-Info';
 import { Searches, searchResult } from '../model/Searches';
+import { Booking, BookingInterface } from '../model/Booking-info';
 
 
 @Injectable({
@@ -70,13 +71,19 @@ export class Api {
         return this.http.post<searchResult[]>(`${this.apiUrl}api/Search`,newSearch);
       }
 
-     //Services For Schedule
+     //Services for Schedule
      getSchedule():Observable<Schedule[]> {
      return this.http.get<Schedule[]>(`${this.apiUrl}api/Schedule`);
         }
 
       addSchedule(newSchedule:any):Observable<Schedule[]>{
         return this.http.post<Schedule[]>(`${this.apiUrl}api/Schedule`,newSchedule)
+      }
+
+
+      //Services for Bookings
+      getBooking():Observable<BookingInterface>{
+        return this.http.get<BookingInterface>( `${this.apiUrl}api/Booking`);
       }
 
 }
