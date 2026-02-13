@@ -4,11 +4,12 @@ import { Api } from '../../services/api';
 import { Vehicle } from '../../model/Vehicles-Info';
 import { AddVehicle } from '../../Forms/add-vehicle/add-vehicle';
 import { VehicleRoutes } from '../../model/vehicle-route';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vehicles',
   standalone: true,
-  imports: [CommonModule, AddVehicle],
+  imports: [CommonModule, AddVehicle,RouterLink],
   templateUrl: './vehicles.html',
   styleUrl: './vehicles.css',
 })

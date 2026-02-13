@@ -4,10 +4,11 @@ import { Fare } from '../../model/Fare-Info';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleRoutes } from '../../model/vehicle-route';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-fares',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   templateUrl: './fares.html',
   styleUrl: './fares.css',
 })

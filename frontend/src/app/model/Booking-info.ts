@@ -12,3 +12,4 @@ export interface Booking {
 export interface BookingInterface{
     data:Booking[];
 }
+   
