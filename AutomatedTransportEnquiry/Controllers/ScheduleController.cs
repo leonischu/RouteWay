@@ -2,11 +2,13 @@
 using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Services;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutomatedTransportEnquiry.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [ProducesResponseType(200)]

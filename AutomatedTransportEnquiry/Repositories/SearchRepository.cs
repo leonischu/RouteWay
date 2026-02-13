@@ -12,6 +12,30 @@ namespace AutomatedTransportEnquiry.Repositories
         {
             _context = context;
         }
+
+        public async Task<IEnumerable<TransportSearchResultDto>> GetAll()
+        {
+            var sql = new StringBuilder(@"
+        SELECT 
+            s.ScheduleId,
+            v.VehicleType,
+            CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
+            s.DepartureTime,
+            s.ArrivalTime,
+            f.Price
+        FROM Schedules s
+        JOIN Vehicles v ON s.VehicleId = v.VehicleId
+        JOIN Routes r ON s.RouteId = r.RouteId
+        JOIN Fares f ON f.RouteId = r.RouteId");
+
+            using var connection = _context.CreateConnection();
+
+            return await connection.QueryAsync<TransportSearchResultDto>(sql.ToString());
+        }
+
+
+
+
         public async Task<IEnumerable<TransportSearchResultDto>> SearchAsync(TransportSearchRequestDto dto)
         {
             var sql =new StringBuilder( @"

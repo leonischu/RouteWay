@@ -1,177 +1,214 @@
-<div class="min-h-screen bg-slate-900 text-slate-200 p-4 sm:p-8">
-  <div class="max-w-7xl mx-auto">
-
-    <!-- Header -->
-    <div class="mb-10">
-      <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
-        Find Your Ride
-      </h1>
-      <p class="text-slate-400 mt-2">Search and book your next journey instantly.</p>
+<div class="flex min-h-screen bg-slate-900">
+  
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-800 border-r border-slate-700 hidden md:flex flex-col p-6">
+    <div class="mb-8">
+      <span class="text-2xl font-bold text-indigo-400">Menu</span>
     </div>
-
-    <!-- Search Form (Glassmorphism Card) -->
-    <form (ngSubmit)="performSearch()" 
-          class="bg-slate-800/40 backdrop-blur-lg border border-slate-700 rounded-2xl p-6 shadow-2xl mb-12">
+    <nav class="space-y-2">
+      <button class="w-full flex items-center space-x-3 px-4 py-3 bg-indigo-600/10 text-indigo-400 rounded-lg border border-indigo-600/20 transition-all">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span class="font-medium">Search Rides</span>
+      </button>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- From -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Departing From</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <input type="text" [(ngModel)]="newSearch.from" name="from" placeholder="e.g. New York"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
+      <button class="w-full flex items-center space-x-3 px-4 py-3 text-slate-400 hover:bg-slate-700/50 hover:text-slate-200 rounded-lg transition-all">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        <span class="font-medium">Available Rides</span>
+      </button>
+    </nav>
+  </aside>
 
-        <!-- To -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Going To</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <input type="text" [(ngModel)]="newSearch.to" name="to" placeholder="e.g. Boston"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
+  <!-- Main Content Area -->
+  <div class="flex-1 text-slate-200 p-4 sm:p-8 overflow-y-auto">
+    <div class="max-w-7xl mx-auto">
 
-        <!-- Date -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Date</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <input type="date" [(ngModel)]="newSearch.travelDate" name="date"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
-
-        <!-- Departure Time -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Departure Time</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <input type="text" placeholder="00:00:00" [(ngModel)]="newSearch.startTime" name="startTime"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
-
-        <!-- Arrival Time -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Arrival Time</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <input type="text" placeholder="00:00:00" [(ngModel)]="newSearch.endTime" name="arrivalTime"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
-
-        <!-- Price -->
-        <div class="relative">
-          <label class="block text-xs font-medium text-slate-400 mb-1">Max Price</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <input type="number" [(ngModel)]="newSearch.maxPrice" name="price" placeholder="Any"
-              class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
-          </div>
-        </div>
-
-        <!-- Search Button -->
-        <div class="lg:col-span-3 flex justify-end pt-2">
-          <button type="submit" 
-            class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5">
-            Search Rides
-          </button>
-        </div>
-
+      <!-- Header -->
+      <div class="mb-10">
+        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+          Find Your Ride
+        </h1>
+        <p class="text-slate-400 mt-2">Search and book your next journey instantly.</p>
       </div>
-    </form>
 
-    <!-- Results Section -->
-    <div *ngIf="searchResults.length > 0" class="animate-fade-in-up">
-      <h2 class="text-2xl font-bold text-white mb-6">Available Rides</h2>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Search Form (Glassmorphism Card) -->
+      <form (ngSubmit)="performSearch()" 
+            class="bg-slate-800/40 backdrop-blur-lg border border-slate-700 rounded-2xl p-6 shadow-2xl mb-12">
         
-        <!-- Result Card -->
-        <div *ngFor="let result of searchResults" 
-             class="bg-slate-800 border border-slate-700 rounded-xl p-6 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col group">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
-          <!-- Card Header -->
-          <div class="flex justify-between items-start mb-4">
-            <div>
-              <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
-                {{ result.routeName }} 
-              </h3>
-              <p class="text-sm text-slate-400 mt-1">{{ result.departureTime }}</p>
-              <p class="text-sm text-slate-400 mt-1">{{ result.arrivalTime }}</p>
-            </div>
-            <span class="text-xl font-bold text-green-400">{{ result.price | currency }}</span>
-          </div>
-
-          <!-- Card Details -->
-          <div class="space-y-4 mb-8 flex-grow">
-            <div class="flex items-center text-slate-300">
-              <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <!-- <span>{{ result. | date:'fullDate' }}</span> -->
-            </div>
-            <div class="flex items-center text-slate-300">
-              <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span class="font-mono">Departure {{ result.departureTime }} - Arrival {{ result.arrivalTime }}</span>
-            </div>
-            <div class="flex items-center text-slate-300">
-              <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              <!-- <span>{{ result.seats }} seats left</span> -->
+          <!-- From -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Departing From</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <input type="text" [(ngModel)]="newSearch.from" name="from" placeholder="e.g. New York"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
             </div>
           </div>
 
-          <!-- Book Now Button   (click)="bookNow(result)"-->
-          <button  
-            class="w-full mt-auto py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-            Book Now
-          </button>
+          <!-- To -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Going To</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <input type="text" [(ngModel)]="newSearch.to" name="to" placeholder="e.g. Boston"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Date</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <input type="date" [(ngModel)]="newSearch.travelDate" name="date"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+          </div>
+
+          <!-- Departure Time -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Departure Time</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <input type="text" placeholder="00:00:00" [(ngModel)]="newSearch.startTime" name="startTime"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+          </div>
+
+          <!-- Arrival Time -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Arrival Time</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <input type="text" placeholder="00:00:00" [(ngModel)]="newSearch.endTime" name="arrivalTime"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="relative">
+            <label class="block text-xs font-medium text-slate-400 mb-1">Max Price</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <input type="number" [(ngModel)]="newSearch.maxPrice" name="price" placeholder="Any"
+                class="w-full bg-slate-900/50 border border-slate-600 rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all">
+            </div>
+          </div>   
+
+          <!-- Search Button -->
+          <div class="lg:col-span-3 flex justify-end pt-2">
+            <button type="submit" 
+              class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5">
+              Search Rides
+            </button>
+          </div>
 
         </div>
+      </form>
+
+      <!-- Results Section -->
+      <div *ngIf="searchResults.length > 0" class="animate-fade-in-up">
+        <h2 class="text-2xl font-bold text-white mb-6">Available Rides</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <!-- Result Card -->
+          <div *ngFor="let result of searchResults" 
+               class="bg-slate-800 border border-slate-700 rounded-xl p-6 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col group">
+            
+            <!-- Card Header -->
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
+                  {{ result.routeName }} 
+                </h3>
+                <p class="text-sm text-slate-400 mt-1">{{ result.departureTime }}</p>
+                <p class="text-sm text-slate-400 mt-1">{{ result.arrivalTime }}</p>
+              </div>
+              <span class="text-xl font-bold text-green-400">{{ result.price | currency }}</span>
+            </div>
+
+            <!-- Card Details -->
+            <div class="space-y-4 mb-8 flex-grow">
+              <div class="flex items-center text-slate-300">
+                <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <div *ngFor="let schedule of schedules" > 
+                <p *ngIf="schedule.scheduleId === result.scheduleId">
+                <span>{{ schedule.travelDate }}</span>
+                </p></div>
+
+
+              </div>
+              <div class="flex items-center text-slate-300">
+                <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="font-mono">Departure {{ result.departureTime }} - Arrival {{ result.arrivalTime }}</span>
+              </div>
+
+
+              <div class="flex items-center text-slate-300" >
+                <svg class="w-5 h-5 mr-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <div *ngFor="let schedule of schedules" > 
+                <p *ngIf="schedule.scheduleId === result.scheduleId">
+                <span>{{ schedule.availableSeats }} seats left</span>
+                </p></div>
+              </div>
+            </div>
+
+            <!-- Book Now Button -->
+            <button  
+              class="w-full mt-auto py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+              Book Now
+            </button>
+
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- No Results State -->
-    <div *ngIf="searchResults.length === 0" class="text-center py-20 bg-slate-800/30 rounded-xl border border-dashed border-slate-700">
-      <svg class="mx-auto h-12 w-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <h3 class="mt-2 text-lg font-medium text-slate-300">No rides found</h3>
-      <p class="mt-1 text-slate-500">Try adjusting your search criteria.</p>
-    </div>
+      <!-- No Results State -->
+      <div *ngIf="searchResults.length === 0" class="text-center py-20 bg-slate-800/30 rounded-xl border border-dashed border-slate-700">
+        <svg class="mx-auto h-12 w-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="mt-2 text-lg font-medium text-slate-300">No rides found</h3>
+        <p class="mt-1 text-slate-500">Try adjusting your search criteria.</p>
+      </div>
 
+    </div>
   </div>
 </div>
