@@ -5,5 +5,6 @@ export interface Schedule {
   routeId: number;
   travelDate: string | null;  
   departureTime: string;      
-  arrivalTime: string;        
+  arrivalTime: string;   
+  availableSeats:number;     
 }

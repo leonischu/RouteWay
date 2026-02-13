@@ -21,17 +21,18 @@ vehicles : Vehicle [] =[];
 newSchedule: Schedule = {
   scheduleId: 0,
   vehicleId: 0,
-  
+
   routeId: 0,
   travelDate: null,
   departureTime: '',
-  arrivalTime: ''
+  arrivalTime: '',
+  availableSeats: 0
 };
  
  error: string = '';
 constructor(
   private apiService:Api,
-  //  private cdr: ChangeDetectorRef
+   private cdr: ChangeDetectorRef
 ){ }
  
 
@@ -47,7 +48,8 @@ constructor(
         this.apiService.getSchedule().subscribe({
           next:(response) =>{
             this.schedules=response;
-            console.log(this.schedules)
+            console.log(this.schedules);
+            this.cdr.detectChanges();       
           }
         })
       }
@@ -57,7 +59,14 @@ constructor(
         this.apiService.addSchedule(this.newSchedule).subscribe(
           {
        next:(response:Schedule[] )=>{
-       this.schedules.push(...response);
+       if (Array.isArray(response)) {
+                // Ensure response is an array before using spread
+                this.schedules.push(...response); // This spreads the array of schedules into the schedules array
+            } else {
+                // If response is not an array, directly push it (assuming it's a single object)
+                this.schedules.push(response);
+            }
+              this.cdr.detectChanges();
          this.newSchedule = {
                scheduleId: 0,
                vehicleId: 0,
@@ -65,7 +74,8 @@ constructor(
                routeId: 0,
                travelDate: '',
                departureTime: '',
-               arrivalTime: ''
+               arrivalTime: '',
+               availableSeats:0
                 }
                 console.log(this.newSchedule)
               },
@@ -83,7 +93,8 @@ constructor(
         this.apiService.getRoutes().subscribe({
           next:(res) =>{
             this.routes = [...res.data];
-            console.log(this.routes);            
+            console.log(this.routes);
+            this.cdr.detectChanges();                   
           },
           error:(err) => console.error(err)
         });
@@ -94,6 +105,7 @@ constructor(
           next:(res) =>{
           this.vehicles = [...res.data];
           console.log(this.vehicles);
+          this.cdr.detectChanges();       
           },
           error:(err) => console.error(err)
         });
