@@ -74,6 +74,7 @@ loadRides(): void {
       },
        (err) => {
         console.error('Error loading rides', err);
+        this.cdr.detectChanges();
       }
     );
   }
