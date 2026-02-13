@@ -8,6 +8,7 @@ import { Schedule } from '../model/schedule-info';
 import { Fare, FareInterface } from '../model/Fare-Info';
 import { Searches, searchResult } from '../model/Searches';
 import { Booking, BookingInterface } from '../model/Booking-info';
+import { cancelBooking } from '../model/Cancel-Booking';
 
 
 @Injectable({
@@ -84,6 +85,11 @@ export class Api {
       //Services for Bookings
       getBooking():Observable<BookingInterface>{
         return this.http.get<BookingInterface>( `${this.apiUrl}api/Booking`);
+      }
+
+     
+      cancelBooking(bookingId:number,cancel:cancelBooking):Observable<any>{
+        return this.http.put<any>(`${this.apiUrl}api/BookingCancel/cancel`,cancel);
       }
 
 }
