@@ -41,6 +41,20 @@
       <input type="date" [(ngModel)]="newSchedule.travelDate" name="date" required
         class="w-full bg-slate-900 border border-slate-600 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all">
     </div>
+    <div class="relative">
+      <label class="block text-sm font-medium text-slate-300 mb-2">AvailableSeats</label>
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none mt-9">
+      <svg class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9V7a2 2 0 00-2-2H7a2 2
+       0 00-2 2v2m0 4h14M9 13v6m6-6v6M7 19h10" />
+      </svg>
+      </div>
+      <input type="number" [(ngModel)]="newSchedule.availableSeats" name="date" required
+        class="w-full bg-slate-900 border border-slate-600 rounded-lg 
+        pl-12 pr-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 
+        transition-all">
+    </div>
+
 
     <div class="relative">
       <label class="block text-sm font-medium text-slate-300 mb-2">Departure Time</label>
@@ -102,7 +116,7 @@
 
       <p><span class="text-slate-400">Route ID:</span> {{schedule.routeId}}</p>
       <p><span class="text-slate-400">Date:</span> {{schedule.travelDate}}</p>
-      <!-- <p><span class="text-slate-400">Date:</span> {{schedule.availableSeats}}</p> -->
+      <p><span class="text-slate-400">AvailableSeats : </span> {{schedule.availableSeats}}</p>
       
       <div class="flex items-center gap-4 pt-2">
         <div class="flex items-center gap-2">
