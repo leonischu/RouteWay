@@ -25,22 +25,21 @@ namespace AutomatedTransportEnquiry.Services
         public async Task<APIResponse> CreateAsync(BookingCreateDto dto)
         {
             var response = new APIResponse();
+            var fareResult = await _repository.GetFareAndSeats(dto.ScheduleId, dto.FareId);
             try
             {
-                
 
 
-
-                if (!await _repository.ScheduleExists(dto.ScheduleId))
+                if (fareResult == null)
                 {
                     response.Status = false;
                     response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Errors.Add("Invalid Schedule");
+                    response.Errors.Add("Invalid Schedule or fare");
                     return response;
                 }
 
-                var (price, availableSeats) =
-                                        await _repository.GetFareAndSeats(dto.ScheduleId, dto.FareId);
+                var (price, availableSeats) = fareResult.Value;
+                                        
 
 
                 if (availableSeats < dto.Seats)

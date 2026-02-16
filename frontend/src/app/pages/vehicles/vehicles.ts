@@ -5,6 +5,7 @@ import { Vehicle } from '../../model/Vehicles-Info';
 import { AddVehicle } from '../../Forms/add-vehicle/add-vehicle';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vehicles',
@@ -25,7 +26,8 @@ export class Vehicles implements OnInit {
  
   constructor(
     private apiService: Api,
-      private cdr: ChangeDetectorRef
+      private cdr: ChangeDetectorRef,
+    private toastr: ToastrService
 
 
   ) {}
@@ -38,7 +40,8 @@ export class Vehicles implements OnInit {
   loadVehicle(): void {
   this.apiService.getVehicle().subscribe({
     next: (res) => {
-      this.vehicles = [...res.data];  
+      this.vehicles = [...res.data]; 
+      // console.log(this.vehicles); 
       this.cdr.detectChanges();        
     },
     error: (err) => console.error(err),
@@ -65,6 +68,8 @@ loadRoutes(): void {
   addVehicle(vehicle: any): void {
     this.apiService.addVehicle(vehicle).subscribe(() => {
       this.loadVehicle();
+       this.toastr.success('Vehicle Added sucessfully !');
+       this.cdr.detectChanges();
     });
   }
 

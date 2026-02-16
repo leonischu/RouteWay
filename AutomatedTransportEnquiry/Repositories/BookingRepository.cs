@@ -21,7 +21,7 @@ namespace AutomatedTransportEnquiry.Repositories
             return await conn.ExecuteScalarAsync<int>(sql, new { ScheduleId = scheduleId }) > 0;
         }
 
-        public async Task<(decimal price,int availableSeats)> GetFareAndSeats(int scheduleId, int fareId)
+        public async Task<(decimal price,int availableSeats)?> GetFareAndSeats(int scheduleId, int fareId)
         {
             var sql = @"SELECT f.price,s.AvailableSeats
                         FROM Fares f 
