@@ -60,6 +60,11 @@ export class Bookings implements OnInit{
       (response)=>{
         this.toastr.success('Booking cancelled sucessfully !');
         this.loading=false;
+        this.bookingId = 0;
+        this.cancellationReason='';
+        this.loadBooking();
+        this.cdr.detectChanges();
+        
       },
       (error) =>{
         this.toastr.error('Failed to cancel booking.Please try again');
