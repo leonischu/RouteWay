@@ -4,15 +4,38 @@
     <!-- Back to Admin Button -->
     <div class="mb-8">
       <button routerLink="/adminPage" 
-              class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg shadow-lg transition-all flex items-center gap-2">
+              class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg
+               shadow-lg transition-all flex items-center gap-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
         Back to Dashboard
       </button>
     </div>
+    
 
     <h1 class="text-3xl font-bold text-white mb-10">All Bookings ({{ bookings.length }})</h1>
+       
+    
+    <!-- <button (click)= "openBookingModal()" class="text-xl font-semibold text-white mb-6 flex items-center gap-2  
+    mb-10    px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg
+               shadow-lg transition-all flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Add New Booking
+    </button> -->
+
+
+    <app-booking-form
+  [schedules]="schedules"
+  [fares]="fares"
+  [routes]="routes"
+  [vehicles]="vehicles"
+  (newBookings)="addBooking($event)">
+</app-booking-form>
+
+
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div *ngFor="let b of bookings" 

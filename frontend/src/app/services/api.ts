@@ -92,4 +92,9 @@ export class Api {
         return this.http.put<any>(`${this.apiUrl}api/BookingCancel/cancel`,cancel);
       }
 
+
+      newBookings(newBooking:any):Observable<Booking[]>{
+        return this.http.post<Booking[]>(`${this.apiUrl}api/Booking`,newBooking);
+      }
+
 }
