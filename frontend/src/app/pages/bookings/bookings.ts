@@ -3,10 +3,13 @@ import { Api } from '../../services/api';
 import { Booking } from '../../model/Booking-info';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { cancelBooking } from '../../model/Cancel-Booking';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-bookings',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,FormsModule],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',
 })
@@ -14,48 +17,15 @@ export class Bookings implements OnInit{
 
   bookings:Booking[]=[];
 
-
-
-// bookings = [];  // Array to store booking details (if needed for display)
-//   bookingId: number;  // The ID of the booking to cancel
-//   cancellationReason: string = '';  // Reason for cancellation
-
-
-// cancelBooking(): void {
-//     // Create the cancelBooking data object
-//     const cancelBookingData: cancelBooking = {
-//       bookingId: this.bookingId,
-//       cancellationReason: this.cancellationReason,
-//     };
-// this.bookingService.cancelBooking(this.bookingId, cancelBookingData).subscribe({
-//       next: (response) => {
-//         console.log('Booking cancelled successfully:', response);
-//         // Handle successful cancellation, e.g., show a success message, refresh bookings list, etc.
-//       },
-//       error: (err) => {
-//         console.error('Error cancelling booking:', err);
-//         // Handle error, e.g., show an error message
-//       },
-//     });
-//   }
-
-//   // Optional: You can add a method to load bookings into the bookings array if needed
-//   loadBooking(): void {
-//     // Call a service to load bookings (if needed for your UI)
-//     // Example: this.bookingService.getBooking().subscribe(res => this.bookings = res.data);
-//   }
-// }
-
-
-
-
-
-
+ bookingId: number = 0;
+  cancellationReason: string = '';
+  loading: boolean = false;
 
 
   constructor(
     private apiService:Api,
-    private cdr:ChangeDetectorRef
+    private cdr:ChangeDetectorRef,
+     private toastr: ToastrService
   ){}
   
   ngOnInit(): void {
@@ -73,11 +43,34 @@ export class Bookings implements OnInit{
     });
   }
 
-  cancelBooking():void {
-    this.apiService.cancelBooking().subscribe({
 
-    })
+  cancelBooking(){
+    if(!this.bookingId || !this.cancellationReason) {
+      this.toastr.error('Please provide a valid BookingId and cancellation reason');
+    return;
+    }
+    this.loading = true;
+    
+    const cancelData:cancelBooking = {
+      bookingId:this.bookingId,
+      cancellationReason:this.cancellationReason
+    };
+     
+    this.apiService.cancelBooking(this.bookingId,cancelData).subscribe(
+      (response)=>{
+        this.toastr.success('Booking cancelled sucessfully !');
+        this.loading=false;
+      },
+      (error) =>{
+        this.toastr.error('Failed to cancel booking.Please try again');
+        this.loading = false;
+      }
+    );
+
+
+    }
   }
 
 
-}
+
+
