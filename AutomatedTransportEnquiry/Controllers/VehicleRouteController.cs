@@ -14,7 +14,7 @@ namespace AutomatedTransportEnquiry.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
 
 
     [ProducesResponseType(200)]

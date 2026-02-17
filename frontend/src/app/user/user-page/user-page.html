@@ -202,12 +202,14 @@
                 </p></div>
               </div>
             </div>
+     <button (click)="openForm(result.routeName, result.price, result.departureTime, result.arrivalTime)" 
+                  class="px-6 py-3 bg-gradient-to-r mb-5 from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-lg shadow-lg shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5">
+            Book Ticket
+          </button>
+     
+   
 
-            <!-- Book Now Button -->
-            <button  
-              class="w-full mt-auto py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold rounded-lg shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-              Book Now
-            </button>
+
 
           </div>
         </div>
@@ -222,6 +224,24 @@
         <p class="mt-1 text-slate-500">Try adjusting your search criteria.</p>
       </div>
 
+
+    </div>
+      <!-- Modal -->
+    <div *ngIf="isModalOpen" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4" (click)="closeForm()">
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md p-8 relative animate-fade-in-up" (click)="$event.stopPropagation()">
+        <app-book-form
+  *ngIf="isModalOpen"
+  [routeName]="selectedRide.routeName"
+  [fare]="selectedRide.fare"
+  [fareId]="selectedRide.fareId"
+  [departureTime]="selectedRide.departureTime"
+  [arrivalTime]="selectedRide.arrivalTime"
+  [routeId]="selectedRide.routeId"
+  [vehicleId]="selectedRide.vehicleId"
+  [scheduleId]="selectedRide.scheduleId"
+  (newBookings)="handleBooking($event)">
+</app-book-form>
+      </div>
     </div>
   </div>
 </div>

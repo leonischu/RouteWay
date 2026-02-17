@@ -1,0 +1,33 @@
+<form (ngSubmit)="submitForm()" class="space-y-5">
+
+  <!-- Passenger Name -->
+  <div>
+    <label class="block text-sm font-medium text-slate-400 mb-2">Passenger Name</label>
+    <input type="text" [(ngModel)]="newBooking.passengerName" name="passengerName" class="w-full bg-slate-900 border border-slate-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+  </div>
+
+  <!-- Passenger Phone -->
+  <div>
+    <label class="block text-sm font-medium text-slate-400 mb-2">Passenger Phone</label>
+    <input type="text" [(ngModel)]="newBooking.passengerPhone" name="passengerPhone" class="w-full bg-slate-900 border border-slate-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+  </div>
+
+  <!-- Seats -->
+  <div>
+    <label class="block text-sm font-medium text-slate-400 mb-2">Seats</label>
+    <input type="number" [(ngModel)]="newBooking.seats" name="seats" class="w-full bg-slate-900 border border-slate-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+  </div>
+
+  <div class="flex gap-4 mt-8">
+    <button type="button" (click)="closeForm()" 
+      class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-lg transition-colors">
+      Cancel
+    </button>
+
+    <button type="submit" 
+      class="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 rounded-lg shadow-lg shadow-indigo-500/30 transition-all">
+      Confirm
+    </button>
+  </div>
+
+</form>
