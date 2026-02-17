@@ -16,6 +16,7 @@ import { Schedules } from './pages/schedules/schedules';
 import { Fares } from './pages/fares/fares';
 import { UserPage } from './user/user-page/user-page';
 import { Bookings } from './pages/bookings/bookings';
+import { Users } from './pages/users/users';
 
 export const routes: Routes = [
 
@@ -35,6 +36,7 @@ export const routes: Routes = [
       { path: 'Fares', component: Fares,canActivate:[authGuard]},
       { path: 'User', component: UserPage,canActivate:[authGuard]},
       { path: 'Bookings', component: Bookings ,canActivate:[authGuard]},
+      { path: 'Users', component: Users ,canActivate:[authGuard]},
       
       
       { path: "**", component:PageNotFound},
