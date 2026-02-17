@@ -13,7 +13,8 @@ namespace AutomatedTransportEnquiry.Repositories
         }
         public async Task<IEnumerable<FareDto>> GetAllAsync()
         {
-            var sql = @"SELECT f.FareId,CONCAT(r.source, ' - ' ,r.Destination) AS RouteName,
+            var sql = @"SELECT f.FareId, f.RouteId,
+                   CONCAT(r.source, ' - ' ,r.Destination) AS RouteName,
                         f.Price From Fares f 
                         JOIN Routes r ON r.RouteId = f.RouteId";
                 using var connection = _context.CreateConnection();
