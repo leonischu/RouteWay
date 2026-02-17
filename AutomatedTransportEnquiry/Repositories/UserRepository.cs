@@ -14,6 +14,12 @@ namespace AutomatedTransportEnquiry.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            var sql = "SELECT * FROM Users";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<User>(sql);
+        }
         public async Task<User> GetByEmail(string email)
         {
             var sql = "SELECT * FROM Users WHERE Email = @Email";
@@ -51,5 +57,7 @@ namespace AutomatedTransportEnquiry.Repositories
                 
             
         }
+
+    
     }
 }
