@@ -5,7 +5,7 @@ namespace AutomatedTransportEnquiry.Repositories
     public interface IUserRepository
     {
 
-        Task<User> GetAll();
+        Task<IEnumerable<User>> GetAll();
         Task<User> GetByEmail(string email);
         Task Create(User user);
 
