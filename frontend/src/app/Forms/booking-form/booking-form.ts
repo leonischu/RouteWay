@@ -72,13 +72,32 @@ export class BookingForm {
    }
   onRouteChange() {
     
+  console.log("Selected Route:", this.newBooking.routeId);
+  console.log("Available Fares:", this.fares);
+
   this.newBooking.vehicleId = 0;
     this.newBooking.scheduleId = 0;
     this.newBooking.fareId = 0;
+ if (!this.newBooking.routeId) return;
+
+  const fare = this.fares.find(
+    f => f.routeId === Number(this.newBooking.routeId)
+  );
+
+  if (fare) {
+    this.newBooking.fareId = fare.fareId;
+  } else {
+    this.newBooking.fareId = 0;
+  }
+
+  console.log("Selected RouteId:", this.newBooking.routeId);
+  console.log("Matched Fare:", fare);
+
+
   }
    onVehicleChange() {
     this.newBooking.scheduleId = 0;
-    this.newBooking.fareId = 0;
+
   }
   onScheduleChange() {
     const schedule = this.schedules.find(
@@ -87,14 +106,15 @@ export class BookingForm {
 
     if (!schedule) return;
 
-    const fare = this.fares.find(
-      f => f.routeId === schedule.routeId
-    );
+    // const fare = this.fares.find(
+    //   f => f.routeId === schedule.routeId
+    // );
 
-    this.newBooking.fareId = fare ? fare.fareId : 0;
+    // this.newBooking.fareId = fare ? fare.fareId : 0;
   }
 
   getFarePrice(fareId: number): number | '' {
+ if (!fareId) return '';
   const fare = this.fares.find(f => f.fareId === fareId);
   return fare ? fare.price : '';
 }

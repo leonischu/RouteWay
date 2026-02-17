@@ -14,6 +14,7 @@ import { Fare } from '../../model/Fare-Info';
 
 @Component({
   selector: 'app-bookings',
+    standalone:true,
   imports: [CommonModule,RouterLink,FormsModule,BookingForm],
   templateUrl: './bookings.html',
   styleUrl: './bookings.css',

@@ -5,6 +5,8 @@
         public int FareId { get; set; }
         public string RouteName { get; set; }
         public decimal Price { get; set; }
+        public int RouteId { get; set; }
+
 
     }
 
