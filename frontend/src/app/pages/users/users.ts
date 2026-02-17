@@ -25,11 +25,11 @@ this.loadUsers();
     this.apiService.getUser().subscribe({
       next :(res)=>{
         this.users = [...res.data];
-        console.log(this.users)
+        
         this.cdr.detectChanges();       
 
       }
-    })
+    });
   }
 
 
