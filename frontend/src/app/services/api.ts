@@ -9,6 +9,7 @@ import { Fare, FareInterface } from '../model/Fare-Info';
 import { Searches, searchResult } from '../model/Searches';
 import { Booking, BookingInterface } from '../model/Booking-info';
 import { cancelBooking } from '../model/Cancel-Booking';
+import { UserInterface } from '../model/User-detail';
 
 
 @Injectable({
@@ -95,6 +96,13 @@ export class Api {
 
       newBookings(newBooking:any):Observable<Booking[]>{
         return this.http.post<Booking[]>(`${this.apiUrl}api/Booking`,newBooking);
+      }
+
+
+      //Services for Users
+
+      getUser():Observable<UserInterface>{
+        return this.http.get<UserInterface>(`${this.apiUrl}api/User`)
       }
 
 }
