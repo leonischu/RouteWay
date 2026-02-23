@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { searchResult } from '../../model/Searches';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-form',
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './book-form.html',
   styleUrl: './book-form.css',
 })
@@ -21,8 +22,9 @@ export class BookForm {
   @Input() scheduleId: number = 0;
 
   @Output() newBookings = new EventEmitter<any>();
+  @Output() close = new EventEmitter<void>();
 
-  isModalOpen = false;
+  // isModalOpen = true;
   newBooking = {
     passengerName: '',
     passengerPhone: '',
@@ -30,9 +32,9 @@ export class BookForm {
     bookingStatus: 'CONFIRMED'
   };
   
-  closeForm(){
-this.isModalOpen=false;
-  }
+//   closeForm(){
+// this.isModalOpen=false;
+//   }
 
 
   
@@ -69,6 +71,6 @@ this.isModalOpen=false;
     };
 
     this.newBookings.emit(bookingDetails);
-    this.closeForm();
+    // this.closeForm();
   }
 }

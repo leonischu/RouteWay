@@ -1,55 +1,34 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { Api } from '../../services/api';
-import { Searches, searchResult } from '../../model/Searches';
-import { errorContext } from 'rxjs/internal/util/errorContext';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { Api } from '../../services/api';
+import { Searches, searchResult } from '../../model/Searches';
 import { Schedule } from '../../model/schedule-info';
 import { Vehicle } from '../../model/Vehicles-Info';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { Fare } from '../../model/Fare-Info';
 import { Booking } from '../../model/Booking-info';
-import { BookingForm } from '../../Forms/booking-form/booking-form';
 import { BookForm } from '../../Forms/book-form/book-form';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-page',
-  imports: [CommonModule,FormsModule,BookForm],
+  standalone: true,
+  imports: [CommonModule, FormsModule, BookForm],
   templateUrl: './user-page.html',
   styleUrl: './user-page.css',
 })
 export class UserPage {
-  // @ViewChild(BookForm) addBookForm!:BookForm ;
-   vehicles: Vehicle[] = [];
-   routes: VehicleRoutes[] = [];
-   schedules:Schedule[] = [];
-   fares : Fare[] = [];
-  
-  filteredVehicles: Vehicle[] = [];
-  filteredSchedules: Schedule[] = [];
-  selectedFare: Fare | null = null;
-  isEditMode = false;
-  bookings:Booking[]=[];
 
+  // ---------- Master Data ----------
+  vehicles: Vehicle[] = [];
+  routes: VehicleRoutes[] = [];
+  schedules: Schedule[] = [];
+  fares: Fare[] = [];
+  bookings: Booking[] = [];
 
-
-   isModalOpen = false;
-
-  selectedRide = {
-
-    routeName: '',
-    fare: 0,
-    departureTime: '',
-    arrivalTime: '',
-    fareId:0
-    // vehicle: '',
-    // routeId:0,
-    // vehicleId:0,
-    // scheduleId:0
-  };
-
-//For Search
-
+  // ---------- Search ----------
   newSearch: Searches = {
     from: '',
     to: '',
@@ -59,163 +38,157 @@ export class UserPage {
     maxPrice: 0
   };
 
-  searchResults:searchResult[] = [];
-  searchCompleted: boolean = false;
-  error: string = '';
-  
+  searchResults: searchResult[] = [];
+  searchCompleted = false;
+  error = '';
+
+  // ---------- Modal ----------
+  isModalOpen = false;
+
+  // showForm = false;
+
+openForm() {
+  this.isModalOpen  = true;
+}
+
+  selectedRide = {
+    routeName: '',
+    fare: 0,
+    departureTime: '',
+    arrivalTime: '',
+    fareId: 0,
+    scheduleId: 0
+  };
 
   constructor(
-     private apiService:Api,
-     private cdr: ChangeDetectorRef
+    private apiService: Api,
+    private cdr: ChangeDetectorRef,
+      private toastr: ToastrService
 
-  ){}
-  ngOnInit():void{
-//  this.performSearch();
- this.loadSchedule();
- this.loadRides();
-     this.loadFare();
+
+  ) {}
+
+  // ---------- Lifecycle ----------
+  ngOnInit(): void {
+    this.loadSchedule();
+    this.loadRides();
+    this.loadFare();
     this.loadRoutes();
     this.loadVehicle();
   }
-  performSearch(){
-    this.searchCompleted = false; 
-        console.log(this.newSearch)
-    this.apiService.search(this.newSearch).subscribe(
-      (data)=>{
+
+  // ---------- Search ----------
+  performSearch(): void {
+    this.searchCompleted = false;
+
+    this.apiService.search(this.newSearch).subscribe({
+      next: (data: searchResult[]) => {
         this.searchResults = data;
-         this.searchCompleted = true;
-              this.cdr.detectChanges();     
-    
-      },
-      (error)=> {
-        console.error('Search error', error);
-      }
-    );
-  }
-
-  loadSchedule():void{
-    this.apiService.getSchedule().subscribe({
-      next: (res:Schedule[]) => {
-        this.schedules=[...res];
-        console.log(this.schedules);
-        this.cdr.detectChanges();       
-      },
-     error:(err) => console.error(err)
-    })
-  }
-
-
-loadRides(): void {
-    this.apiService.getAllSearch().subscribe(
-      (searchResults: searchResult[]) => {
-        this.searchResults = searchResults;
-        console.log( this.searchResults);
-      },
-       (err) => {
-        console.error('Error loading rides', err);
-        this.cdr.detectChanges();
-      }
-    );
-  }
-
-
-  // For Bookings
-
-  loadBooking(): void {
-    this.apiService.getBooking().subscribe({
-      next: (res) => {
-        this.bookings = [...res.data];
-        console.log(this.bookings);
+        this.searchCompleted = true;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error(err)
+      error: err => console.error('Search error', err)
     });
   }
 
+  loadRides(): void {
+    this.apiService.getAllSearch().subscribe({
+      next: (res: searchResult[]) => {
+        this.searchResults = res;
+      },
+      error: err => console.error('Error loading rides', err)
+    });
+  }
 
+  // ---------- Load Master Data ----------
+  loadSchedule(): void {
+    this.apiService.getSchedule().subscribe({
+      next: res => {
+        this.schedules = [...res];
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+  }
 
+  loadRoutes(): void {
+    this.apiService.getRoutes().subscribe({
+      next: res => {
+        this.routes = [...res.data];
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+  }
 
+  loadVehicle(): void {
+    this.apiService.getVehicle().subscribe({
+      next: res => {
+        this.vehicles = [...res.data];
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+  }
 
+  loadFare(): void {
+    this.apiService.getFare().subscribe({
+      next: res => {
+        this.fares = res.data;
+        this.cdr.detectChanges();
+      },
+      error: err => {
+        this.error = 'Failed to load fares';
+        console.error(err);
+      }
+    });
+  }
 
+  loadBooking(): void {
+    this.apiService.getBooking().subscribe({
+      next: res => {
+        this.bookings = [...res.data];
+        this.cdr.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+  }
 
+  // ---------- Book Now ----------
+  bookNow(result: searchResult): void {
+    this.selectedRide = {
+      routeName: result.routeName,
+      fare: result.price,
+      departureTime: result.departureTime,
+      arrivalTime: result.arrivalTime,
+      fareId: result.fareId,
+      scheduleId: result.scheduleId
+    };
 
-    loadRoutes():void
-    {
-      this.apiService.getRoutes().subscribe({
-        next:(res) => {
-          this.routes = [...res.data];
-          console.log(this.routes);
-          this.cdr.detectChanges();
-        },
-        error:(err) => console.error(err)
+    this.isModalOpen = true;
+  }
 
-      });
-    }
-
-    loadVehicle() : void {
-      this.apiService.getVehicle().subscribe({
-        next : (res) => {
-          this.vehicles = [...res.data];
-          console.log(this.vehicles);
-          this.cdr.detectChanges();
-        },
-        error:(err) => console.error(err)
-      });
-    }
-
-
-     loadFare():void {
-      this.apiService.getFare().subscribe({
-        next:(response) =>{
-          this.fares = response.data;
-          this.cdr.detectChanges();
-          console.log(this.fares)
-        },
-        error:(err) => {
-          this.error= 'Failed to load fares';
-          console.error(err);
-        }
-      })
-    }
- // ----------------- Cascading Dropdown Logic -----------------
-  // onRouteChange(routeId: number) {
-  //   this.filteredVehicles = this.vehicles.filter(v => v.routeId === routeId);
-  //   this.filteredSchedules = [];
-  //   this.selectedFare = null;
-  // }
-
-  // onVehicleChange(vehicleId: number) {
-  //   this.filteredSchedules = this.schedules.filter(s => s.vehicleId === vehicleId);
-  //   this.selectedFare = null;
-  // }
-
-  // onScheduleChange(scheduleId: number) {
-  //   const schedule = this.schedules.find(s => s.scheduleId === scheduleId);
-  //   if (!schedule) return;
-
-  //   this.selectedFare = this.fares.find(f => f.routeId === schedule.routeId) || null;
-  // }
-
-
- openForm(routeName: string, fare: number, departureTime: string, arrivalTime: string,fareId:number): void {
-  this.selectedRide = {
-    routeName,
-    fareId,
-    fare,
-    departureTime,
-    arrivalTime
-  };
-
-  this.isModalOpen = true;
-}
-
-  closeForm():void {
+  closeForm(): void {
     this.isModalOpen = false;
   }
- handleBooking(Booking:any):void {
-      this.apiService.newBookings(Booking).subscribe(() => {
-        this.loadBooking();
-      });
-    }
 
+  // ---------- Receive booking from form ----------
+  handleBooking(bookingPayload: any): void {
+    console.log('Booking payload:', bookingPayload);
+
+
+    this.apiService.newBookings(bookingPayload).subscribe({
+      next: () => {
+              console.log('Booking successful');
+               this.toastr.success('Booking Successful!', 'Success ');
+         this.cdr.detectChanges();
+        this.isModalOpen = false;
+        this.loadBooking();
+      },
+ error: err => {
+      this.toastr.error('Booking Failed!', 'Error ');
+      console.error(err);
+    }
+    });
+  }
 }

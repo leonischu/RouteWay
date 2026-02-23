@@ -12,7 +12,10 @@
 
     public class TransportSearchResultDto
     {
+
         public int ScheduleId { get; set; }
+        public int FareId { get; set; }
+
         public string RouteName { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
