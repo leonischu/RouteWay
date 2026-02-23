@@ -99,6 +99,11 @@ export class Api {
       }
 
 
+      getBookingId(userId:number):Observable<BookingInterface>{
+        return this.http.get<BookingInterface>(`${this.apiUrl}api/Booking/user/${userId}`)
+      }
+
+
       //Services for Users
 
       getUser():Observable<UserInterface>{

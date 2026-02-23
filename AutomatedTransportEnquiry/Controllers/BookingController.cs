@@ -43,8 +43,24 @@ namespace AutomatedTransportEnquiry.Controllers
         [HttpPost]
         public async Task<ActionResult<APIResponse>>Create([FromBody] BookingCreateDto dto)
         {
-            var result = await _service.CreateAsync(dto);
-            return StatusCode((int)result.StatusCode,result);
+            var userIdClaim = User.FindFirst("id")?.Value;
+
+            if (userIdClaim == null)
+                return Unauthorized("Invalid token");
+
+            int userId = int.Parse(userIdClaim);
+
+            var result = await _service.CreateAsync(dto, userId);
+
+            return StatusCode((int)result.StatusCode, result);
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<APIResponse>> GetByUserId(int userId)
+        {
+            var response = await _service.GetByUserIdAsync(userId);
+            return StatusCode((int)response.StatusCode, response);
+        }
+
     }
 }

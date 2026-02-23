@@ -11,11 +11,12 @@ import { Fare } from '../../model/Fare-Info';
 import { Booking } from '../../model/Booking-info';
 import { BookForm } from '../../Forms/book-form/book-form';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, BookForm],
+  imports: [CommonModule, FormsModule, BookForm,RouterLink],
   templateUrl: './user-page.html',
   styleUrl: './user-page.css',
 })

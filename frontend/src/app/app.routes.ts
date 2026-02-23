@@ -17,6 +17,7 @@ import { Fares } from './pages/fares/fares';
 import { UserPage } from './user/user-page/user-page';
 import { Bookings } from './pages/bookings/bookings';
 import { Users } from './pages/users/users';
+import { MyBookings } from './user/my-bookings/my-bookings';
 
 export const routes: Routes = [
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
       { path: 'User', component: UserPage,canActivate:[authGuard]},
       { path: 'Bookings', component: Bookings ,canActivate:[authGuard]},
       { path: 'Users', component: Users ,canActivate:[authGuard]},
+      { path: 'myBookings', component: MyBookings ,canActivate:[authGuard]},
       
       
       { path: "**", component:PageNotFound},

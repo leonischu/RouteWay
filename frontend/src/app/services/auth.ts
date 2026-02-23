@@ -83,5 +83,14 @@ export class Auth {
   const decoded: any = jwtDecode(token);
   return decoded.role || decoded.Role || null;
 }
+
+
+getUserId(): number {
+  const token = localStorage.getItem('token');
+  if (!token) return 0;
+
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  return Number(payload.id);
+}
   
 }

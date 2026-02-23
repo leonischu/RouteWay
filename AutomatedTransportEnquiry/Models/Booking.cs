@@ -2,6 +2,8 @@
 {
     public class Booking
     {
+
+        public int UserId { get; set; }
         public int BookingId { get; set; }
         public int ScheduleId { get; set; }
         public int FareId { get; set; }

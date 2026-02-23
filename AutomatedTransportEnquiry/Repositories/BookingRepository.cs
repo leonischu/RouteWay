@@ -81,8 +81,8 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<int> CreateAsync(Booking booking)
         {
-            var sql = @"INSERT INTO Bookings (ScheduleId,FareId,PassengerName,PassengerPhone,Seats,TotalAmount,BookingStatus,BookingDate,PaymentStatus)
-                    VALUES (@ScheduleId,@FareId,@PassengerName,@PassengerPhone,@Seats,@TotalAmount,  'CONFIRMED', GETDATE(),'PENDING');
+            var sql = @"INSERT INTO Bookings (ScheduleId,FareId,PassengerName,PassengerPhone,Seats,UserId,TotalAmount,BookingStatus,BookingDate,PaymentStatus)
+                    VALUES (@ScheduleId,@FareId,@PassengerName,@PassengerPhone,@Seats,@UserId,@TotalAmount,  'CONFIRMED', GETDATE(),'PENDING');
                     SELECT SCOPE_IDENTITY();";
             using var connection = _context.CreateConnection();
             
@@ -91,6 +91,7 @@ namespace AutomatedTransportEnquiry.Repositories
             var parameters = new DynamicParameters();
             parameters.Add("@ScheduleId", booking.ScheduleId);
             parameters.Add("@FareId", booking.FareId);
+            parameters.Add("@UserId", booking.UserId);
             parameters.Add("@PassengerName", booking.PassengerName);
             parameters.Add("@PassengerPhone", booking.PassengerPhone);
             parameters.Add("@Seats", booking.Seats);
@@ -162,5 +163,18 @@ namespace AutomatedTransportEnquiry.Repositories
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<Booking>(query);
         }
+
+        public async Task<List<Booking>> GetByUserIdAsync(int userId)
+        {
+
+            var query = "SELECT * FROM Bookings WHERE UserId = @UserId";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var bookings = await connection.QueryAsync<Booking>(query, new { UserId = userId });
+                return bookings.ToList();
+            }
+        }
     }
-}
+    }
+

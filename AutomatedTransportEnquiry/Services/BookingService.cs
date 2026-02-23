@@ -22,7 +22,7 @@ namespace AutomatedTransportEnquiry.Services
         }
 
 
-        public async Task<APIResponse> CreateAsync(BookingCreateDto dto)
+        public async Task<APIResponse> CreateAsync(BookingCreateDto dto, int userId)
         {
             var response = new APIResponse();
             var fareResult = await _repository.GetFareAndSeats(dto.ScheduleId, dto.FareId);
@@ -53,6 +53,7 @@ namespace AutomatedTransportEnquiry.Services
 
 
                 var booking = _mapper.Map<Booking>(dto);
+                booking.UserId = userId;
                 booking.TotalAmount = price * dto.Seats;
                 booking.BookingStatus = "CONFIRMED";
 
@@ -121,5 +122,26 @@ namespace AutomatedTransportEnquiry.Services
 
 
         }
+
+
+        public async Task<APIResponse> GetByUserIdAsync(int userId)
+        {
+            var bookings = await _repository.GetByUserIdAsync(userId);
+
+            return new APIResponse
+            {
+                Status = true,
+                StatusCode = HttpStatusCode.OK,
+                Data = bookings,
+                Errors = new List<string>()
+            };
+        }
+
+
+
+
+
+
+
     }
 }
