@@ -18,6 +18,7 @@ namespace AutomatedTransportEnquiry.Repositories
             var sql = new StringBuilder(@"
         SELECT 
             s.ScheduleId,
+              f.FareId AS FareId,
             v.VehicleType,
             CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
             s.DepartureTime,
@@ -38,9 +39,10 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<IEnumerable<TransportSearchResultDto>> SearchAsync(TransportSearchRequestDto dto)
         {
-            var sql =new StringBuilder( @"
+            var sql =new StringBuilder(@"
                       SELECT 
                      s.ScheduleId,
+                     f.FareId AS FareId,
                      v.VehicleType,
                      CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
                      s.DepartureTime,

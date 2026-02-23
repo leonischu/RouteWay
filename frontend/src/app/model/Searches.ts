@@ -5,6 +5,7 @@ export interface Searches {
     startTime:string;
     endTime:string;
     maxPrice:number;
+      
 }
 
 export interface searchResult{
@@ -13,4 +14,5 @@ export interface searchResult{
   departureTime: string;  
   arrivalTime: string;    
   price: number;
+    fareId: number;
 }
