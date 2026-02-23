@@ -3,6 +3,7 @@ export interface Fare{
   routeName: string;
   price: number;
   routeId:number;
+  // vehicleId:number
 }
 export interface FareInterface{
     data:Fare[];
