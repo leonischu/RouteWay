@@ -81,6 +81,24 @@ namespace AutomatedTransportEnquiry.Services
             try
             {
                 var booking = await _repository.GetAllAsync();
+                var result = booking.Select(b => new
+                {
+                    b.BookingId,
+                    b.PassengerName,
+                    b.PassengerPhone,
+                    b.ScheduleId,
+                    b.Seats,
+                    b.TotalAmount,
+                    b.BookingStatus,
+                    b.CreatedAt,
+
+                    // Only include reason if Cancelled
+                    CancellationReason =
+              b.BookingStatus == "CANCELLED"
+              ? b.CancellationReason 
+              : null
+                });
+
                 response.Data = booking;
                 response.Status = true;
                 response.StatusCode = HttpStatusCode.OK;

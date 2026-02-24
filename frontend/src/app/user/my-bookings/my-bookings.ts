@@ -11,9 +11,11 @@ import { Bookings } from '../../pages/bookings/bookings';
 import { CommonModule } from '@angular/common';
 import { cancelBooking } from '../../model/Cancel-Booking';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-bookings',
+  standalone: true,
   imports: [CommonModule,RouterLink],
   templateUrl: './my-bookings.html',
   styleUrl: './my-bookings.css',
@@ -146,7 +148,10 @@ cancelBooking(id: number) {
       this.loading = false;
     }
   );
-}
+}  
+
+
+
 
 
 // getRouteName(routeId: number): string {

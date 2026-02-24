@@ -8,6 +8,8 @@ export interface Booking {
   totalAmount: number;
   bookingStatus: string;
   createdAt: string;
+  cancellationReason:string;
+  
   // id:number;
 }
 export interface BookingInterface{
