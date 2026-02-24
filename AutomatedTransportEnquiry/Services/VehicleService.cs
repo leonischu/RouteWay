@@ -9,6 +9,7 @@ namespace AutomatedTransportEnquiry.Services
     public class VehicleService : IVehicleService
     {
         private readonly IVehicleRepository _repository;
+       
         private readonly IMapper _mapper;
         public VehicleService(IVehicleRepository repository,IMapper mapper)
         {
@@ -124,31 +125,33 @@ namespace AutomatedTransportEnquiry.Services
         public async Task<APIResponse> DeleteAsync(int vehicleId)
         {
             var response = new APIResponse();
+
             try
             {
                 var deleted = await _repository.DeleteAsync(vehicleId);
+
                 if (!deleted)
                 {
                     response.Status = false;
                     response.StatusCode = HttpStatusCode.NotFound;
+                    response.Errors.Add("Vehicle not found.");
                     return response;
                 }
-                response.Data = "Vehicle Deleted Sucessfully";
+
                 response.Status = true;
                 response.StatusCode = HttpStatusCode.OK;
-
+                response.Data = "Vehicle Deleted Successfully";
             }
             catch (Exception ex)
             {
                 response.Status = false;
-                response.StatusCode = HttpStatusCode.InternalServerError;
+                response.StatusCode = HttpStatusCode.BadRequest; // Better than 500
                 response.Errors.Add(ex.Message);
             }
-
 
             return response;
         }
 
-        
+
     }
 }

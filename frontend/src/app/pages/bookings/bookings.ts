@@ -51,10 +51,10 @@ export class Bookings implements OnInit{
   
   ngOnInit(): void {
     this.loadBooking();  
-    this.loadFare();
-    this.loadRoutes();
-    this.loadSchdeule();
-    this.loadVehicle();
+    // this.loadFare();
+    // this.loadRoutes();
+    // this.loadSchdeule();
+    // this.loadVehicle();
   }
 
   loadBooking(): void {

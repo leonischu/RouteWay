@@ -41,7 +41,9 @@ export class Navbar {
           this.cdr.detectChanges();        
 
   }
-
+get isAdmin(): boolean {
+  return this.userDetail?.role === 'Admin';
+}
 
 
 

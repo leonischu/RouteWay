@@ -15,6 +15,8 @@
         public decimal TotalAmount { get; set; }
 
         public string BookingStatus { get; set; }
+
+        public string CancellationReason { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
