@@ -1,142 +1,143 @@
 🚀 Booking System
 
-A simple and secure vehicle/seat booking system with JWT authentication and a clean layered backend structure.
+  A simple and secure vehicle/seat booking system with JWT authentication and a clean layered backend structure.
 
 Project Features
 
-🔐 User Authentication using JWT
+      🔐 User Authentication using JWT
 
-👤 Secure Login & Registration
+      👤 Secure Login & Registration  
 
-🎟️ Vehicle / Seat Booking
+      🎟️ Vehicle / Seat Booking
 
-📋 View Bookings
+      📋 View Bookings
 
-❌ Cancel/Delete Booking
+      ❌ Cancel/Delete Booking
 
-🔄 REST API Integration
+      🔄 REST API Integration
 
-📦 Clean Layered Backend Structure
+      📦 Clean Layered Backend Structure
 
-🔑 AuthGuard for route protection
+      🔑 AuthGuard for route protection
 
-🧑‍💼 Admin Seeding
+      🧑‍💼 Admin Seeding
 
 🏗️ Project Architecture
-🔹 Frontend – Angular
+    🔹 Frontend – Angular
 
-Angular Components & Services
+      Angular Components & Services
 
-API calls using HttpClient
+      API calls using HttpClient
 
-Form validation
+      Form validation
 
-Dynamic booking display
+      Dynamic booking display
 
-Token-based authentication handling
+      Token-based authentication handling
 
-AuthGuard for protecting routes:
+      AuthGuard for protecting routes:
 
-AuthGuard ensures that only authenticated users can access certain routes.
+      AuthGuard ensures that only authenticated users can access certain routes.
 
-Redirects users to the login page if they are not authenticated.
+      Redirects users to the login page if they are not authenticated.
 
 🔹 Backend – ASP.NET Core
 
-RESTful Web API
+      RESTful Web API
 
-Business logic for the booking system
+      Business logic for the booking system
 
-JWT token generation & validation
+      JWT token generation & validation
 
-Secure protected endpoints
+      Secure protected endpoints
 
-Dapper for database operations
+      Dapper for database operations
 
-Admin Seeding:
-An admin user is seeded in the database on startup to ensure that there is always an administrative account for system management.
+      Admin Seeding:
+      An admin user is seeded in the database on startup to ensure that there is always an administrative account for system management.
 
 🗄️ Database Access – Dapper
 
-Dapper is used instead of Entity Framework as a lightweight ORM.
+        Dapper is used instead of Entity Framework as a lightweight ORM.
 
-High-performance data access with raw SQL queries.
+        High-performance data access with raw SQL queries.
 
-Manual query control for better flexibility.
+        Manual query control for better flexibility.
 
-CRUD operations using Dapper.
+        CRUD operations using Dapper.
 
-This approach helps understand how SQL queries work behind the scenes.
-
+        This approach helps understand how SQL queries work behind the scenes.
+    
 🔐 Authentication – JWT
 
-JWT (JSON Web Token) is used for secure authentication:
+        JWT (JSON Web Token) is used for secure authentication:
 
-User logs in.
+        User logs in.
 
-Server validates credentials.
+        Server validates credentials.
 
-JWT token is generated and stored on the frontend.
+        JWT token is generated and stored on the frontend.
+  
+        Token is sent in the Authorization header with API requests.
 
-Token is sent in the Authorization header with API requests.
+        Backend validates token before granting access.
 
-Backend validates token before granting access.
+        Protected routes require a valid JWT token.
 
-Protected routes require a valid JWT token.
+  How the System Works
 
-How the System Works
+    User Registration/Login
+            User registers or logs in, generating a JWT token.
 
-User Registration/Login
-User registers or logs in, generating a JWT token.
+     Searching for Transport
+                User searches for available vehicles/seats.
 
-Searching for Transport
-User searches for available vehicles/seats.
+    Booking Request
+                 Booking request is sent to the backend.
 
-Booking Request
-Booking request is sent to the backend.
+     Processing Booking
+                Backend processes the booking logic and stores booking data using Dapper.
+   
+    UI Update
+               Frontend displays booking confirmation.
 
-Processing Booking
-Backend processes the booking logic and stores booking data using Dapper.
-
-UI Update
-Frontend displays booking confirmation.
-
-Admin Seeding
-An admin account is seeded in the database on the backend, ensuring there is always an admin for managing the system.
+    Admin Seeding
+              An admin account is seeded in the database on the backend, ensuring there is always an admin for managing the system.
 
 🛠️ Technologies Used
-Frontend:
 
-Angular
 
-TypeScript
+   Frontend:
 
-HTML
+            Angular
 
-CSS / SCSS
+            TypeScript
 
-Backend:
+            HTML
 
-C#
+            CSS / SCSS
+   Backend:
 
-ASP.NET Core Web API
+            C#
 
-Dapper
+            ASP.NET Core Web API
 
-SQL Server
+            Dapper
 
-JWT Authentication
+            SQL Server
+ 
+           JWT Authentication
 
 🎯 Learning Goals
 
-Implement secure JWT authentication.
+      Implement secure JWT authentication.
 
-Understand and work with Dapper for database access.
+      Understand and work with Dapper for database access.
 
-Build a complete booking system.
+      Build a complete booking system.
 
-Connect the Angular frontend with the .NET backend.
+      Connect the Angular frontend with the .NET backend.
 
-Handle protected API routes using AuthGuard.
+      Handle protected API routes using AuthGuard.
 
-Implement admin seeding for initial system setup.
+      Implement admin seeding for initial system setup.
