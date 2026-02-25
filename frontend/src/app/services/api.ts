@@ -110,4 +110,6 @@ export class Api {
         return this.http.get<UserInterface>(`${this.apiUrl}api/User`)
       }
 
+
+ 
 }

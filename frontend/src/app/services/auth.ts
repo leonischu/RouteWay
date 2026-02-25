@@ -10,87 +10,122 @@ import { UserDetail } from '../model/userDetail';
   providedIn: 'root',
 })
 export class Auth {
-  private apiUrl = 'http://localhost:5278/'; 
+
+  private apiUrl = 'http://localhost:5278/';
 
   constructor(private http: HttpClient) {}
 
-  // Register new user
-  register(data:Register ): Observable<any> {
+  // =========================
+  // AUTH API CALLS
+  // =========================
+
+  register(data: Register): Observable<any> {
     return this.http.post(`${this.apiUrl}api/Auth/register`, data);
   }
 
-  // Login
-  login(data:Login): Observable<UserDetail> {
-    return this.http.post(`${this.apiUrl}api/Auth/login`, data)
+  login(data: Login): Observable<any> {
+    return this.http
+      .post(`${this.apiUrl}api/Auth/login`, data)
       .pipe(
         tap((response: any) => {
-          // Save token to localStorage
-          if (response.token) {
+          if (response?.token && typeof response.token === 'string') {
             localStorage.setItem('token', response.token);
-            localStorage.setItem('user', JSON.stringify(response.user));
+            if (response.user) {
+              localStorage.setItem('user', JSON.stringify(response.user));
+            }
           }
         })
       );
   }
 
-  // Logout
+  googleLogin(idToken: string): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}api/Auth/google`,
+      { idToken }
+    ).pipe(
+      tap((response: any) => {
+        // ✅ IMPORTANT: store ONLY JWT, not whole response
+        if (response?.token && typeof response.token === 'string') {
+          localStorage.setItem('token', response.token);
+        }
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
 
-  // Check if user is logged in
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
+  // =========================
+  // TOKEN HELPERS
+  // =========================
 
-  // Get token
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
 
+  // =========================
+  // SAFE JWT DECODING
+  // =========================
 
-  // Get user name
-  getUserName = () =>{
-  
-
+  private decodeToken(): any | null {
     const token = this.getToken();
-    if(!token) return null;
-    const decodedToken : any = jwtDecode(token);
-    console.log('DECODED TOKEN', decodedToken);
+    if (!token) return null;
 
-    const userDetail ={
-      id:decodedToken.id,
-       FullName: decodedToken.name,
+    // JWT must have 3 parts
+    if (token.split('.').length !== 3) {
+      console.error('Invalid JWT format');
+      this.logout();
+      return null;
+    }
+
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      console.error('JWT Decode Failed:', error);
+      this.logout();
+      return null;
+    }
+  }
+
+  // =========================
+  // USER DATA (SAFE)
+  // =========================
+
+  getUserName(): UserDetail | null {
+    const decodedToken = this.decodeToken();
+    if (!decodedToken) return null;
+
+    return {
+      userId: decodedToken.id,
+      fullName: decodedToken.name,
       email: decodedToken.email,
       role: decodedToken.role || [],
     };
-    return userDetail;
-
-  };
-  
-  getUserProfile(): Observable<UserDetail>{
-    return this.http.get<UserDetail>(`${this.apiUrl}api/Auth/detail`);
   }
-  
 
-  // Get user role (for admin check)
- getUserRole(): string | null {
-  const token = this.getToken();
-  if (!token) return null;
+  getUserRole(): string | null {
+    const decoded = this.decodeToken();
+    if (!decoded) return null;
 
-  const decoded: any = jwtDecode(token);
-  return decoded.role || decoded.Role || null;
-}
+    return decoded.role || decoded.Role || null;
+  }
 
+  getUserId(): number {
+    const decoded = this.decodeToken();
+    if (!decoded) return 0;
 
-getUserId(): number {
-  const token = localStorage.getItem('token');
-  if (!token) return 0;
+    return Number(decoded.id) || 0;
+  }
 
-  const payload = JSON.parse(atob(token.split('.')[1]));
-  return Number(payload.id);
-}
-  
+  getUserProfile(): Observable<UserDetail> {
+    return this.http.get<UserDetail>(
+      `${this.apiUrl}api/Auth/detail`
+    );
+  }
 }
