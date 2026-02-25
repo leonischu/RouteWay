@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { provideToastr, ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
+declare const google: any;
+
 @Component({
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
@@ -57,7 +59,7 @@ export class Login {
         icon: "success"
         } );
         // //this.toaster.success('Login successfull',"Sucess");
-        // alert('Login successful! ✅');
+        // alert('Login successful! ');
       },
       error: (error) => {
         this.loading = false;
@@ -72,5 +74,42 @@ export class Login {
       }
     });
   }
+
+ // Google Button Setup (component only)
+ngAfterViewInit(): void {
+  google.accounts.id.initialize({
+    client_id: '596508608140-eic4vkkoud60jd15mrrokvf0e6a4ef5a.apps.googleusercontent.com',
+    callback: (response: any) => this.handleGoogleLogin(response),
+
+     
+  });
+
+  google.accounts.id.renderButton(
+    document.getElementById('googleButton'),
+    {
+      theme: 'outline',
+      size: 'large',
+      width: 300
+    }
+  );
+
+
+}
+
+ // Google Login Handler (component only)
+handleGoogleLogin(response: any): void {
+  const idToken = response.credential;
+
+  this.authService.googleLogin(idToken).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.token);
+      this.router.navigate(['/User']);
+    },
+    error: () => {
+      this.errorMessage = 'Google login failed';
+    }
+  });
+}
+
 
 }

@@ -1,4 +1,5 @@
 ﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Models;
 using AutomatedTransportEnquiry.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,5 +64,23 @@ namespace AutomatedTransportEnquiry.Controllers
             return Ok(user);
 
         }
+
+        //For Google 
+        [HttpPost("google")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto model)
+        {
+            var token = await _service.GoogleLoginAsync(model);
+
+            return Ok(new
+            {
+                status = true,
+                token = token
+            });
+        }
+
+
+
+
+
     }
 }

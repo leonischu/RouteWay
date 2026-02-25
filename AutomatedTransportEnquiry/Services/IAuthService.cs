@@ -10,7 +10,7 @@ namespace AutomatedTransportEnquiry.Services
         Task<UserDetailDto> GetUserDetail(int userId);
 
 
-
+        Task<string> GoogleLoginAsync(GoogleLoginDto model);
 
 
     }

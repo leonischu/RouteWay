@@ -58,6 +58,35 @@ namespace AutomatedTransportEnquiry.Repositories
             
         }
 
-    
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var sql = "SELECT * FROM Users WHERE Email = @Email";
+
+            using var connection = _context.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<User>(
+                sql,
+                new { Email = email }
+            );
+        }
+
+        public async Task<User> CreateUserAsync(User user)
+        {
+            var sql = @"INSERT INTO Users (FullName, Email, PasswordHash, Role)
+                VALUES (@FullName, @Email, @PasswordHash, @Role);
+                
+                SELECT CAST(SCOPE_IDENTITY() as int);";
+
+            using var connection = _context.CreateConnection();
+
+            var id = await connection.QuerySingleAsync<int>(sql, user);
+
+            user.UserId = id;
+
+            return user;
+        }
+
+
     }
 }

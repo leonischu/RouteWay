@@ -10,7 +10,12 @@ namespace AutomatedTransportEnquiry.Repositories
         Task Create(User user);
 
         Task<User> GetById(int id);
-  
+
+
+        //For Login With Google 
+        Task<User?> GetUserByEmailAsync(string email);
+        Task<User> CreateUserAsync(User user);
+
 
     }
 }
