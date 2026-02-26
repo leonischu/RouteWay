@@ -108,13 +108,13 @@
        class="flex items-center gap-3 cursor-pointer pl-2">
     <!-- Name + Role (Hidden on small screens) -->
     <div class="hidden lg:flex flex-col text-right leading-tight">
-      <span class="font-semibold text-sm text-white">{{ userDetail.FullName }}</span>
+      <span class="font-semibold text-sm text-white">{{ userDetail.fullName }}</span>
       <span class="text-xs text-slate-400 capitalize">{{ userDetail.role }}</span>
     </div>
 
     <!-- Avatar -->
     <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-full w-11 h-11 flex items-center justify-center shadow-lg shadow-indigo-900/50 ring-2 ring-slate-900 transition-all duration-300 group-hover:ring-indigo-500">
-  {{ userDetail?.FullName?.charAt(0) | uppercase }}
+  {{ userDetail?.fullName?.charAt(0) | uppercase }}
 </div>
   </div>
 
@@ -124,13 +124,13 @@
          class="flex items-center gap-3 cursor-pointer pl-2">
       <!-- Name + Role (Hidden on small screens) -->
       <div class="hidden lg:flex flex-col text-right leading-tight">
-        <span class="font-semibold text-sm text-white">{{ userDetail.FullName }}</span>
+        <span class="font-semibold text-sm text-white">{{ userDetail.fullName }}</span>
         <span class="text-xs text-slate-400 capitalize">{{ userDetail.role }}</span>
       </div>
 
       <!-- Avatar -->
       <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-full w-11 h-11 flex items-center justify-center shadow-lg shadow-indigo-900/50 ring-2 ring-slate-900 transition-all duration-300 group-hover:ring-indigo-500">
-  {{ userDetail?.FullName?.charAt(0) | uppercase }}
+{{ userDetail?.fullName?.charAt(0) | uppercase }}
 </div>
     </div>
   </ng-template>
