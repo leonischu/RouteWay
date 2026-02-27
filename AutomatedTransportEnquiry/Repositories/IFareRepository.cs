@@ -8,5 +8,7 @@ namespace AutomatedTransportEnquiry.Repositories
         Task<FareDto?> GetByIdAsync(int fareId);   
 
         Task<int> CreateAsync(FareCreateDto dto);
+
+        Task<bool> DeleteAsync(int fareId);
     }
 }

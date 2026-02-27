@@ -61,6 +61,9 @@ export class Api {
         addFare(newFare:any):Observable<Fare>{
           return this.http.post<Fare>(`${this.apiUrl}api/Fare`,newFare)
         }
+        deleteFare(fareId:number):Observable<any>{
+        return this.http.delete<any>(`${this.apiUrl}api/Fare/${fareId}`);
+      }
 
 
 

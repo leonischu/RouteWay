@@ -47,5 +47,13 @@ namespace AutomatedTransportEnquiry.Controllers
         return Ok(await _service.CreateAsync(dto));
 
         }
+
+
+        [HttpDelete("{fareId}")]
+
+        public async Task<ActionResult<APIResponse>>Delete(int fareId){
+            var response = await _service.DeleteAsync(fareId);
+            return StatusCode((int)response.StatusCode, response);
+        }
     }
 }
