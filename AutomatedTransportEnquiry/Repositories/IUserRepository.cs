@@ -1,11 +1,12 @@
-﻿using AutomatedTransportEnquiry.Models;
+﻿using AutomatedTransportEnquiry.DTOs;
+using AutomatedTransportEnquiry.Models;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
     public interface IUserRepository
     {
 
-        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<UserDetailDto>> GetAll();
         Task<User> GetByEmail(string email);
         Task Create(User user);
 
