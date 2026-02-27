@@ -26,7 +26,10 @@ namespace AutomatedTransportEnquiry.Repositories
                            s.TravelDate
                           FROM Schedules s
                           JOIN Vehicles v ON v.VehicleId = s.VehicleId
-                          JOIN Routes r ON r.RouteId = s.RouteId WHERE LOWER(r.Source) = LOWER(@From) AND LOWER( r.Destination) = LOWER(@To)";
+                          JOIN Routes r ON r.RouteId = s.RouteId WHERE LOWER(r.Source) = LOWER(@From) AND LOWER( r.Destination) = LOWER(@To)
+                             AND r.IsDeleted = 0
+                            AND s.IsDeleted = 0
+                             AND v.IsDeleted = 0";
             using var connection = _context.CreateConnection();
             
             return await connection.QueryAsync<ScheduleDto>(query, new { from, to});
@@ -46,7 +49,12 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<IEnumerable<Schedule>> GetAsync()
         {
-            var query = "SELECT * FROM Schedules ";
+            var query = @"SELECT s.* FROM Schedules s
+                  JOIN Routes r ON r.RouteId = s.RouteId
+                  JOIN Vehicles v ON v.VehicleId = s.VehicleId
+                  WHERE s.IsDeleted = 0
+                  AND r.IsDeleted = 0
+                  AND v.IsDeleted = 0";
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<Schedule>(query);
         }
@@ -55,7 +63,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var query = "DELETE FROM Schedules WHERE ScheduleID = @ScheduleId";
+            var query = "UPDATE Schedules SET IsDeleted = 1 WHERE ScheduleID = @ScheduleId";
             using var connection = _context.CreateConnection();
             return await connection.ExecuteAsync(query, new { ScheduleId = id }) > 0;
 

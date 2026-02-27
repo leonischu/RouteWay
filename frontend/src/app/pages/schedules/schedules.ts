@@ -79,10 +79,12 @@ constructor(
         };
 
         this.schedules.push(formattedResponse);
-        this.cdr.detectChanges();
+      
 
         // Reset cleanly
         this.newSchedule = this.getEmptySchedule();
+        this.getSchedule();
+          this.cdr.detectChanges();
       },
 
       error: (err) => {

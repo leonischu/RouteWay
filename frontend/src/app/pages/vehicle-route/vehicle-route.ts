@@ -31,7 +31,8 @@ export class VehicleRoute implements OnInit {
   this.apiService.getRoutes().subscribe({
     next: (res) => {
       this.vehicleRoutes = [...res.data]; 
-      this.cdr.detectChanges();           
+      this.cdr.detectChanges();     
+      console.log(this.vehicleRoutes)      
     },
     error: (err) => console.error(err),
   });
