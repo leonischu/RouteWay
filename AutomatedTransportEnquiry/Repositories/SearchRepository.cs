@@ -27,7 +27,8 @@ namespace AutomatedTransportEnquiry.Repositories
         FROM Schedules s
         JOIN Vehicles v ON s.VehicleId = v.VehicleId
         JOIN Routes r ON s.RouteId = r.RouteId
-        JOIN Fares f ON f.RouteId = r.RouteId");
+        JOIN Fares f ON f.RouteId = r.RouteId
+       WHERE r.IsDeleted = 0 AND s.IsDeleted = 0 AND v.IsDeleted = 0");
 
             using var connection = _context.CreateConnection();
 
@@ -52,6 +53,7 @@ namespace AutomatedTransportEnquiry.Repositories
                      JOIN Vehicles v ON s.VehicleId = v.VehicleId
                      JOIN Routes r ON s.RouteId = r.RouteId
                       JOIN Fares f ON f.RouteId = r.RouteId
+                       WHERE r.IsDeleted = 0 AND s.IsDeleted = 0 AND v.IsDeleted = 0
                      WHERE LOWER(r.Source) = LOWER(@From)
                       AND LOWER(r.Destination) =LOWER(@To)");
 

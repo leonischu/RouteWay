@@ -180,10 +180,11 @@ openForm() {
 
     this.apiService.newBookings(bookingPayload).subscribe({
       next: () => {
-              console.log('Booking successful');
+              console.log('Booking successful'); 
+               this.isModalOpen = false;
+               this.cdr.detectChanges();
                this.toastr.success('Booking Successful!', 'Success ');
-         this.cdr.detectChanges();
-        this.isModalOpen = false;
+       
         this.loadBooking();
       },
  error: err => {

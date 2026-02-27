@@ -4,6 +4,7 @@ export interface VehicleRoutes {
   source: string;
   destination: string;
   distance: number;
+  IsDeleted:number;
 }
 export interface VehicleRoutesInterface {
   data: VehicleRoutes[];
