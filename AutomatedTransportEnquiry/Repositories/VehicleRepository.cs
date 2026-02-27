@@ -17,7 +17,7 @@ namespace AutomatedTransportEnquiry.Repositories
         }
         public async Task<IEnumerable<Vehicle>> GetAllAsync()
         {
-            var query = "SELECT * FROM Vehicles";
+            var query = "SELECT * FROM Vehicles  WHERE  IsDeleted = 0";
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<Vehicle>(query);
         }
@@ -62,9 +62,9 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var query = "DELETE FROM Vehicles WHERE VehicleId = @VehicleId";
+            var query = "UPDATE Vehicles SET IsDeleted = 1  WHERE VehicleId = @VehicleId";
             using var connection = _context.CreateConnection();
-            return await connection.ExecuteAsync(query, new {VehicleId = id }) >0;
+            return await connection.ExecuteAsync(query, new { VehicleId = id }) >0;
         }
 
        
