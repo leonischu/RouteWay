@@ -12,7 +12,7 @@ namespace AutomatedTransportEnquiry.Services
         Task<APIResponse> GetByIdAsync(int fareId);
          Task<APIResponse> CreateAsync(FareCreateDto dto);
 
-
+        Task<APIResponse> DeleteAsync(int fareId);
 
     }
 }

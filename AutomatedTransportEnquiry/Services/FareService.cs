@@ -76,5 +76,36 @@ namespace AutomatedTransportEnquiry.Services
             }
             return response;
         }
+
+        public async Task<APIResponse> DeleteAsync(int fareId)
+        {
+            var response = new APIResponse();
+
+            try
+            {
+                var deleted = await _repository.DeleteAsync(fareId);
+
+                if (!deleted)
+                {
+                    response.Status = false;
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Errors.Add("Fare not found.");
+                    return response;
+                }
+
+                response.Status = true;
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = "Fare Deleted Successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Errors.Add(ex.Message);
+            }
+
+            return response;
+        }
     }
+    
 }

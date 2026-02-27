@@ -1,6 +1,7 @@
 ﻿using AutomatedTransportEnquiry.Data;
 using AutomatedTransportEnquiry.DTOs;
 using Dapper;
+using ZstdSharp.Unsafe;
 
 namespace AutomatedTransportEnquiry.Repositories
 {
@@ -16,7 +17,9 @@ namespace AutomatedTransportEnquiry.Repositories
             var sql = @"SELECT f.FareId, f.RouteId,
                    CONCAT(r.source, ' - ' ,r.Destination) AS RouteName,
                         f.Price From Fares f 
-                        JOIN Routes r ON r.RouteId = f.RouteId";
+                        JOIN Routes r ON r.RouteId = f.RouteId
+                        WHERE f.IsDeleted = 0
+                        AND r.IsDeleted = 0                   ";
                 using var connection = _context.CreateConnection();
                 return await connection.QueryAsync<FareDto>(sql);
         }
@@ -46,6 +49,13 @@ namespace AutomatedTransportEnquiry.Repositories
                         SELECT SCOPE_IDENTITY();";
             using var connection = _context.CreateConnection();
             return await connection.ExecuteScalarAsync<int>(sql,dto);
+        }
+
+        public async Task<bool> DeleteAsync(int fareId)
+        {
+            var sql = @"UPDATE Fares  SET IsDeleted = 1 WHERE FareId = @FareId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(sql, new { FareId = fareId }) > 0;
         }
     }
 }

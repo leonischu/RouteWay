@@ -62,6 +62,7 @@ addFare():void {
                   
         // alert('Fare added successfully!');
           this.toastr.success('Fare added sucessfully!');
+          this.getFare(); 
     }, error: (err) => {
         this.toastr.error('Failed to add fare'); 
         console.error(err);}
@@ -78,7 +79,19 @@ loadRoutes(): void {
     error: (err) => console.error(err),
   });
 }
-
+  deleteFare(fareId:number ) : void {
+       this.apiService.deleteFare(fareId).subscribe({
+    next: (res) => {
+      console.log(res);
+      this.toastr.success('Fare deleted successfully!');
+      this.getFare(); 
+    },
+    error: (err) => {
+      console.error('Delete error', err);
+      this.toastr.error(err?.error?.errors?.[0] || 'Failed to delete fare.');
+    }
+  });
+    }
 
 }
 
