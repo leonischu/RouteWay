@@ -19,17 +19,20 @@ schedules: Schedule[] = [];
 routes: VehicleRoutes [] = [];
 vehicles : Vehicle [] =[];
   
-newSchedule: Schedule = {
-  scheduleId: 0,
-  vehicleId: 0,
+ newSchedule: Schedule = this.getEmptySchedule();
 
-  routeId: 0,
-  travelDate: null,
-  departureTime: '',
-  arrivalTime: '',
-  availableSeats: 0
-};
- 
+  private getEmptySchedule(): Schedule {
+    return {
+      scheduleId: 0,
+      vehicleId: 0,
+      routeId: 0,
+      travelDate: '',
+      departureTime: '',
+      arrivalTime: '',
+      availableSeats: 0
+    };
+  }
+
  error: string = '';
 constructor(
   private apiService:Api,
@@ -55,40 +58,39 @@ constructor(
         })
       }
 
-      addSchedule():void {
-        console.log(this.newSchedule)
-        this.apiService.addSchedule(this.newSchedule).subscribe(
-          {
-       next:(response:Schedule[] )=>{
-       if (Array.isArray(response)) {
-                // Ensure response is an array before using spread
-                this.schedules.push(...response); // This spreads the array of schedules into the schedules array
-            } else {
-                // If response is not an array, directly push it (assuming it's a single object)
-                this.schedules.push(response);
-            }
-              this.cdr.detectChanges();
-         this.newSchedule = {
-               scheduleId: 0,
-               vehicleId: 0,
-               
-               routeId: 0,
-               travelDate: '',
-               departureTime: '',
-               arrivalTime: '',
-               availableSeats:0
-                }
-                console.log(this.newSchedule)
-              },
-              
-         error:(err) =>{
-          this.error = 'Failed to add Schedule';
-          console.error(err);
-         } 
-            
-          });
-      }
+       addSchedule(): void {
 
+    // Ensure numbers are numbers
+    this.newSchedule.vehicleId = Number(this.newSchedule.vehicleId);
+    this.newSchedule.routeId = Number(this.newSchedule.routeId);
+    this.newSchedule.availableSeats = Number(this.newSchedule.availableSeats);
+
+    console.log(this.newSchedule);
+
+    this.apiService.addSchedule(this.newSchedule).subscribe({
+      next: (response: any) => {
+
+        // Fix travelDate format before pushing
+        const formattedResponse = {
+          ...response,
+          travelDate: response.travelDate
+            ? response.travelDate.split('T')[0]
+            : ''
+        };
+
+        this.schedules.push(formattedResponse);
+        this.cdr.detectChanges();
+
+        // Reset cleanly
+        this.newSchedule = this.getEmptySchedule();
+      },
+
+      error: (err) => {
+        this.error = 'Failed to add Schedule';
+        console.error(err);
+      }
+    });
+  }
 
       loadRoutes() : void {
         this.apiService.getRoutes().subscribe({
@@ -112,7 +114,11 @@ constructor(
         });
       }
 
-
+    deleteSchedule(scheduleId:number ) : void {
+      this.apiService.deleteSchedule(scheduleId).subscribe(() =>{
+        this.getSchedule();
+      })
+    }
       
 
 }

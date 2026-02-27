@@ -68,6 +68,34 @@ namespace AutomatedTransportEnquiry.Services
             return response;
         }
 
-        
+        public async Task<APIResponse> DeleteAsync(int scheduleId)
+        {
+            var response = new APIResponse();
+
+            try
+            {
+                var deleted = await _repository.DeleteAsync(scheduleId);
+
+                if (!deleted)
+                {
+                    response.Status = false;
+                    response.StatusCode = HttpStatusCode.NotFound;
+                    response.Errors.Add("Vehicle not found.");
+                    return response;
+                }
+
+                response.Status = true;
+                response.StatusCode = HttpStatusCode.OK;
+                response.Data = "Vehicle Deleted Successfully";
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Errors.Add(ex.Message);
+            }
+
+            return response;
+        }
     }
 }

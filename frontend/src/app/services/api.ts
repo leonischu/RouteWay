@@ -82,6 +82,14 @@ export class Api {
         return this.http.post<Schedule[]>(`${this.apiUrl}api/Schedule`,newSchedule)
       }
 
+      deleteSchedule(scheduleId:number):Observable<any>{
+        return this.http.delete<any>(`${this.apiUrl}api/Schedule/${scheduleId}`);
+      }
+
+
+
+
+
 
       //Services for Bookings
       getBooking():Observable<BookingInterface>{

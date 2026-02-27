@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-fares',
@@ -25,7 +26,8 @@ export class Fares {
    } ;
 constructor(
   private apiService :Api,
-  private cdr: ChangeDetectorRef
+  private cdr: ChangeDetectorRef,
+  private toastr:ToastrService
 
 ){}
 ngOnInit():void{
@@ -54,12 +56,14 @@ addFare():void {
   this.apiService.addFare(this.newFare).subscribe({
     next:(response:Fare)=>{
        this.fares.push(response);
+          this.cdr.detectChanges(); 
         this.newFare = { fareId: 0, routeName: '', price: 0, routeId: 0 }; // Reset the form after successful addition
         console.log(this.newFare);
-              this.cdr.detectChanges();        
-        alert('Fare added successfully!');
+                  
+        // alert('Fare added successfully!');
+          this.toastr.success('Fare added sucessfully!');
     }, error: (err) => {
-        this.error = 'Failed to add fare'; 
+        this.toastr.error('Failed to add fare'); 
         console.error(err);}
   });
 }

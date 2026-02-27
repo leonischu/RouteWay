@@ -50,5 +50,15 @@ namespace AutomatedTransportEnquiry.Repositories
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<Schedule>(query);
         }
+
+      
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var query = "DELETE FROM Schedules WHERE ScheduleID = @ScheduleId";
+            using var connection = _context.CreateConnection();
+            return await connection.ExecuteAsync(query, new { ScheduleId = id }) > 0;
+
+        }
     }
 }
