@@ -17,7 +17,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<IEnumerable<VehicleRoute>> GetAllAsync()
         {
-            var query = "SELECT * FROM Routes";
+            var query = "SELECT * FROM Routes WHERE IsDeleted = 0";
             var parameters = new DynamicParameters();
             //parameters.Add("Name", r.Name, DbType.String);
 
@@ -80,7 +80,7 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<bool> DeleteAsync(int routeId)
         {
-            var query = "DELETE FROM Routes Where RouteId = @RouteId";
+            var query = "UPDATE Routes SET IsDeleted = 1 WHERE RouteId = @RouteId";
             using var connection = _context.CreateConnection();
             return await connection.ExecuteAsync(query, new { RouteId = routeId }) > 0;
             

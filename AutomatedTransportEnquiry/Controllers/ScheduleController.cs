@@ -46,5 +46,13 @@ namespace AutomatedTransportEnquiry.Controllers
             return StatusCode((int)response.StatusCode, response);
 
         }
+        [HttpDelete("{scheduleId}")]
+        public async Task<ActionResult<APIResponse>>Delete(int scheduleId)
+        {
+            var response = await _service.DeleteAsync(scheduleId);
+            return StatusCode((int)response.StatusCode, response);
+        }
+
+
     }
 }
