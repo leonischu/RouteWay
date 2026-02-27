@@ -1,4 +1,5 @@
 ﻿using AutomatedTransportEnquiry.Data;
+using AutomatedTransportEnquiry.DTOs;
 using AutomatedTransportEnquiry.Models;
 using Dapper;
 using System.Data;
@@ -14,11 +15,11 @@ namespace AutomatedTransportEnquiry.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserDetailDto>> GetAll()
         {
             var sql = "SELECT * FROM Users";
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<User>(sql);
+            return await connection.QueryAsync<UserDetailDto>(sql);
         }
         public async Task<User> GetByEmail(string email)
         {
