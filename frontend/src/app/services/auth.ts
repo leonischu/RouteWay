@@ -66,7 +66,13 @@ export class Auth {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
+      const token =  this.getToken();
+      if(!token) return false;
+      if(this.isTokenExpired()){
+        this.logout();
+        return false;
+      }
+      return true;
   }
 
   // =========================
@@ -128,4 +134,17 @@ export class Auth {
       `${this.apiUrl}api/Auth/detail`
     );
   }
+
+
+  
+isTokenExpired(): boolean {
+  const decoded = this.decodeToken();
+  if (!decoded) return true;
+
+  const expiry = decoded.exp; // exp is in seconds
+  const now = Math.floor(Date.now() / 1000);
+
+  return now >= expiry;
 }
+}
+
