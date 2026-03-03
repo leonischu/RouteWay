@@ -66,7 +66,6 @@ Project Features
 
         CRUD operations using Dapper.
 
-        This approach helps understand how SQL queries work behind the scenes.
     
 🔐 Authentication – JWT
 
