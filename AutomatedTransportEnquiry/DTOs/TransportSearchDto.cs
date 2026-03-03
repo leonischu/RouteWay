@@ -20,5 +20,7 @@
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
         public decimal Price { get; set; }
+        public string VehicleNumber { get; set; }
+        public string VehicleType { get; set; }
     }
 }
