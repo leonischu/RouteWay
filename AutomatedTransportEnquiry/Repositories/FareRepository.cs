@@ -14,12 +14,14 @@ namespace AutomatedTransportEnquiry.Repositories
         }
         public async Task<IEnumerable<FareDto>> GetAllAsync()
         {
-            var sql = @"SELECT f.FareId, f.RouteId,
+            var sql = @"SELECT f.FareId, f.RouteId,v.VehicleId,
                    CONCAT(r.source, ' - ' ,r.Destination) AS RouteName,
                         f.Price From Fares f 
                         JOIN Routes r ON r.RouteId = f.RouteId
+                        JOIN Vehicles v ON v.VehicleId = f.VehicleId
                         WHERE f.IsDeleted = 0
-                        AND r.IsDeleted = 0                   ";
+                        AND r.IsDeleted = 0  
+                        AND v.IsDeleted = 0  ";
                 using var connection = _context.CreateConnection();
                 return await connection.QueryAsync<FareDto>(sql);
         }
@@ -34,6 +36,7 @@ namespace AutomatedTransportEnquiry.Repositories
             f.Price
         FROM Fares f
        JOIN Routes r ON r.RouteId = f.RouteId
+        JOIN Vehicles v ON v.vehicleId = f.VehicleId
 
         WHERE f.FareId = @FareId";
 
@@ -44,8 +47,8 @@ namespace AutomatedTransportEnquiry.Repositories
 
         public async Task<int> CreateAsync(FareCreateDto dto)
         {
-            var sql = @"INSERT INTO Fares (RouteId,Price)
-                        VALUES(@RouteId,@Price);
+            var sql = @"INSERT INTO Fares (RouteId,Price,VehicleId)
+                        VALUES(@RouteId,@Price,@VehicleId);
                         SELECT SCOPE_IDENTITY();";
             using var connection = _context.CreateConnection();
             return await connection.ExecuteScalarAsync<int>(sql,dto);

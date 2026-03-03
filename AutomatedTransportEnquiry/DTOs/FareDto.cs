@@ -6,6 +6,10 @@
         public string RouteName { get; set; }
         public decimal Price { get; set; }
         public int RouteId { get; set; }
+        public int VehicleId { get; set; }
+
+        public string VehicleNumber { get; set; }
+        public string VehicleType { get; set; }
 
 
     }
@@ -13,6 +17,7 @@
     public class FareCreateDto
     {
         public int RouteId  { get; set; }
+        public int VehicleId { get; set; }
         public decimal Price { get; set; }
     }
 

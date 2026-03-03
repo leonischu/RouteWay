@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { VehicleRoutes } from '../../model/vehicle-route';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Vehicle } from '../../model/Vehicles-Info';
 
 @Component({
   selector: 'app-fares',
@@ -16,13 +17,17 @@ import { ToastrService } from 'ngx-toastr';
 export class Fares {
   fares:Fare[]=[];
     routes: VehicleRoutes[] = [];
+    vehicles: Vehicle[] = [];
    error: string = '';
 
    newFare: Fare ={
-    fareId:0,
-    routeName:'',
-    price:0,
-    routeId:0
+     fareId: 0,
+     routeName: '',
+     price: 0,
+     routeId: 0,
+     vehicleId: 0,
+     vehicleNumber: '',
+     vehicleType: ''
    } ;
 constructor(
   private apiService :Api,
@@ -33,6 +38,7 @@ constructor(
 ngOnInit():void{
   this.getFare();
   this.loadRoutes();
+  this.loadVehicle();
 }
 
 getFare():void{
@@ -57,7 +63,7 @@ addFare():void {
     next:(response:Fare)=>{
        this.fares.push(response);
           this.cdr.detectChanges(); 
-        this.newFare = { fareId: 0, routeName: '', price: 0, routeId: 0 }; // Reset the form after successful addition
+        this.newFare = { fareId: 0, routeName: '', price: 0, routeId: 0 ,vehicleId:0 ,vehicleNumber:'', vehicleType: ''}; // Reset the form after successful addition
         console.log(this.newFare);
                   
         // alert('Fare added successfully!');
@@ -79,6 +85,7 @@ loadRoutes(): void {
     error: (err) => console.error(err),
   });
 }
+
   deleteFare(fareId:number ) : void {
        this.apiService.deleteFare(fareId).subscribe({
     next: (res) => {
@@ -92,6 +99,26 @@ loadRoutes(): void {
     }
   });
     }
+
+
+
+   
+  loadVehicle(): void {
+  this.apiService.getVehicle().subscribe({
+    next: (res) => {
+      this.vehicles = [...res.data]; 
+      // console.log(this.vehicles); 
+      this.cdr.detectChanges();        
+    },
+    error: (err) => console.error(err),
+  });
+}
+
+
+getVehicleName(vehicleId: number): string {
+  const vehicle = this.vehicles.find(v => v.vehicleId === vehicleId);
+  return vehicle ? `${vehicle.vehicleNumber} - ${vehicle.vehicleType}` : 'Unknown Vehicle';
+}
 
 }
 
