@@ -87,6 +87,24 @@
         </select>
       </div>
 
+      <!-- Assign Vehicle Dropdown -->
+<div>
+  <label class="block text-sm font-medium text-slate-300 mb-2">
+    Assign Vehicle
+  </label>
+  <select
+    [(ngModel)]="newFare.vehicleId"
+    name="vehicleId"
+    required
+    class="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all appearance-none"
+  >
+    <option value="0" disabled>Select a vehicle</option>
+    <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">
+      {{ vehicle.vehicleNumber }} - {{ vehicle.vehicleType }}
+    </option>
+  </select>
+</div>
+
       <!-- Submit Button -->
       <div class="md:col-span-3 flex justify-end">
         <button 
@@ -141,6 +159,29 @@
 
       <!-- Card Body: Details -->
       <div class="p-5 space-y-4">
+          
+   
+        <!-- VehicleName -->
+        <div class="flex items-center gap-3 text-slate-300">
+          <div class="p-2 bg-slate-700/50 rounded-lg w-10 h-10 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          </div>
+          <div class="text-sm">
+            <p class="text-xs text-slate-500">Vehicle Number and Type</p>
+            <p class="font-mono text-white">  {{ getVehicleName(fare.vehicleId) }}
+</p>
+          </div>
+        </div>
+        
+
+
+
+
+
+
+
         
         <!-- Fare ID -->
         <div class="flex items-center gap-3 text-slate-300">
