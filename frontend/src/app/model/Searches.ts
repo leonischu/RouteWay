@@ -15,4 +15,7 @@ export interface searchResult{
   arrivalTime: string;    
   price: number;
     fareId: number;
+
+    vehicleNumber: string;
+vehicleType: string;
 }

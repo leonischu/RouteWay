@@ -19,7 +19,8 @@ namespace AutomatedTransportEnquiry.Repositories
         SELECT 
             s.ScheduleId,
               f.FareId AS FareId,
-            v.VehicleType,
+           v.VehicleNumber,
+             v.VehicleType,
             CONCAT(r.Source, ' - ', r.Destination) AS RouteName,
             s.DepartureTime,
             s.ArrivalTime,
@@ -27,7 +28,8 @@ namespace AutomatedTransportEnquiry.Repositories
         FROM Schedules s
         JOIN Vehicles v ON s.VehicleId = v.VehicleId
         JOIN Routes r ON s.RouteId = r.RouteId
-        JOIN Fares f ON f.RouteId = r.RouteId
+        JOIN Fares f ON f.RouteId = r.RouteId 
+              AND f.VehicleId = v.VehicleId
        WHERE r.IsDeleted = 0 AND s.IsDeleted = 0 AND v.IsDeleted = 0");
 
             using var connection = _context.CreateConnection();
