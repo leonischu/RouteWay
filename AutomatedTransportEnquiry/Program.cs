@@ -115,7 +115,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 
-
+//For Cache 
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<ICacheService, MemoryCacheService>();
 
 
 builder.Services.AddAuthentication("Bearer")
