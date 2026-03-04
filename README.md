@@ -21,6 +21,8 @@ Project Features
       🔑 AuthGuard for route protection
 
       🧑‍💼 Admin Seeding
+      
+      ⚡ Response Caching for performance optimization
 
 🏗️ Project Architecture
     🔹 Frontend – Angular
