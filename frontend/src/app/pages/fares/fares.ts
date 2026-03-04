@@ -92,6 +92,7 @@ loadRoutes(): void {
       console.log(res);
       this.toastr.success('Fare deleted successfully!');
       this.getFare(); 
+      this.cdr.detectChanges();
     },
     error: (err) => {
       console.error('Delete error', err);
