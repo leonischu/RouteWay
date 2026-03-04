@@ -68,5 +68,19 @@ namespace AutomatedTransportEnquiry.Repositories
             return await connection.ExecuteAsync(query, new { ScheduleId = id }) > 0;
 
         }
+        public async Task<IEnumerable<Schedule>> GetUpcomingAsync()
+        {
+            var query = @"SELECT s.* FROM Schedules s
+                  JOIN Routes r ON r.RouteId = s.RouteId
+                  JOIN Vehicles v ON v.VehicleId = s.VehicleId
+                  WHERE s.IsDeleted = 0
+                  AND r.IsDeleted = 0
+                  AND v.IsDeleted = 0
+                  AND s.TravelDate >= CURDATE()
+                  ORDER BY s.TravelDate ASC, s.DepartureTime ASC
+                  LIMIT 15";
+            using var connection = _context.CreateConnection();
+            return await connection.QueryAsync<Schedule>(query);
+        }
     }
 }

@@ -5,10 +5,12 @@ import { Footer } from './core/footer/footer';
 import { Auth } from './services/auth';
 import { UserDetail } from './model/userDetail';
 import { Token } from '@angular/compiler';
+import { ChatbotComponent } from './pages/chatbot/chatbot';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer],
+  standalone: true,
+  imports: [RouterOutlet,Navbar,Footer,ChatbotComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

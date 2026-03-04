@@ -121,6 +121,9 @@ export class Api {
         return this.http.get<UserInterface>(`${this.apiUrl}api/User`)
       }
 
-
+   // For chatBot 
+   sendChatMessage(message: string, history: { role: string; content: string }[]): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}api/Chat`, { message, history });
+}
  
 }

@@ -109,6 +109,22 @@ builder.Services.AddScoped<IBookingService,BookingService>();
 builder.Services.AddScoped<ICancelBookingService, CancelBookingService>();
 
 
+// For Chat (Groq)
+builder.Services.AddHttpClient("Groq", client =>
+{
+    client.BaseAddress = new Uri("https://api.groq.com");
+    client.DefaultRequestHeaders.Authorization =
+        new System.Net.Http.Headers.AuthenticationHeaderValue(
+            "Bearer", builder.Configuration["Groq:ApiKey"]);
+});
+builder.Services.AddScoped<IChatService, ChatService>();
+
+
+
+
+
+
+
 //For User 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();

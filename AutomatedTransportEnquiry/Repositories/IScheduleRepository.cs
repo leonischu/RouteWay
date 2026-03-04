@@ -10,5 +10,7 @@ namespace AutomatedTransportEnquiry.Repositories
         Task<IEnumerable<ScheduleDto>> GetAllAsync(string from, string to);
         Task<int>CreateAsync(Schedule schedule);
         Task<bool> DeleteAsync(int id);
+
+        Task<IEnumerable<Schedule>> GetUpcomingAsync();
     }
 }

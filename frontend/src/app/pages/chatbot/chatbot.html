@@ -1,0 +1,165 @@
+<p>chatbot works!</p>
+<div class="fixed bottom-6 right-6 z-[9999] font-sans">
+
+  <!-- Bubble button -->
+  <button
+    (click)="toggleChat()"
+    [ngClass]="isOpen
+      ? 'bg-gradient-to-br from-red-500 to-orange-500 shadow-red-500/40'
+      : 'bg-gradient-to-br from-indigo-500 to-blue-500 shadow-indigo-500/40'"
+    class="w-14 h-14 rounded-full border-none text-white cursor-pointer
+           flex items-center justify-center shadow-lg
+           transition-transform duration-200 hover:scale-110">
+    <!-- Open icon -->
+    <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg"
+         class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03
+               8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512
+               15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+    </svg>
+    <!-- Close icon -->
+    <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg"
+         class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- Chat window -->
+  <div
+    [ngClass]="isOpen
+      ? 'opacity-100 pointer-events-auto translate-y-0 scale-100'
+      : 'opacity-0 pointer-events-none translate-y-4 scale-95'"
+    class="absolute bottom-16 right-0 w-80 sm:w-96 h-[500px]
+           bg-slate-900 border border-slate-700 rounded-2xl
+           flex flex-col overflow-hidden
+           shadow-2xl transition-all duration-200">
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-indigo-500 to-blue-500
+                px-4 py-3 flex items-center justify-between flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">🚌</span>
+        <div>
+          <p class="text-white font-bold text-sm m-0">Transport Assistant</p>
+          <p class="text-white/80 text-xs m-0 flex items-center gap-1">
+            <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+            Online
+          </p>
+        </div>
+      </div>
+      <button
+        (click)="clearChat()"
+        title="Clear chat"
+        class="bg-white/20 hover:bg-white/30 border-none text-white
+               rounded-lg p-1.5 cursor-pointer transition-colors flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0
+                   01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0
+                   00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div
+      #messagesBox
+      class="flex-1 overflow-y-auto px-3 py-3 flex flex-col gap-2 bg-slate-950
+             scrollbar-thin scrollbar-thumb-slate-700">
+
+      <div
+        *ngFor="let msg of messages"
+        class="flex items-end gap-2"
+        [ngClass]="msg.role === 'user' ? 'justify-end' : 'justify-start'">
+
+        <!-- Bot avatar -->
+        <span *ngIf="msg.role === 'assistant'" class="text-base flex-shrink-0 mb-1">
+          🚌
+        </span>
+
+        <!-- Bubble -->
+        <div
+          [ngClass]="msg.role === 'user'
+            ? 'bg-gradient-to-br from-indigo-500 to-blue-500 text-white rounded-br-sm'
+            : 'bg-slate-800 text-slate-200 border border-slate-700 rounded-bl-sm'"
+          class="max-w-[78%] px-3 py-2 rounded-2xl text-sm leading-relaxed">
+          <p class="m-0 whitespace-pre-wrap break-words">{{ msg.content }}</p>
+          <span class="block text-[10px] opacity-50 text-right mt-1">
+            {{ msg.timestamp | date:'hh:mm a' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Typing dots -->
+      <div *ngIf="isTyping" class="flex items-end gap-2 justify-start">
+        <span class="text-base flex-shrink-0 mb-1">🚌</span>
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-bl-sm
+                    px-4 py-3 flex gap-1 items-center">
+          <span class="typing-dot"></span>
+          <span class="typing-dot" style="animation-delay:0.2s"></span>
+          <span class="typing-dot" style="animation-delay:0.4s"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggestion chips -->
+    <div class="flex gap-2 px-3 py-2 bg-slate-900 border-t border-slate-700
+                overflow-x-auto flex-shrink-0 scrollbar-none">
+      <button
+        (click)="quickAsk('Show available schedules')"
+        class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-indigo-400
+               border border-slate-600 hover:border-indigo-500 rounded-full
+               px-3 py-1 text-xs cursor-pointer transition-colors flex-shrink-0">
+        🗺️ Schedules
+      </button>
+      <button
+        (click)="quickAsk('Show my bookings')"
+        class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-indigo-400
+               border border-slate-600 hover:border-indigo-500 rounded-full
+               px-3 py-1 text-xs cursor-pointer transition-colors flex-shrink-0">
+        🎫 My Bookings
+      </button>
+      <button
+        (click)="quickAsk('How do I cancel a booking?')"
+        class="whitespace-nowrap bg-slate-800 hover:bg-slate-700 text-indigo-400
+               border border-slate-600 hover:border-indigo-500 rounded-full
+               px-3 py-1 text-xs cursor-pointer transition-colors flex-shrink-0">
+        ❓ Cancel?
+      </button>
+    </div>
+
+    <!-- Input -->
+    <div class="flex items-center gap-2 px-3 py-2 bg-slate-900
+                border-t border-slate-700 flex-shrink-0">
+      <textarea
+        [(ngModel)]="userInput"
+        (keydown)="onEnter($event)"
+        [disabled]="isTyping"
+        placeholder="Ask me anything..."
+        rows="1"
+        class="flex-1 bg-slate-950 border border-slate-700 focus:border-indigo-500
+               rounded-2xl px-4 py-2 text-slate-200 text-sm resize-none outline-none
+               font-sans leading-snug placeholder-slate-500
+               disabled:opacity-50 transition-colors">
+      </textarea>
+      <button
+        (click)="sendMessage()"
+        [disabled]="!userInput.trim() || isTyping"
+        class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500
+               border-none text-white cursor-pointer flex items-center justify-center
+               flex-shrink-0 transition-all duration-200
+               hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed
+               disabled:hover:scale-100">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</div>
