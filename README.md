@@ -23,6 +23,8 @@ Project Features
       🧑‍💼 Admin Seeding
       
       ⚡ Response Caching for performance optimization
+      
+      🤖 AI Chatbot Assistant powered by Groq (LLaMA 3.3)
 
 🏗️ Project Architecture
     🔹 Frontend – Angular
@@ -128,6 +130,31 @@ Project Features
             SQL Server
  
            JWT Authentication
+
+
+🤖 AI Chatbot
+        
+        The chatbot is a floating bubble assistant available on every page of the application.
+        How it works:
+
+        User clicks the 💬 bubble in the bottom-right corner.
+        User types a question (e.g. "Show my bookings" or "What schedules are available?").
+        Frontend sends the message + conversation history to POST /api/Chat.
+        Backend detects keywords in the message and queries the database for live schedule and booking data.
+        Live data is injected into the AI system prompt as context.
+        Groq's LLaMA 3.3 model generates a natural, accurate response.
+        Response is displayed in the chat bubble with a typing animation.
+
+        Capabilities:
+        
+        🗺️ Search available routes and upcoming schedules
+        🎫 View personal booking history and status
+        ❓ Answer FAQs about cancellation, payment, and booking process
+        🚫 Politely redirects off-topic questions back to transport topics
+
+
+
+
 
 🎯 Learning Goals
 
